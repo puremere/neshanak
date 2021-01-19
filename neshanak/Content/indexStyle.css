@@ -1,0 +1,328 @@
+﻿
+
+
+body {
+    --direction: rtl;
+    --align: left;
+}
+
+.headerSection {
+    background: url("/Images/city-nawpic.jpg");
+    background-repeat: no-repeat;
+}
+
+.logosection {
+    padding: 50px 30px 160px;
+    display: flex;
+    align-items: center
+}
+
+    .logosection ul {
+        list-style-type: none;
+        flex: 1;
+        direction: rtl;
+        font-size: 18px;
+        color: white;
+        height: 100%;
+        align-items: center;
+    }
+
+        .logosection ul li {
+            display: inline
+        }
+
+.headerSection h1, h2, h3, h4, h5, h6 {
+    text-align: center;
+    color: white;
+}
+
+.formsection {
+    width: 60%;
+    margin: 40px auto 0;
+    display: flex;
+    padding: 15px;
+    border: 1px solid #EFEFEF;
+    border-radius: 5px;
+    background-color: #EFEFEF;
+    direction: var(--direction)
+}
+
+.searchButton {
+    padding: 0px 25px;
+    background-color: #F85C9B;
+    color: white;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    margin: 0 10px;
+}
+
+.formsection input {
+    height: 44px;
+    flex: 1;
+    border: 1px solid #ddd;
+    background-color: #EFEFEF;
+    border-radius: 5px;
+    margin: 0 10px;
+    direction: var(--direction);
+    text-align: var(--align);
+    width: 33%;
+}
+
+.menuSection {
+    border-radius: 5px;
+    padding: 10px;
+    justify-content: center;
+    display: flex;
+    margin-top: 40px;
+    padding-bottom: 40px
+}
+
+    .menuSection .child {
+        width: 100%
+    }
+
+.ITEMCAT {
+    background-color: rgba(0,0,0,0.5);
+    box-shadow: none;
+    cursor: pointer;
+    white-space: nowrap;
+    color: white;
+    padding: 4px 15px;
+    margin-left: 10px;
+    display: inline-block;
+    width: 90px;
+    cursor: pointer
+}
+
+    .ITEMCAT img {
+        max-width: 50px;
+        display: block;
+        margin: auto;
+    }
+
+    .ITEMCAT p {
+        text-align: center;
+        white-space: nowrap;
+        width: 100%;
+        overflow: hidden
+    }
+
+#cityDropDown {
+    width: 28%;
+    height: 44px;
+    background-color: #EFEFEF;
+}
+
+.mapsection {
+    background-color: #2D2D2D;
+    padding: 40px;
+}
+
+.mapsection h3, h6 {
+    margin: 0
+}
+
+    .mapsection h6 {
+        color: rebeccapurple;
+        margin-top: 10px
+    }
+
+    .mapsection img {
+        width: 60%;
+        margin: auto;
+        display: block
+    }
+
+.textSection {
+    display: flex;
+    width: 70%;
+    margin: auto;
+    direction : var(--direction)
+}
+
+    .textSection div {
+        width: 33%;
+        padding: 10px;
+    }
+
+        .textSection div .hd {
+            font-size: 15px;
+            color: white;
+            text-align: var(--align)
+        }
+
+        .textSection div .content {
+            font-size: 12px;
+            color: white;
+            text-align: var(--align)
+        }
+.viewProduct {
+    background-color: #EFEFEF;
+    padding: 80px 15%;
+}
+    .viewProduct h3, h6 {
+        padding:5px;
+        margin: 0;
+        color:#4d4d4d
+    }
+.slidHolder{
+    margin-top:50px;
+}
+.slidHolder p {
+    text-align: center;
+    margin-top: 10px
+}
+.bannerHolder1 {
+    background-color: white;
+    display: flex;
+    padding: 50px 10px;
+    justify-content: center;
+}
+    .bannerHolder1 div {
+        width: 25%;
+        padding: 10px;
+    }
+    .bannerHolder2 img {
+        width: 100%
+    }
+.bannerHolder2 {
+    background-color: white;
+    display: flex;
+    padding: 50px 10px;
+    justify-content: center;
+}
+.bannerHolder2 div {
+    width: 50%;
+    padding: 20px;
+}
+.bannerHolder2 img{
+    width:100%
+}
+
+.blogHolder {
+    background-color: #EFEFEF;
+    padding: 80px 15%;
+}
+
+.blogHolder h3, h6 {
+    padding: 5px;
+    margin: 0;
+    color: #4d4d4d
+}
+.slidBlogHolder{
+    background-color:white;
+   padding-bottom:10px
+}
+.blogcontnet{
+    max-height:150px;
+    overflow:hidden;
+    text-align:var(--align) !important;
+    padding:10px
+
+}
+.titlecontnet{
+    color: rebeccapurple
+}
+.footerSection {
+    display: flex;
+    background-color: #373737;
+    direction: var(--direction)
+
+}
+    .footerSection .aboutUs{
+        width:60%;
+        padding:40px;
+        color:white
+    }
+        .footerSection .aboutUs p{
+            padding-top:40px;
+            text-align: var(--align)
+        }
+    .footerSection .Tag {
+        width: 40%;
+        padding: 40px;
+        color: white;
+        direction: var(--direction);
+        text-align: var(--align)
+    }
+    .footerSection .Tag p{
+        font-size:26px
+    }
+    .footerSection .Tag span{
+        padding:5px;
+        border : 1px solid white;
+        color:white;
+        background-color:royalblue;
+        display:inline-block;
+        margin:5px
+
+    }
+#mapid{
+    height:100%
+}
+
+#contentHolder {
+    flex: 1;
+    color: #1c1c1c;
+    width: 35%;
+    overflow:scroll;
+}
+.itemHolder{
+    width: 100%;
+    padding: 10px;
+    display: flex;
+    border-bottom: 1px solid #eee;
+    direction: var(--direction);
+    cursor:pointer;
+    position:relative;
+}
+.itemHolder .cover {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
+    .itemHolder img {
+        width: 115px;
+    }
+    .itemHolder .DATA {
+        flex: 1;
+        padding: 10px
+    }
+    .itemHolder .DATA h4,h5{
+        text-align : var(--align);
+        color:#4d4d4d
+        
+    }
+
+.logosectionalone {
+    padding: 15px;
+    display: flex;
+    align-items: center;
+    background-color: rgba(0,0,0,0.5);
+    position: absolute;
+    z-index: 9;
+    width: 100%;
+}
+.logosectionalone ul {
+    list-style-type: none;
+    flex: 1;
+    direction: rtl;
+    font-size: 18px;
+    color: white;
+    height: 100%;
+    align-items: center;
+    margin:0
+}
+    .logosectionalone ul li {
+        display: inline
+    }
+
+.imageholder {
+    object-fit: cover;
+}
+
+    .imageholder img {
+        width: 100%
+    }

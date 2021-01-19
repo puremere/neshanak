@@ -1,0 +1,290 @@
+﻿
+@model neshanak.viewModel.BzListVM
+@{
+    ViewBag.Title = "searchResult";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section styles{
+
+
+    <link href="~/Content/indexStyle.css" rel="stylesheet" />
+    <link href="~/Extra/leaflet/leaflet.css" rel="stylesheet" />
+    <link href="~/Content/sliderStyle.css" rel="stylesheet" />
+
+    <link href="~/Content/slick.css" rel="stylesheet" />
+    <link href="~/Content/slick-theme.css" rel="stylesheet" />
+
+}
+@section scripts{
+    <script>
+        if ('@Session["lang"]' == 'fa') {
+            $("body").get(0).style.setProperty("--align", "right");
+            $("body").get(0).style.setProperty("--direction", "rtl");
+
+        }
+        else {
+            $("body").get(0).style.setProperty("--align", "left");
+            $("body").get(0).style.setProperty("--direction", "ltr");
+
+        }
+
+    </script>
+    <script>
+        var height = $(window).height();
+        $("#mapid").height(height + "px");
+        $("#contentHolder").height(height + "px");
+
+        $("#mapid").width("55%");
+
+    </script>
+
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+            integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+            crossorigin="">
+
+    </script>
+    <script>
+        var markers = {};
+        var ITEMES = @Html.Raw(Json.Encode(Model.bzlist));
+          var first = ITEMES[0];
+        var mymap = L.map('mapid', { attributionControl: false}).setView([51.505, -0.09], 13);
+        L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
+            attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+            maxZoom: 18,
+            id: 'mapbox/streets-v11',
+            tileSize: 512,
+            zoomOffset: -1,
+            accessToken: 'pk.eyJ1IjoibWVyaW9saSIsImEiOiJja2p6dXhmdngwYmVvMnZwY2lyc2htNGxhIn0.Y9t__Bll6Fw9b9amb_rcHg',
+
+        }).addTo(mymap);
+        mymap.panTo(new L.LatLng(first.lat, first.lng));
+
+        var LeafIcon = L.Icon.extend({
+            options: {
+                shadowUrl: '/images/marker-shadow.png',
+                iconSize: [25, 41],
+                iconAnchor: [12, 41],
+                popupAnchor: [1, -34],
+                shadowSize: [41, 41]
+            }
+        });
+        var greenIcon = new LeafIcon({ iconUrl: '/images/marker-green.png' });
+
+        var marker;
+        $.each(ITEMES, function (index, item) {
+            //alert(JSON.stringify(item));
+            var popuphtml = `<div class="leaflet-popup-content" style="width: px;display: flex;"><img style="width: 100px;display: inline-block;" src="/images/nodes/thumb/thumb_`+item.img+`"><div style="display: inline-block;margin: 5px;flex: 1;"><h4 style="color: black;">`+item.title+`</h4><p style=" text-align: center;">`+item.address+`</p></div></div>`;
+            if (index === 0) {
+                var mr = L.marker([item.lat, item.lng]).addTo(mymap).on('click', onClick);
+                mr.bindPopup(popuphtml);
+                mr.on('mouseover', function (e) {
+                    this.openPopup();
+                });
+                mr.on('mouseout', function (e) {
+                    this.closePopup();
+                });
+                markers[item.id] = mr;
+
+
+                marker = L.marker([item.lat, item.lng], { icon: greenIcon });
+                marker.bindPopup(popuphtml);
+                marker.on('mouseover', function (e) {
+                    this.openPopup();
+                });
+                marker.on('mouseout', function (e) {
+                    this.closePopup();
+                });
+                marker.addTo(mymap).on('click', onClick);
+            }
+            else {
+                var mr = L.marker([item.lat, item.lng]).addTo(mymap).on('click', onClick);
+                mr.bindPopup(popuphtml);
+                mr.on('mouseover', function (e) {
+                    this.openPopup();
+                });
+                mr.on('mouseout', function (e) {
+                    this.closePopup();
+                });
+                markers[item.id] = mr;
+            }
+
+
+        });
+        function onClick(e) {
+
+            mymap.removeLayer(marker); // حذف مارکر فوکوس قبلی
+            mymap.panTo(e.target.getLatLng());
+
+
+            marker = L.marker(e.target.getLatLng(), { icon: greenIcon });
+            marker.addTo(mymap).on('click', onClick);
+
+            var id = "";
+
+            $.each(ITEMES, function (index, item) {
+
+                var string = e.target.getLatLng().toString();
+                var srt = string.substring(string.indexOf("(") + 1, string.indexOf(","));
+                if (item.lat.includes(srt) || srt.includes(item.lat)) {
+                    $(".itemHolder").css('background-color', '#E2E2E2');
+                    $(".itemHolder").parent().find('h4').css("color", "#4d4d4d");
+                    $(".itemHolder").parent().find('h5').css("color", "#4d4d4d");
+
+
+                    $("#" + item.id).parent().css('background-color', '#8e8e8e');
+                    $("#" + item.id).parent().find('h4').css("color", "#eee");
+                    $("#" + item.id).parent().find('h5').css("color", "#eee");
+
+
+                    $('#contentHolder').animate({
+                        scrollTop: $("#" + item.id).offset().top
+                    }, 500);
+                }
+
+
+            });
+
+
+
+
+
+        }
+
+        $(".cover").on('mouseover', function (e) {
+            $(this).parent().css("background-color", "#8e8e8e")
+            $(this).parent().find('h4').css("color", "#eee");
+            $(this).parent().find('h5').css("color", "#eee");
+
+            var id = $(this).attr('id');
+            markers[id].openPopup();
+        });
+        $(".cover").on('mouseout', function (ev) {
+            $(this).parent().css("background-color", "#E2E2E2")
+            $(this).parent().find('h4').css("color", "#4d4d4d");
+            $(this).parent().find('h5').css("color", "#4d4d4d");
+            var id = $(this).attr('id');
+            markers[id].closePopup();
+
+            ////Make sure that the mouseover event isn't triggered when moving from a child element
+            ////or bubbled from a child element
+            //if (ev.target == this) {  //!isParent(this, ev.relatedTarget) &&
+            ////Event handling code here
+
+            //}
+        });
+
+
+    </script>
+    <script src="~/Scripts/jquery.migrate.js"></script>
+    <script src="~/Scripts/slick.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('.your-class').slick({
+                dots: false,
+                infinite: true,
+                autoplay: true,
+                speed: 500,
+                cssEase: 'linear'
+            });
+        });
+    </script>
+    <script>
+        $("#languagetOption").change(function () {
+            let id = $(this).val()
+            if (id != '') {
+
+                window.location.href = "/Home/ChangeLanguage?lang=" + id + "&actionstring=searchResult";
+
+            }
+        })
+    </script>
+
+}
+
+<div class="logosectionalone">
+    <ul>
+        <li style="font-size:12px; color:black">
+            <select id="languagetOption">
+                @{
+                    List<string> list = new List<string>();
+                    list.Add("en"); list.Add("fa");
+                    foreach (var item in list)
+                    {
+
+                        if (Session["lang"] as string == item)
+                        {
+                            <option selected>
+                                @item
+                            </option>
+                        }
+                        else
+                        {
+                            <option>
+                                @item
+                            </option>
+
+                        }
+                    }
+                }
+
+
+            </select>
+        </li>
+        <li>|</li>
+        <li>@Resources.res.logosection1</li>
+        <li>|</li>
+        <li>@Resources.res.logosection2</li>
+        <li>|</li>
+        <li>@Resources.res.logosection3</li>
+
+
+
+
+
+    </ul>
+</div>
+<div class="row" style="background-color:black">
+    <div id="slideHolder" style=" width:80%; height:auto; margin:auto;display:block">
+        <div class="your-class">
+            <div class="imageholder">
+                <img src="~/Images/slide.jpg" />
+            </div>
+            <div class="imageholder">
+                <img src="~/Images/slide.jpg" />
+            </div>
+            <div class="imageholder">
+                <img src="~/Images/slide.jpg" />
+            </div>
+            <div class="imageholder">
+                <img src="~/Images/slide.jpg" />
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+
+<div style="display:flex; align-items:center; height:100% ">
+    <div id="mapid" style=""></div>
+    <div id="contentHolder">
+        @foreach (var item in Model.bzlist)
+        {
+            var id = "E" + item.id;
+        <div class="itemHolder" id="@id">
+            <div class="cover" id="@item.id"></div>
+            <div class="DATA">
+                <h4>@item.title</h4>
+                <h5>@item.desc</h5>
+                <h5>@item.address</h5>
+            </div>
+            <img src="~/Images/nodes/@item.img" />
+
+
+        </div>
+        }
+    </div>
+</div>
+
+

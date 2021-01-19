@@ -1,0 +1,11 @@
+﻿@model neshanak.Models.Account
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<a href="@Url.Action("ChangeLanguage", "Main", new { lang = "en" })">English</a> |
+<a href="@Url.Action("ChangeLanguage", "Main", new { lang = "fa" })">Farsi</a> |
+
+
+ <h1>  @Resources.res.registration   </h1>

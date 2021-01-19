@@ -1,31 +1,312 @@
-﻿@{
+﻿@model neshanak.viewModel.IndexVM
+@{
     ViewBag.Title = "Home Page";
+    Layout = "/Views/Shared/_Layout.cshtml";
 }
 
-<div class="jumbotron">
-    <h1>ASP.NET</h1>
-    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-    <p><a href="https://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
-</div>
 
-<div class="row">
-    <div class="col-md-4">
-        <h2>Getting started</h2>
-        <p>
-            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-            enables a clean separation of concerns and gives you full control over markup
-            for enjoyable, agile development.
-        </p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
+@section styles{
+
+    <link href="~/Content/root.css" rel="stylesheet" />
+    <link href="~/Content/indexStyle.css" rel="stylesheet" />
+
+    <link href="~/Content/slick.css" rel="stylesheet" />
+    <link href="~/Content/slick-theme.css" rel="stylesheet" />
+
+
+}
+@section scripts{
+
+
+    <script src="~/Scripts/jquery.migrate.js"></script>
+
+    <script type="text/javascript" src="~/Scripts/slick.js"></script>
+
+    <script>
+        $("#languagetOption").change(function () {
+            let id = $(this).val()
+            window.location.href = "/Home/ChangeLanguage?lang=" + id;
+        })
+    </script>
+    <script>
+        if ('@Session["lang"]' == 'fa') {
+            $("body").get(0).style.setProperty("--align", "right");
+            $("body").get(0).style.setProperty("--direction", "rtl");
+
+        }
+        else {
+            $("body").get(0).style.setProperty("--align", "left");
+            $("body").get(0).style.setProperty("--direction", "ltr");
+
+        }
+
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            $('.your-class').slick({
+                slidesToShow: 4,
+                slidesToScroll: 1,
+                autoplay: true,
+                autoplaySpeed: 2000,
+                dots: true
+            });
+        });
+
+    </script>
+    <script>
+        $(".ITEMCAT").click(function () {
+
+            var catid = $(this).attr('id');
+            window.location.href = "/Home/GetSubCat?result=" + catid + "-1";
+
+        })
+
+    </script>
+
+}
+
+<div class="headerSection">
+    <div class="logosection">
+
+        <img src="~/Images/final2.png" />
+        <img src="~/Images/logo_text.png" />
+        <ul>
+            <li style="font-size:12px; color:black">
+                <select id="languagetOption">
+                    @{
+                        List<string> list = new List<string>();
+                        list.Add("en"); list.Add("fa");
+                        foreach (var item in list)
+                        {
+
+                            if (Session["lang"] as string == item)
+                            {
+                                <option selected>
+                                    @item
+                                </option>
+                            }
+                            else
+                            {
+                                <option>
+                                    @item
+                                </option>
+
+                            }
+                        }
+                    }
+
+
+                </select>
+            </li>
+            <li>|</li>
+            <li>@Resources.res.logosection1</li>
+            <li>|</li>
+            <li>@Resources.res.logosection2</li>
+            <li>|</li>
+            <li>@Resources.res.logosection3</li>
+
+
+
+
+
+        </ul>
     </div>
-    <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
+    <h1>@Resources.res.headertext1</h1>
+    <h2>@Resources.res.headertext2</h2>
+    <div class="formsection">
+        <input class="form-control" placeholder="@Resources.res.headerFormInput1" />
+        @Html.DropDownList("SelectedItem", new SelectList(Model.lands, "ID", "title"), @Resources.res.headerFormInput3, new { @class = "form-control", id = "cityDropDown" })
+        <input class="form-control" placeholder="@Resources.res.headerFormInput4" />
+        <div class="searchButton">@Resources.res.headerFormInput2</div>
     </div>
-    <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
+    <div class="menuSection">
+        @foreach (var item in Model.cat)
+        {
+
+            string ID = item.id.ToString();
+            int index = Model.cat.IndexOf(item);
+            string imageName = "lawyers_icon.png"; // Path.GetFileNameWithoutExtension(item.img) + "_icon.png";
+            if (index < 6)
+            {
+                <div class="item  ITEMCAT" id=@ID style=" ">
+                    <span><img style="" src="http://supectco.com/neshanak/portal/uploads/@imageName" /></span>
+                    <p>@item.title</p>
+                </div>
+            }
+
+
+
+        }
+
+        <div class="item  ITEMCAT" style=" ">
+            <span><img style="" src="http://supectco.com/neshanak/portal/uploads/lawyers_icon.png" /></span>
+            <p>@Resources.res.more</p>
+        </div>
+
+
+    </div>
+</div>
+<div class="viewProduct">
+    <h3> @Resources.res.popularText1</h3>
+    <h6> @Resources.res.popularText2</h6>
+    <div class="slidHolder">
+
+        <div class="your-class">
+
+            @{
+                foreach (var item in Model.rec)
+                {
+                    <div class="slidItemHolder" style="padding:10px">
+                        <img style="width:100%" src="~/Images/supectmarket.jpg" />
+                        <p>@item.title</p>
+                        <p>@item.desc</p>
+                    </div>
+                }
+            }
+
+        </div>
+
+    </div>
+
+
+</div>
+<div class="mapsection">
+    <h3> @Resources.res.viewProductText1</h3>
+    <h6> @Resources.res.viewProductText2</h6>
+    <img src="~/Images/map.jpg" />
+    <div class="textSection">
+        <div>
+            <p class="hd">@Resources.res.viewProductHeader1</p>
+            <p class="content">@Resources.res.viewProductContent1</p>
+        </div>
+        <div>
+            <p class="hd">@Resources.res.viewProductHeader2</p>
+            <p class="content">@Resources.res.viewProductContent2</p>
+        </div>
+        <div>
+            <p class="hd">@Resources.res.viewProductHeader3</p>
+            <p class="content">@Resources.res.viewProductContent3</p>
+        </div>
+    </div>
+</div>
+<div class="viewProduct">
+    <h3> @Resources.res.recenttext1</h3>
+    <h6>
+        @Resources.res.recenttext2
+    </h6>
+    <div class="slidHolder">
+
+        <div class="your-class">
+
+            @{
+                foreach (var item in Model.rec)
+                {
+                    <div class="slidItemHolder" style="padding:10px">
+                        <img style="width:100%" src="~/Images/supectmarket.jpg" />
+                        <p>@item.title</p>
+                        <p>@item.desc</p>
+                    </div>
+                }
+            }
+
+        </div>
+
+    </div>
+
+
+</div>
+<div class="bannerHolder1">
+    <div>
+        <img src="~/Images/banner1.jpg" />
+    </div>
+    <div>
+        <img src="~/Images/banner2.jpg" />
+    </div>
+    <div>
+        <img src="~/Images/banner3.jpg" />
+    </div>
+    <div>
+        <img src="~/Images/banner4.jpg" />
+    </div>
+</div>
+<div class="viewProduct">
+    <h3> @Resources.res.randomtext1</h3>
+    <h6>
+        @Resources.res.randomtext2
+    </h6>
+    <div class="slidHolder">
+
+        <div class="your-class">
+
+            @{
+                foreach (var item in Model.rec)
+                {
+
+                    <div class="slidItemHolder" style="padding:10px">
+
+                        <img style="width:100%" src="~/Images/supectmarket.jpg" />
+                        <p>@item.title</p>
+                        <p>@item.desc</p>
+                    </div>
+                }
+            }
+
+        </div>
+
+    </div>
+
+
+</div>
+<div class="bannerHolder2">
+    <div>
+        <img src="~/Images/banner5.jpg" />
+    </div>
+    <div>
+        <img src="~/Images/banner6.jpg" />
+    </div>
+
+</div>
+<div class="blogHolder">
+    <h3> @Resources.res.blogtext1</h3>
+    <h6>
+        @Resources.res.blogtext1
+    </h6>
+    <div class="slidHolder">
+
+        <div class="your-class">
+
+            @{
+                foreach (var item in Model.blog)
+                {
+                    <div style="padding:5px">
+                        <div class="slidBlogHolder">
+                            <img style="width:100%" src="~/Images/city-nawpic.jpg" />
+                            <p class="titlecontnet">@item.title</p>
+                            <p class="blogcontnet">@item.content</p>
+                        </div>
+                    </div>
+
+                }
+            }
+
+        </div>
+
+    </div>
+
+
+</div>
+<div class="footerSection">
+    <div class="aboutUs">
+        <img src="~/Images/final2.png" />
+        <img src="~/Images/logo_text.png" />
+        <p>@Resources.res.footeraboutus</p>
+
+    </div>
+    <div class="Tag">
+        <p>@Resources.res.footertag</p>
+        <div>
+            <span>tag1</span><span>tag2tag2tag2</span><span>tag3tag3</span><span>tag4</span><span>tag5</span><span>tag6tag6tag6tag6tag6</span>
+        </div>
     </div>
 </div>
