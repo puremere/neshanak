@@ -10,7 +10,7 @@
 
     <link href="~/Content/indexStyle.css" rel="stylesheet" />
     <link href="~/Extra/leaflet/leaflet.css" rel="stylesheet" />
-    <link href="~/Content/sliderStyle.css" rel="stylesheet" />
+    
 
     <link href="~/Content/slick.css" rel="stylesheet" />
     <link href="~/Content/slick-theme.css" rel="stylesheet" />
@@ -197,6 +197,9 @@
                 window.location.href = "/Home/ChangeLanguage?lang=" + id + "&actionstring=searchResult";
 
             }
+        });
+        $("#addnew").click(function () {
+            window.location.href = "/Home/createItem"
         })
     </script>
 
@@ -237,6 +240,8 @@
         <li>@Resources.res.logosection2</li>
         <li>|</li>
         <li>@Resources.res.logosection3</li>
+        <li>|</li>
+        <li id="addnew">@Resources.res.logosection4</li>
 
 
 

@@ -5,6 +5,18 @@ using System.Web;
 
 namespace neshanak.viewModel
 {
+    public class countryCityCatVM
+    {
+        public List<Land> lands { get; set; }
+        public List<city> cities { get; set; }
+        public List<Cat> cat { get; set; }
+    }
+
+    public class city
+    {
+        public int ID { get; set; }
+        public string title { get; set; }
+    }
     public class IndexVM
     {
         public List<Sld> sld { get; set; }

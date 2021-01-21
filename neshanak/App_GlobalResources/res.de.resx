@@ -118,163 +118,163 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="blogtext1" xml:space="preserve">
-    <value>Recent Blog Post</value>
+    <value>Letzter Blog-Beitrag</value>
   </data>
   <data name="blogtext2" xml:space="preserve">
-    <value>we are some of uss anyway</value>
+    <value>Wir sind sowieso einige von uns</value>
   </data>
   <data name="cat" xml:space="preserve">
-    <value>main category</value>
+    <value>Hauptkategorie</value>
   </data>
   <data name="chooscat" xml:space="preserve">
-    <value>choose cat</value>
+    <value>Kategorie wählen</value>
   </data>
   <data name="chooseCity" xml:space="preserve">
-    <value>Select your city</value>
+    <value>Wählen Sie Ihre Stadt</value>
   </data>
   <data name="chooseCountry" xml:space="preserve">
-    <value>Select your country</value>
+    <value>Wähle dein Land</value>
   </data>
   <data name="choossubcat" xml:space="preserve">
-    <value>choose subcat</value>
+    <value>Unterkategorie auswählen</value>
   </data>
   <data name="city" xml:space="preserve">
-    <value>City</value>
+    <value>Stadt</value>
   </data>
   <data name="coosesubcattwo" xml:space="preserve">
-    <value>choose subcattwo</value>
+    <value>Unterkategorie auswählen zwei</value>
   </data>
   <data name="country" xml:space="preserve">
-    <value>Country</value>
+    <value>Land</value>
   </data>
   <data name="createAbout" xml:space="preserve">
-    <value>About Us</value>
+    <value>Über uns</value>
   </data>
   <data name="createAddress" xml:space="preserve">
-    <value>Address</value>
+    <value>Adresse</value>
   </data>
   <data name="createButt" xml:space="preserve">
-    <value>Create</value>
+    <value>Erstellen</value>
   </data>
   <data name="createDesc" xml:space="preserve">
-    <value>Description</value>
+    <value>Beschreibung</value>
   </data>
   <data name="createImage" xml:space="preserve">
-    <value>Upload image</value>
+    <value>Bild hochladen</value>
   </data>
   <data name="createLocation" xml:space="preserve">
-    <value>Location</value>
+    <value>Ort</value>
   </data>
   <data name="createPhone" xml:space="preserve">
-    <value>Mobile</value>
+    <value>Handy</value>
   </data>
   <data name="createPhone2" xml:space="preserve">
-    <value>Phone</value>
+    <value>Telefon</value>
   </data>
   <data name="createTitle" xml:space="preserve">
-    <value>Title </value>
+    <value>Titel</value>
   </data>
   <data name="email" xml:space="preserve">
     <value>email</value>
   </data>
   <data name="footeraboutus" xml:space="preserve">
-    <value>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus a lectus finibus, sagittis lorem vitae, pulvinar metus. Etiam placerat orci mauris, nec aliquet augue vulputate vitae. Interdum et malesuada fames ac ante ipsum primis in faucibus. Sed iaculis, risus eget volutpat vestibulum, </value>
+    <value>Lorem ipsum dolor sitzen amet, consectetur adipiscing elit. Die Grenzen von, um einen Lectus zu leben, sagittis lorem vitae, pulvinar metus Sed congue. Etiam placerat orci mauris, ang aliquet ipsum vulputate vitae. Manchmal haben sie Menuada-Hunger und beim ersten Geschmack. Allerdings Copyright, Schulwochenende;</value>
   </data>
   <data name="footertag" xml:space="preserve">
-    <value>tags</value>
+    <value>Stichworte</value>
   </data>
   <data name="headerFormInput1" xml:space="preserve">
-    <value>Where are you looking for?</value>
+    <value>Wonach suchst du?</value>
   </data>
   <data name="headerFormInput2" xml:space="preserve">
-    <value>Search</value>
+    <value>Suche</value>
   </data>
   <data name="headerFormInput3" xml:space="preserve">
-    <value>your country</value>
+    <value>dein Land</value>
   </data>
   <data name="headerFormInput4" xml:space="preserve">
-    <value>your city</value>
+    <value>deine Stadt</value>
   </data>
   <data name="headertext1" xml:space="preserve">
-    <value>FIND THE BEST TO BE</value>
+    <value>FINDEN SIE DAS BESTE</value>
   </data>
   <data name="headertext2" xml:space="preserve">
-    <value>find great places to stay, shop,  or visit local experts</value>
+    <value>Finden Sie großartige Orte zum Verweilen, Einkaufen oder besuchen Sie lokale Experten</value>
   </data>
   <data name="instagram" xml:space="preserve">
     <value>instagram</value>
   </data>
   <data name="logosection1" xml:space="preserve">
-    <value>Sign In or Register</value>
+    <value>Einloggen oder Registrieren</value>
   </data>
   <data name="logosection2" xml:space="preserve">
-    <value>Contactus</value>
+    <value>Kontaktiere uns</value>
   </data>
   <data name="logosection3" xml:space="preserve">
-    <value>Support</value>
+    <value>Unterstützung</value>
   </data>
   <data name="logosection4" xml:space="preserve">
-    <value>Add new</value>
+    <value>Neue hinzufügen</value>
   </data>
   <data name="more" xml:space="preserve">
-    <value>more</value>
+    <value>Mehr</value>
   </data>
   <data name="popularText1" xml:space="preserve">
-    <value>Popular in all categories</value>
+    <value>Beliebt in allen Kategorien</value>
   </data>
   <data name="popularText2" xml:space="preserve">
-    <value>we are some of uss anyway</value>
+    <value>Wir sind sowieso einige von uns</value>
   </data>
   <data name="randomtext1" xml:space="preserve">
-    <value>Random Suggestion</value>
+    <value>Zufälliger Vorschlag</value>
   </data>
   <data name="randomtext2" xml:space="preserve">
-    <value>we are some of uss anyway</value>
+    <value>Wir sind sowieso einige von uns</value>
   </data>
   <data name="recenttext1" xml:space="preserve">
-    <value>Recent View</value>
+    <value>Letzte Ansicht</value>
   </data>
   <data name="recenttext2" xml:space="preserve">
-    <value>we are some of uss anyway</value>
+    <value>Wir sind sowieso einige von uns</value>
   </data>
   <data name="registration" xml:space="preserve">
-    <value>Country name</value>
+    <value>Ländername</value>
   </data>
   <data name="subcat" xml:space="preserve">
-    <value>sub category</value>
+    <value>Unterkategorie</value>
   </data>
   <data name="subcat2" xml:space="preserve">
-    <value>sub category two</value>
+    <value>Unterkategorie zwei</value>
   </data>
   <data name="telegram" xml:space="preserve">
     <value>telegram</value>
   </data>
   <data name="viewProductContent1" xml:space="preserve">
-    <value>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus a lectus finibus, sagittis lorem vitae, pulvinar metus. Etiam placerat orci mauris, nec aliquet augue vulputate vitae. Interdum et malesuada fames ac ante ipsum primis in faucibus. Sed iaculis, risus eget volutpat vestibulum, ligula quam maximus diam, fringilla aliquet leo est ut lorem. Donec sit amet feugiat neque. Phasellus quis felis in magna elementum dapibus at nec dui. Nulla ut velit eu neque pulvinar pulvinar quis in orci. Vestibulum nisi neque,</value>
+    <value>Lorem ipsum dolor sitzen amet, consectetur adipiscing elit. Die Grenzen von, um einen Lectus zu leben, sagittis lorem vitae, pulvinar metus Sed congue. Etiam placerat orci mauris, ang aliquet ipsum vulputate vitae. Manchmal haben sie Menuada-Hunger und beim ersten Geschmack. Allerdings Copyright, Schulwochenende;</value>
   </data>
   <data name="viewProductContent2" xml:space="preserve">
-    <value>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus a lectus finibus, sagittis lorem vitae, pulvinar metus. Etiam placerat orci mauris, nec aliquet augue vulputate vitae. Interdum et malesuada fames ac ante ipsum primis in faucibus. Sed iaculis, risus eget volutpat vestibulum, ligula quam maximus diam, fringilla aliquet leo est ut lorem. Donec sit amet feugiat neque. Phasellus quis felis in magna elementum dapibus at nec dui. Nulla ut velit eu neque pulvinar pulvinar quis in orci. Vestibulum nisi neque,</value>
+    <value>Lorem ipsum dolor sitzen amet, consectetur adipiscing elit. Die Grenzen von, um einen Lectus zu leben, sagittis lorem vitae, pulvinar metus Sed congue. Etiam placerat orci mauris, ang aliquet ipsum vulputate vitae. Manchmal haben sie Menuada-Hunger und beim ersten Geschmack. Allerdings Copyright, Schulwochenende;</value>
   </data>
   <data name="viewProductContent3" xml:space="preserve">
-    <value>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus a lectus finibus, sagittis lorem vitae, pulvinar metus. Etiam placerat orci mauris, nec aliquet augue vulputate vitae. Interdum et malesuada fames ac ante ipsum primis in faucibus. Sed iaculis, risus eget volutpat vestibulum, ligula quam maximus diam, fringilla aliquet leo est ut lorem. Donec sit amet feugiat neque. Phasellus quis felis in magna elementum dapibus at nec dui. Nulla ut velit eu neque pulvinar pulvinar quis in orci. Vestibulum nisi neque,</value>
+    <value>Lorem ipsum dolor sitzen amet, consectetur adipiscing elit. Die Grenzen von, um einen Lectus zu leben, sagittis lorem vitae, pulvinar metus Sed congue. Etiam placerat orci mauris, ang aliquet ipsum vulputate vitae. Manchmal haben sie Menuada-Hunger und beim ersten Geschmack. Allerdings Copyright, Schulwochenende;</value>
   </data>
   <data name="viewProductHeader1" xml:space="preserve">
-    <value>Save Time</value>
+    <value>Zeit sparen</value>
   </data>
   <data name="viewProductHeader2" xml:space="preserve">
-    <value>Win Over The Team</value>
+    <value>Gewinnen Sie das Team</value>
   </data>
   <data name="viewProductHeader3" xml:space="preserve">
-    <value>Design Features</value>
+    <value>Design-Merkmale</value>
   </data>
   <data name="viewProductText1" xml:space="preserve">
-    <value>Anywhere and anytime, We are here to help </value>
+    <value>Überall und jederzeit sind wir für Sie da</value>
   </data>
   <data name="viewProductText2" xml:space="preserve">
-    <value>And we mean that</value>
+    <value>Und das meinen wir auch so</value>
   </data>
   <data name="website" xml:space="preserve">
-    <value>website</value>
+    <value>Webseite</value>
   </data>
   <data name="whatsapp" xml:space="preserve">
     <value>whatsapp</value>

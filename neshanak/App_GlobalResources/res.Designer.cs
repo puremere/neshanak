@@ -79,6 +79,168 @@ namespace neshanak.App_GlobalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to main category.
+        /// </summary>
+        public static string cat {
+            get {
+                return ResourceManager.GetString("cat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to choose cat.
+        /// </summary>
+        public static string chooscat {
+            get {
+                return ResourceManager.GetString("chooscat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select your city.
+        /// </summary>
+        public static string chooseCity {
+            get {
+                return ResourceManager.GetString("chooseCity", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select your country.
+        /// </summary>
+        public static string chooseCountry {
+            get {
+                return ResourceManager.GetString("chooseCountry", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to choose subcat.
+        /// </summary>
+        public static string choossubcat {
+            get {
+                return ResourceManager.GetString("choossubcat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to City.
+        /// </summary>
+        public static string city {
+            get {
+                return ResourceManager.GetString("city", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to choose subcattwo.
+        /// </summary>
+        public static string coosesubcattwo {
+            get {
+                return ResourceManager.GetString("coosesubcattwo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Country.
+        /// </summary>
+        public static string country {
+            get {
+                return ResourceManager.GetString("country", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to About Us.
+        /// </summary>
+        public static string createAbout {
+            get {
+                return ResourceManager.GetString("createAbout", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Address.
+        /// </summary>
+        public static string createAddress {
+            get {
+                return ResourceManager.GetString("createAddress", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Create.
+        /// </summary>
+        public static string createButt {
+            get {
+                return ResourceManager.GetString("createButt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Description.
+        /// </summary>
+        public static string createDesc {
+            get {
+                return ResourceManager.GetString("createDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Upload image.
+        /// </summary>
+        public static string createImage {
+            get {
+                return ResourceManager.GetString("createImage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Location.
+        /// </summary>
+        public static string createLocation {
+            get {
+                return ResourceManager.GetString("createLocation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mobile.
+        /// </summary>
+        public static string createPhone {
+            get {
+                return ResourceManager.GetString("createPhone", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Phone.
+        /// </summary>
+        public static string createPhone2 {
+            get {
+                return ResourceManager.GetString("createPhone2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Title .
+        /// </summary>
+        public static string createTitle {
+            get {
+                return ResourceManager.GetString("createTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to email.
+        /// </summary>
+        public static string email {
+            get {
+                return ResourceManager.GetString("email", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus a lectus finibus, sagittis lorem vitae, pulvinar metus. Etiam placerat orci mauris, nec aliquet augue vulputate vitae. Interdum et malesuada fames ac ante ipsum primis in faucibus. Sed iaculis, risus eget volutpat vestibulum, .
         /// </summary>
         public static string footeraboutus {
@@ -151,6 +313,15 @@ namespace neshanak.App_GlobalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to instagram.
+        /// </summary>
+        public static string instagram {
+            get {
+                return ResourceManager.GetString("instagram", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Sign In or Register.
         /// </summary>
         public static string logosection1 {
@@ -174,6 +345,15 @@ namespace neshanak.App_GlobalResources {
         public static string logosection3 {
             get {
                 return ResourceManager.GetString("logosection3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add new.
+        /// </summary>
+        public static string logosection4 {
+            get {
+                return ResourceManager.GetString("logosection4", resourceCulture);
             }
         }
         
@@ -250,6 +430,33 @@ namespace neshanak.App_GlobalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to sub category.
+        /// </summary>
+        public static string subcat {
+            get {
+                return ResourceManager.GetString("subcat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to sub category two.
+        /// </summary>
+        public static string subcat2 {
+            get {
+                return ResourceManager.GetString("subcat2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to telegram.
+        /// </summary>
+        public static string telegram {
+            get {
+                return ResourceManager.GetString("telegram", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus a lectus finibus, sagittis lorem vitae, pulvinar metus. Etiam placerat orci mauris, nec aliquet augue vulputate vitae. Interdum et malesuada fames ac ante ipsum primis in faucibus. Sed iaculis, risus eget volutpat vestibulum, ligula quam maximus diam, fringilla aliquet leo est ut lorem. Donec sit amet feugiat neque. Phasellus quis felis in magna elementum dapibus at nec dui. Nulla ut velit eu neque pulvinar pulvinar quis in orci. Vestibulum ni [rest of string was truncated]&quot;;.
         /// </summary>
         public static string viewProductContent1 {
@@ -318,6 +525,24 @@ namespace neshanak.App_GlobalResources {
         public static string viewProductText2 {
             get {
                 return ResourceManager.GetString("viewProductText2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to website.
+        /// </summary>
+        public static string website {
+            get {
+                return ResourceManager.GetString("website", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to whatsapp.
+        /// </summary>
+        public static string whatsapp {
+            get {
+                return ResourceManager.GetString("whatsapp", resourceCulture);
             }
         }
     }

@@ -1,0 +1,292 @@
+﻿@model neshanak.viewModel.countryCityCatVM
+
+@{
+    ViewBag.Title = "createItem";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section styles{
+
+
+    <link href="~/Content/indexStyle.css" rel="stylesheet" />
+    <link href="~/Extra/leaflet/leaflet.css" rel="stylesheet" />
+
+
+    <link href="~/Content/slick.css" rel="stylesheet" />
+    <link href="~/Content/slick-theme.css" rel="stylesheet" />
+    <link href="~/Content/css-circular-prog-bar.css" rel="stylesheet" />
+    <style>
+    </style>
+    <style>
+    </style>
+}
+
+@section scripts{
+
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+            integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+            crossorigin="">
+    </script>
+
+    <script src="~/Scripts/createItem.js"></script>
+    <script>
+        if ('@Session["lang"]' == 'fa') {
+            $("body").get(0).style.setProperty("--align", "right");
+            $("body").get(0).style.setProperty("--direction", "rtl");
+        }
+        else {
+            $("body").get(0).style.setProperty("--align", "left");
+            $("body").get(0).style.setProperty("--direction", "ltr");
+        }
+        $(".creatButt").click(function () {
+            $("#createForm").submit();
+        })
+        $("#cat").change(function () {
+            var id = $(this).val() 
+            
+            if ($(this).val() != "") {
+                id = id + "-1"
+                $.ajax({
+                    url: "/Home/getSubcatJson",
+                    dataType:"html",
+                    data: {
+                        result : id
+                    },
+                    success: function (data) {
+                      
+                        $("#subcatHolder").html(data);
+                       
+                    }
+                })
+            }
+        })
+    </script>
+}
+
+
+
+
+<div class="logosectionalone">
+    <ul>
+        <li style="font-size:12px; color:black">
+            <select id="languagetOption" style="padding:5px; border-radius:5px">
+                @{
+                    List<string> list = new List<string>();
+                    list.Add("en"); list.Add("fa"); list.Add("de");
+                    foreach (var item in list)
+                    {
+
+                        if (Session["lang"] as string == item)
+                        {
+                            <option selected>
+                                @item
+                            </option>
+                        }
+                        else
+                        {
+                            <option>
+                                @item
+                            </option>
+
+                        }
+                    }
+                }
+
+
+            </select>
+        </li>
+        <li>|</li>
+        <li>@Resources.res.logosection1</li>
+        <li>|</li>
+        <li>@Resources.res.logosection2</li>
+        <li>|</li>
+        <li>@Resources.res.logosection3</li>
+        <li>|</li>
+        <li id="addnew">@Resources.res.logosection4</li>
+
+
+
+
+
+    </ul>
+</div>
+<div class="contentHolder">
+    <div class="parent">
+        <div class="ItemsHome">
+            @{
+                int w = Request.Browser.ScreenPixelsWidth;
+                int h = Request.Browser.ScreenPixelsHeight;
+                if (Request.Browser.IsMobileDevice || (w < 720 && h > 720))
+                {
+
+                }
+                else
+                {
+
+                    <div class="itemRow">
+                        <p>@Resources.res.createImage</p>
+                        <div id="imageHolder" style=" z-index:999; position:relative;top:0; left:0;  background-color:white; display:block; text-align:center; background-color:white;display:flex  /* Negative half of width. */">
+
+                            <input multiple type="file" id="imageFileHolder" name="image" required="required" class="form-control " style="display:none">
+
+                            <div class="imageCover">
+
+                                <img class="default " src="~/images/addPic.png" />
+
+                            </div>
+
+                            @{
+                                if (@ViewBag.images != null)
+                                {
+                                    string[] lst = (ViewBag.images).Split(',');
+
+
+                                    foreach (var item in lst)
+
+                                    {
+
+                                        <div class="imageCover">
+                                            <img src="/images/@item" />
+                                            <img id="@item" class="removeImage" src="/images/trash.png" style="position:absolute; bottom:0;top:0;left:0;right:0;margin:auto" /> <i class="fa fa-remove" style="font-size: 12px;position: absolute;bottom: 5px;left: 0px;color: white;"></i>
+                                        </div>
+
+                                    }
+                                }
+                            }
+                        </div>
+
+
+                    </div>
+
+
+
+                    <form id="createForm" action="addItem" method="post">
+                        <div class="itemRow">
+                            <p>@Resources.res.createTitle </p>
+
+                            <input placeholder="en" id="titleEn" name="titleEn" class="form-control" />
+                            <input placeholder="fa" id="titleFa" name="titleFa" class="form-control" />
+                            <input placeholder="de" id="titleFa" name="titleDe" class="form-control" />
+                        </div>
+                        <div class="itemRow">
+                            <p>@Resources.res.createAbout </p>
+                            <input placeholder="en" id="aboutusEn" name="aboutusEn" class="form-control" />
+                            <input placeholder="fa" id="aboutusFa" name="aboutusFa" class="form-control" />
+                            <input placeholder="de" id="aboutusDe" name="aboutusDe" class="form-control" />
+                        </div>
+                        <div class="itemRow">
+                            <p>@Resources.res.createAddress </p>
+                            <input placeholder="en" id="addressEn" name="addressEn" class="form-control" />
+                            <input placeholder="fa" id="addressFa" name="addressFa" class="form-control" />
+                            <input placeholder="de" id="addressDe" name="addressDe" class="form-control" />
+                        </div>
+                        <div class="itemRow">
+                            <p>@Resources.res.createDesc </p>
+
+                            <input placeholder="en" id="descEn" name="descEn" class="form-control" />
+                            <input placeholder="fa" id="descFa" name="descFa" class="form-control" />
+                            <input placeholder="de" id="descFa" name="descDe" class="form-control" />
+                        </div>
+                        <div class="itemRow">
+                            <p>@Resources.res.cat </p>
+                            @Html.DropDownList("cat", new SelectList(Model.cat, "ID", "title"), Resources.res.chooscat, new { @class = "form-control", id = "cat" })
+
+                        </div>
+                        <div class="itemRow">
+                            <p>@Resources.res.subcat </p>
+                            <div id="subcatHolder">
+                                @Html.DropDownList("subcat", new SelectList(Model.cat, "ID", "title"), Resources.res.choossubcat, new { @class = "form-control", id = "subcat", @disabled = "disabled" })
+
+                            </div>
+
+                        </div>
+                        <div class="itemRow">
+                            <p>@Resources.res.subcat2 </p>
+                            <div id="subcat2Holder">
+                                @Html.DropDownList("subcat2", new SelectList(Model.cat, "ID", "title"), Resources.res.coosesubcattwo, new { @class = "form-control", id = "subcat2", @disabled = "disabled" })
+
+                            </div>
+
+                        </div>
+                        <div class="itemRow">
+                            <p>@Resources.res.country </p>
+                            @Html.DropDownList("country", new SelectList(Model.lands, "ID", "title"), Resources.res.chooseCountry, new { @class = "form-control", id = "country" })
+
+                        </div>
+                        <div class="itemRow">
+                            <p>@Resources.res.city </p>
+                            @Html.DropDownList("city", new SelectList(Model.lands, "ID", "title"), Resources.res.chooseCity, new { @class = "form-control", id = "city" })
+
+                        </div>
+                        <div class="itemRow">
+                            <p>@Resources.res.createPhone2 </p>
+
+                            <input placeholder="" id="phone" name="phone" class="form-control" />
+
+                        </div>
+                        <div class="itemRow">
+                            <p>@Resources.res.createPhone </p>
+
+                            <input placeholder="" id="mobile" name="mobile" class="form-control" />
+
+                        </div>
+
+
+
+                        <div class="itemRow">
+                            <p>@Resources.res.instagram </p>
+                            <input placeholder="@Resources.res.instagram" id="instagram" name="instagram" class="form-control" />
+                        </div>
+                        <div class="itemRow">
+                            <p>@Resources.res.telegram </p>
+                            <input placeholder="@Resources.res.telegram" id="telegram" name="telegram" class="form-control" />
+                        </div>
+                        <div class="itemRow">
+                            <p>@Resources.res.whatsapp </p>
+                            <input placeholder="@Resources.res.whatsapp" id="whatsapp" name="whatsapp" class="form-control" />
+                        </div>
+                        <div class="itemRow">
+                            <p>@Resources.res.website </p>
+                            <input placeholder="@Resources.res.website" id="website" name="website" class="form-control" />
+                        </div>
+                        <div class="itemRow">
+                            <p>@Resources.res.email </p>
+                            <input placeholder="@Resources.res.email" id="email" name="email" class="form-control" />
+                        </div>
+
+                        <div class="itemRow">
+                            <p>@Resources.res.createLocation </p>
+                            <div id="mapid" style=""></div>
+                        </div>
+                        <input style="display:none" id="lat" name="lat" />
+                        <input style="display:none" id="lng" name="lng" />
+
+
+                        <div class="itemRow " style="border:none">
+                            <p class="creatButt btn btn-success">@Resources.res.createButt</p>
+                        </div>
+                    </form>
+
+
+
+
+
+
+                }
+
+
+
+            }
+
+        </div>
+
+
+
+    </div>
+</div>
+
+
+
+
+
+
+

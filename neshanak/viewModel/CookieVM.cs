@@ -10,5 +10,6 @@ namespace neshanak.viewModel
         public string  result  { get; set; }
         public string mallID  { get; set; }
         public string floorID { get; set; }
+        public string images { get; set; }
     }
 }

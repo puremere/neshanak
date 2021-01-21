@@ -1,0 +1,3 @@
+﻿@model neshanak.viewModel.IndexVM
+
+@Html.DropDownList("subcat", new SelectList(Model.cat, "ID", "title"), Resources.res.choossubcat, new { @class = "form-control", id = "subcat" })

@@ -144,6 +144,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App_GlobalResources\res.de.designer.cs">
+      <DependentUpon>res.de.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
     <Compile Include="App_GlobalResources\res.fa.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -168,9 +173,13 @@
     <Compile Include="Classes\webService.cs" />
     <Compile Include="viewModel\BzListVM.cs" />
     <Compile Include="viewModel\CookieVM.cs" />
+    <Compile Include="viewModel\createItem.cs" />
+    <Compile Include="viewModel\getLandVM.cs" />
     <Compile Include="viewModel\getMainVM.cs" />
     <Compile Include="viewModel\getSubCatVM.cs" />
     <Compile Include="viewModel\IndexVM.cs" />
+    <Compile Include="viewModel\languageVM.cs" />
+    <Compile Include="viewModel\main.cs" />
     <Compile Include="viewModel\searchResultVM.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -179,6 +188,7 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\css-circular-prog-bar.css" />
     <Content Include="Content\flexslider.css" />
     <Content Include="Content\flexslider2.css" />
     <Content Include="Content\fontawesome-all.css" />
@@ -208,6 +218,7 @@
     <Content Include="fonts\webfonts\fa-solid-900.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Images\addPic.png" />
     <Content Include="Images\bamland.jpg" />
     <Content Include="Images\banner1.jpg" />
     <Content Include="Images\banner2.jpg" />
@@ -225,6 +236,7 @@
     <Content Include="Images\nodes\thumb\thumb_cell1.jpg" />
     <Content Include="Images\slide.jpg" />
     <Content Include="Images\supectmarket.jpg" />
+    <Content Include="Images\trash.png" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="ApplicationInsights.config">
@@ -283,6 +295,7 @@
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Content\easy-autocomplete.min.css" />
+    <Content Include="Scripts\createItem.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
     <Content Include="Scripts\jquery-3.3.1.slim.js" />
@@ -321,6 +334,8 @@
     <Content Include="Views\Main\Index.cshtml" />
     <Content Include="Views\Home\searchResult.cshtml" />
     <Content Include="Views\Home\GetSubCat.cshtml" />
+    <Content Include="Views\Home\createItem.cshtml" />
+    <Content Include="Views\Shared\_subcat.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -347,6 +362,12 @@
     <Content Include="App_GlobalResources\res.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>res.Designer.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_GlobalResources\res.de.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>res.de.designer.cs</LastGenOutput>
     </Content>
   </ItemGroup>
   <PropertyGroup>

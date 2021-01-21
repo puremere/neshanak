@@ -117,6 +117,60 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="cat" xml:space="preserve">
+    <value>طبقه بندی اصلی</value>
+  </data>
+  <data name="chooscat" xml:space="preserve">
+    <value>طبقه بندی را انتخاب کنید</value>
+  </data>
+  <data name="chooseCity" xml:space="preserve">
+    <value>شهر خود را انتخاب کنید</value>
+  </data>
+  <data name="chooseCountry" xml:space="preserve">
+    <value>کشور خود را انتخاب کنید</value>
+  </data>
+  <data name="choossubcat" xml:space="preserve">
+    <value>طبقه بندی فرعی را انتخاب کنید</value>
+  </data>
+  <data name="city" xml:space="preserve">
+    <value>شهر</value>
+  </data>
+  <data name="coosesubcattwo" xml:space="preserve">
+    <value>طبقه بندی فرعی دو را انتخاب کنید</value>
+  </data>
+  <data name="country" xml:space="preserve">
+    <value>کشور</value>
+  </data>
+  <data name="createAbout" xml:space="preserve">
+    <value>درباره ما</value>
+  </data>
+  <data name="createAddress" xml:space="preserve">
+    <value>آدرس</value>
+  </data>
+  <data name="createButt" xml:space="preserve">
+    <value>تایید</value>
+  </data>
+  <data name="createDesc" xml:space="preserve">
+    <value>توضیحات</value>
+  </data>
+  <data name="createImage" xml:space="preserve">
+    <value>آپلود عکس</value>
+  </data>
+  <data name="createLocation" xml:space="preserve">
+    <value>موقعیت</value>
+  </data>
+  <data name="createPhone" xml:space="preserve">
+    <value>موبایل</value>
+  </data>
+  <data name="createPhone2" xml:space="preserve">
+    <value>تلفن</value>
+  </data>
+  <data name="createTitle" xml:space="preserve">
+    <value>عنوان</value>
+  </data>
+  <data name="email" xml:space="preserve">
+    <value>ایمیل</value>
+  </data>
   <data name="footeraboutus" xml:space="preserve">
     <value>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد</value>
   </data>
@@ -141,6 +195,9 @@
   <data name="headertext2" xml:space="preserve">
     <value>بهترین مکان ها برای خرید،استراحت و تفریح منتظر شماس</value>
   </data>
+  <data name="instagram" xml:space="preserve">
+    <value>اینستاگرام</value>
+  </data>
   <data name="logosection1" xml:space="preserve">
     <value>ورود و ثبت نام</value>
   </data>
@@ -149,6 +206,9 @@
   </data>
   <data name="logosection3" xml:space="preserve">
     <value>پشتیبانی</value>
+  </data>
+  <data name="logosection4" xml:space="preserve">
+    <value>افزودن مورد جدید</value>
   </data>
   <data name="more" xml:space="preserve">
     <value>بیشتر</value>
@@ -174,6 +234,15 @@
   <data name="registration" xml:space="preserve">
     <value>رجیستر</value>
   </data>
+  <data name="subcat" xml:space="preserve">
+    <value>طبقه بندی فرعی</value>
+  </data>
+  <data name="subcat2" xml:space="preserve">
+    <value>طبقه بندی فرعی دو</value>
+  </data>
+  <data name="telgram" xml:space="preserve">
+    <value>تلگرام</value>
+  </data>
   <data name="viewProductContent1" xml:space="preserve">
     <value>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد</value>
   </data>
@@ -197,5 +266,11 @@
   </data>
   <data name="viewProductText2" xml:space="preserve">
     <value>و قطعا انجام میشود</value>
+  </data>
+  <data name="website" xml:space="preserve">
+    <value>وبسایت</value>
+  </data>
+  <data name="whatsapp" xml:space="preserve">
+    <value>واتساپ</value>
   </data>
 </root>
