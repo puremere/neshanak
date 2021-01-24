@@ -4,6 +4,7 @@
 body {
     --direction: rtl;
     --align: left;
+    --font: IRANSans
 }
 
 .headerSection {
@@ -28,7 +29,8 @@ body {
     }
 
         .logosection ul li {
-            display: inline
+            display: inline;
+            cursor:pointer
         }
 
 .headerSection h1, h2, h3, h4, h5, h6 {
@@ -339,7 +341,8 @@ body {
     }
 
         .logosectionalone ul li {
-            display: inline
+            display: inline;
+            cursor:pointer
         }
 
 .imageholder {
@@ -406,14 +409,15 @@ body {
 .contentHolder {
     width: 100%;
     height: 100%;
-    background-color: #ddd
+    padding-top: 70px;
+    background: url(/Images/images.jpg) no-repeat;
+    background-size: auto;
 }
 
 .parent {
     display: block;
     width: 100%;
     height: 100%;
-    background-color: #ddd;
     text-align: right;
 }
 
@@ -422,9 +426,11 @@ body {
     background-color: white;
     width: 40%;
     margin: auto;
-    margin-top: 70px;
+    margin-top: 0px;
     box-shadow: 2px 2px 5px -1px rgba(148,149,153,1);
-    border-radius:5px;
+    border-radius: 5px;
+    height: 90%;
+    overflow-y: scroll;
 }
 .creatButt {
     width: 100%;
@@ -434,7 +440,120 @@ body {
     align-items: center;
     justify-content: center;
 }
-@media (max-width : 724px){
+#loginMain {
+    color: #4d5475;
+    background: url(/Images/images.jpg) no-repeat;
+    background-size: auto;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+}
+.rowholder{
+    width:100%;
+}
+.registererror {
+    display: none;
+   
+    position: absolute;
+   
+    left: 0%;
+    top: -20px;
+    right: 0;
+    color: white;
+    margin: auto;
+    width: 100%;
+    max-width: 400px;
+  
+}
+    .registererror p {
+        background-color: red !important;
+        border-radius: 120px;
+        padding: 10px;
+        width: 60%;
+        float: left;
+    }
+    .mainlabla {
+        width: 100%;
+        margin-bottom: 5px;
+        font-weight: bold;
+        display: flex;
+        padding: 10px;
+        position: relative;
+    }
+        .mainlabla input, p {
+            border: 0;
+            width: 100%;
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 15px;
+            border-radius: 120px;
+            text-align: var(--align);
+            outline: none;
+        }
+.rememberMe {
+    width: 75%;
+    max-width: 400px;
+    margin: auto;
+    direction: var(--direction);
+}
+.rememberMe label{
+    margin:3px;
+    color:white
+}
+.mainlabla p {
+    text-align: center;
+    background-color: dimgray;
+    color: white;
+}
+.mainlabla a{
+    text-decoration:none;
+    cursor:pointer
+}
+.buttonholder {
+    margin: 0 auto;
+    direction: var(--direction)
+}
+.buttonholder a{
+    text-decoration:none;
+    
+}
+#demo{
+    font-family: var(--font)
+}
+#resendButt {
+    pointer-events: none;
+}
+.consentparent {
+    display: flex;
+    width: 100%;
+    max-width: 400px;
+    margin: auto;
+}
+.captchaChild{
+    display:flex;
+    direction:var(--direction)
+}
+.c-form-account__col {
+    width: 100%;
+    margin: auto;
+    border-radius: 5px;
+    padding: 5px;
+   
+}
+.control-label{
+    color:white;
+}
+#registeragreement-error{
+    margin:5px
+}
+#accountAutoLogin{
+    margin:5px
+}
+.BDC_CaptchaDiv{
+    margin: auto !important
+}
+@media (max-width : 724px) {
     .ItemsHome {
        
         width: 60%;

@@ -1,0 +1,124 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title </title>
+    @*@Styles.Render("~/Content/css")*@
+    @*@Scripts.Render("~/bundles/modernizr")*@
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+    <link href="~/Content/fontawesome-all.css" rel="stylesheet" />
+    <link href="~/Content/toastr.css" rel="stylesheet" />
+
+    @RenderSection("styles", required: false)
+    @RenderSection("HeadIncludes", required: false)
+    <link href="~/Content/indexStyle.css" rel="stylesheet" />
+</head>
+<body>
+
+    <div class="">
+        <div class="logosectionalone">
+            <ul>
+                <li style="font-size:12px; color:black">
+                    <select id="languagetOption" style="padding:5px; border-radius:5px">
+                        @{
+                            List<string> list = new List<string>();
+                            list.Add("en"); list.Add("fa"); list.Add("de");
+                            foreach (var item in list)
+                            {
+
+                                if (Session["lang"] as string == item)
+                                {
+                                    <option selected>
+                                        @item
+                                    </option>
+                                }
+                                else
+                                {
+                                    <option>
+                                        @item
+                                    </option>
+
+                                }
+                            }
+                        }
+
+
+                    </select>
+                </li>
+                <li>|</li>
+                @{
+                    if (Session["token"] != null)
+                    {
+                        <li id="">@Resources.res.logosection0</li>
+                    }
+                    else
+                    {
+                        <li id="login">@Resources.res.logosection1</li>
+                    }
+                }
+                <li>|</li>
+                <li>@Resources.res.logosection2</li>
+                <li>|</li>
+                <li id="support">@Resources.res.logosection3</li>
+                <li>|</li>
+                <li id="addnew">@Resources.res.logosection4</li>
+                <li>|</li>
+                <li id="home">@Resources.res.logosection5</li>
+
+
+
+
+
+            </ul>
+        </div>
+        @RenderBody()
+    </div>
+    @*@{
+            int w = Request.Browser.ScreenPixelsWidth;
+            int h = Request.Browser.ScreenPixelsHeight;
+            if (Request.Browser.IsMobileDevice || (w < 720 && h > 720))
+            {
+            }
+            else
+            { <footer class="c-footer-light">
+                    <div class="container">
+                        <ul class="c-footer-light__links">
+                            <li><a href="/Home/aboutus/" title="درباره @System.Configuration.ConfigurationManager.AppSettings["siteName"]">درباره @System.Configuration.ConfigurationManager.AppSettings["siteName"]</a></li>
+                              <li><a href="/Home/contactUs" title="تماس با ما">تماس با ما</a></li>
+                             </ul>
+                        <p class="c-footer-light__text">استفاده از مطالب فروشگاه اینترنتی @System.Configuration.ConfigurationManager.AppSettings["siteName"] فقط برای مقاصد غیرتجاری و با ذکر منبع بلامانع است. کلیه حقوق این سایت متعلق به فروشگاه آنلاین @System.Configuration.ConfigurationManager.AppSettings["siteName"]  @System.Configuration.ConfigurationManager.AppSettings["siteName2"]می‌باشد .</p>
+                        <p class="c-footer-light__copyright">Copyright © 2019 - 2021 supect.com</p>
+                    </div>
+                </footer>}
+        }*@
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    <script src="~/Scripts/toastr.js"></script>
+    @RenderSection("scripts", required: false)
+
+    <script>
+        $("#login").click(function () {
+            window.location.href = "/Home/login"
+        })
+        $("#addnew").click(function () {
+            window.location.href = "/Home/createItem"
+        })
+        $("#home").click(function () {
+            window.location.href = "/Home/index"
+        })
+
+         if ('@Session["lang"]' == 'fa') {
+            $("body").get(0).style.setProperty("--align", "right");
+             $("body").get(0).style.setProperty("--direction", "rtl");
+             $("body").get(0).style.setProperty("--font", "IRANSans ");
+
+        }
+        else {
+            $("body").get(0).style.setProperty("--align", "left");
+             $("body").get(0).style.setProperty("--direction", "ltr");
+             $("body").get(0).style.setProperty("--font", "helvica");
+        }
+    </script>
+</body>
+</html>

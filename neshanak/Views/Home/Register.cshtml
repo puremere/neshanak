@@ -1,0 +1,225 @@
+﻿@using BotDetect.Web.Mvc;
+@using neshanak.Classes;
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+@using BotDetect.Web.Mvc;
+@using neshanak.Classes;
+@{
+    Layout = "/Views/Shared/_loginLayout.cshtml";
+}
+@section HeadIncludes {
+    <link href="@BotDetect.Web.CaptchaUrls.Absolute.LayoutStyleSheetUrl"
+          rel="stylesheet" type="text/css" />
+}
+@section styles{
+    <title>ثبت نام</title>
+
+}
+@section scripts{
+    <script>
+        $("#languagetOption").change(function () {
+            let id = $(this).val()
+            if (id != '') {
+
+                window.location.href = "/Home/ChangeLanguage?lang=" + id + "&actionstring=register";
+
+            }
+        });
+    </script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    @Scripts.Render("~/Scripts/captcha.validate.js")
+    <script>
+        $(document).ready(function () {
+            function isValidPhonenumber(phonenumber) {
+                var pattern = /^09[0-9]{9}$/;
+                return pattern.test(phonenumber);
+            };
+            function isNotNull(str) {
+                var pattern = /^[A-Za-z0-9]{1,20}$/;
+                return pattern.test(str);
+            };
+           
+            
+            
+
+        })
+    </script>
+    <script>
+        //$("#accountAutoLogin").on('change', function (e) {
+
+        //    if (!$(this).is(':checked')) {
+
+        //        $("#verifyRegister").css("", "block");
+        //    }
+        //    else {
+        //        $("#registeragreement-error").css("display", "none");
+
+        //    }
+        //});
+        function isNotNull(str) {
+            var pattern = /^[A-Za-z0-9]{1,20}$/;
+            return pattern.test(str);
+        };
+        function isValidPhonenumber(phonenumber) {
+            var pattern = /^09[0-9]{9}$/;
+            return pattern.test(phonenumber);
+        };
+        function validateEmail(email) {
+            const re = /^(([^<>()[\]\\.,;:\s@@"]+(\.[^<>()[\]\\.,;:\s@@"]+)*)|(".+"))@@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+            return re.test(String(email).toLowerCase());
+        };
+
+
+
+        $(".mainlabla").find("input").on("input", function () {
+            $(this).parent().find(".registererror").css("display", "none");
+        })
+        $("#verifyRegister").click(function () {
+           
+            ///  alert("ssss");
+            var n = $("#accountAutoLogin:checked").length;
+            var pass = $("#registerpassword").val();
+            var val = $("#registeremail").val();
+            if (n != 1) {
+                $("#registeragreement-error").css("color", "red");
+            }
+            $(".mainlabla").find("input").each(function () {
+
+                var val = $(this).val();
+                if (val == "") {
+
+                    $(this).parent().find(".registererror").css("display", "block");
+                }
+                else {
+
+                    $(this).parent().find(".registererror").css("display", "none");
+                }
+            })
+            if (!validateEmail(val)) {
+                $("#registeremail").parent().find(".registererror").css("display", "block");
+            }
+            if (pass.length < 8) {
+                $("#registerpassword").parent().find(".registererror").css("display", "block");
+            }
+
+
+            if (n === 1 && validateEmail(val) && (pass.length > 5)) {
+                $("form#registreForm").submit();
+            }
+
+
+           
+            //
+        })
+
+    </script>
+    @{
+        if (ViewBag.message != null)
+        {
+            <script>
+
+            toastr.options = {
+                "debug": false,
+                "positionClass": "toast-top-center",
+                "onclick": null,
+                "fadeIn": 300,
+                "fadeOut": 1000,
+                "timeOut": 8000,
+                "extendedTimeOut": 1000,
+
+
+            }
+            toastr.error('@ViewBag.message');
+            </script>
+        }
+
+    }
+}
+
+<div>
+    <main id="loginMain" style="">
+
+        <div class="c-account-box__content" style="padding:10px; width:60%; margin: 0 auto">
+            @using (Html.BeginForm("CustomerVerification", "CustomerLogin", FormMethod.Post,
+                            new { enctype = "multipart/form-data", id = "registreForm", @class = "c-form-account" }))
+            {
+
+
+                @Html.AntiForgeryToken()
+                <input type="hidden" name="rc" value="ZURUU1UzMVowaHFXNFFGZEdCb01pdz09"><input type="hidden" name="rd" value="a3RYVkxNOER0Q0IvaFpnQlVZMVNpdXV2bGxSSWJvRDEvbU8wN0VvdjFFakowc1NVQU9wdW9JOFF5QXhldEx0cg~~">
+                <div class="rowholder">
+                    <label class="mainlabla">
+                        <input id="registeremail" class="c-ui-input__field c-ui-input__field--right-placeholder" type="text" name="registeremail" placeholder=" @Resources.res.registerEmail" value="">
+
+                        <div class="registererror"><p>@Resources.res.registerEmailError</p>  </div>
+                    </label>
+                </div>
+
+                <div class="rowholder">
+                    <label class="mainlabla">
+                        <input id="registerpassword" class="c-ui-input__field c-ui-input__field--right-placeholder" type="password" name="registerpassword" placeholder=" @Resources.res.registerPassword">
+                        <div class="registererror"><p>@Resources.res.registerPasswordError</p> </div>
+                    </label>
+                </div>
+
+                <div class="rowholder">
+                    <div class="mainlabla">
+                        <div class="c-form-account__col">
+
+                            @{MvcCaptcha registrationCaptcha = CaptchaHelper.GetRegistrationCaptcha(); }
+                            @if (!registrationCaptcha.IsSolved)
+                            {
+                                <div class="captchaparent">
+                                    <div class="captchaChild row " style="">
+                                        @Html.Captcha(registrationCaptcha)
+
+                                    </div>
+                                    <div class="captchaChild row" style="margin-top:10px">
+                                        @Html.TextBox("CaptchaCode", null, new { @class = "form-control captchaVal", @placeholder = @Resources.res.captchatext })
+
+
+                                    </div>
+
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+
+                <div class=" rowholder">
+                    <div class="rememberMe">
+                        <label class="consentparent">
+                            <input type="checkbox" value="1" name="register" id="accountAutoLogin" checked="checked">
+                            <span id="span" class="c-ui-checkbox__check"></span>
+                            <div style="margin-right: 10px;" id="registeragreement-error" class="error c-ui-feedback-hint">@Resources.res.confirmRuleText</div>
+                            <div class="registererror"><p>باید موافق باشید</p></div>
+                        </label>
+                    </div>
+
+                </div>
+                <div id="verifyRegister" class="rowholder">
+                    <div class="mainlabla">
+                        <p style="float:left" class="">@Resources.res.OK</p>
+                    </div>
+                </div>
+                <div class="rowholder">
+                    <div class="mainlabla">
+                        <div class="buttonholder">
+                            <a href="login">@Resources.res.login</a>
+
+                        </div>
+                    </div>
+                </div>
+
+
+
+            }
+        </div>
+
+    </main>
+</div>
+

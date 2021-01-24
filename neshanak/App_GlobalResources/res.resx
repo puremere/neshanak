@@ -142,7 +142,7 @@
     <value>City</value>
   </data>
   <data name="coosesubcattwo" xml:space="preserve">
-    <value>choose subcattwo</value>
+    <value>choose subcat two</value>
   </data>
   <data name="country" xml:space="preserve">
     <value>Country</value>
@@ -183,6 +183,9 @@
   <data name="footertag" xml:space="preserve">
     <value>tags</value>
   </data>
+  <data name="forgetPass" xml:space="preserve">
+    <value>forget your password</value>
+  </data>
   <data name="headerFormInput1" xml:space="preserve">
     <value>Where are you looking for?</value>
   </data>
@@ -204,6 +207,21 @@
   <data name="instagram" xml:space="preserve">
     <value>instagram</value>
   </data>
+  <data name="login" xml:space="preserve">
+    <value>login</value>
+  </data>
+  <data name="loginEmail" xml:space="preserve">
+    <value>Your Email</value>
+  </data>
+  <data name="loginEmailError" xml:space="preserve">
+    <value>Please set valid email</value>
+  </data>
+  <data name="loginPass" xml:space="preserve">
+    <value>Your Password</value>
+  </data>
+  <data name="loginPassError" xml:space="preserve">
+    <value>please insert password</value>
+  </data>
   <data name="logosection1" xml:space="preserve">
     <value>Sign In or Register</value>
   </data>
@@ -218,6 +236,9 @@
   </data>
   <data name="more" xml:space="preserve">
     <value>more</value>
+  </data>
+  <data name="OK" xml:space="preserve">
+    <value>verify</value>
   </data>
   <data name="popularText1" xml:space="preserve">
     <value>Popular in all categories</value>
@@ -237,8 +258,14 @@
   <data name="recenttext2" xml:space="preserve">
     <value>we are some of uss anyway</value>
   </data>
+  <data name="register" xml:space="preserve">
+    <value>register</value>
+  </data>
   <data name="registration" xml:space="preserve">
     <value>Country name</value>
+  </data>
+  <data name="rememberme" xml:space="preserve">
+    <value>Remember Me</value>
   </data>
   <data name="subcat" xml:space="preserve">
     <value>sub category</value>
@@ -278,5 +305,44 @@
   </data>
   <data name="whatsapp" xml:space="preserve">
     <value>whatsapp</value>
+  </data>
+  <data name="captchatext" xml:space="preserve">
+    <value>please insert above code</value>
+  </data>
+  <data name="changeEmail" xml:space="preserve">
+    <value>change email</value>
+  </data>
+  <data name="confirmRuleText" xml:space="preserve">
+    <value>you must consent with terms and conditions</value>
+  </data>
+  <data name="logosection0" xml:space="preserve">
+    <value>profile</value>
+  </data>
+  <data name="logosection5" xml:space="preserve">
+    <value>home</value>
+  </data>
+  <data name="registerEmail" xml:space="preserve">
+    <value>insert your email</value>
+  </data>
+  <data name="registerEmailError" xml:space="preserve">
+    <value>please insert correct email</value>
+  </data>
+  <data name="registerPassword" xml:space="preserve">
+    <value>insert new password</value>
+  </data>
+  <data name="registerPasswordError" xml:space="preserve">
+    <value>password lengh must be 6 at least</value>
+  </data>
+  <data name="registerPasswordRepeat" xml:space="preserve">
+    <value>repeat password</value>
+  </data>
+  <data name="registerPasswordRepeatError" xml:space="preserve">
+    <value>password must be identical</value>
+  </data>
+  <data name="resendCode" xml:space="preserve">
+    <value>resend code</value>
+  </data>
+  <data name="verifyCode" xml:space="preserve">
+    <value>insert verification code</value>
   </data>
 </root>

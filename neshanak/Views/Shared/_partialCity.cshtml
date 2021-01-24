@@ -1,0 +1,16 @@
+﻿@model neshanak.viewModel.countryCityCatVM
+
+@{
+    if (Model.cities != null)
+    {
+        @Html.DropDownList("city", new SelectList(Model.cities, "ID", "title"), Resources.res.chooseCity, new { @class = "form-control", id = "city" });
+
+    }
+    else
+    {
+        List<neshanak.viewModel.city> lst = new List<neshanak.viewModel.city>();
+        @Html.DropDownList("city", new SelectList(lst, "ID", "title"), Resources.res.chooseCity, new { @class = "form-control", id = "city", @disabled = "disabled" });
+
+    }
+}
+

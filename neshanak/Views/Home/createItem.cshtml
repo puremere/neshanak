@@ -39,26 +39,69 @@
         }
         $(".creatButt").click(function () {
             $("#createForm").submit();
-        })
-        $("#cat").change(function () {
-            var id = $(this).val() 
-            
-            if ($(this).val() != "") {
-                id = id + "-1"
-                $.ajax({
-                    url: "/Home/getSubcatJson",
-                    dataType:"html",
-                    data: {
-                        result : id
-                    },
-                    success: function (data) {
-                      
-                        $("#subcatHolder").html(data);
-                       
+        });
+        var getSubcatTree = function (val, type) {
+            if (val != "") {
+                var id = val.split('-')[0];
+                var isfinal = val.split('-')[1];
+
+                if (isfinal == "0") {
+                    id = id + "-" + type
+                    $.ajax({
+                        url: "/Home/getSubcatJson",
+                        dataType: "html",
+                        data: {
+                            result: id
+                        },
+                        success: function (data) {
+
+                            if (type == "1") {
+
+                                $("#subcatHolder").html(data);
+                            }
+                            else {
+                                $("#subcatHolder2").html(data);
+
+                            }
+
+                        }
+                    })
+
+                }
+                else {
+                    if (type == "1") {
+                        $("#subcat").val("");
+                        $("#subcat2").var("");
+                        $("#subcat").attr("disabled", "disabled");
+                        $("#subcat2").attr("disabled", "disabled");
                     }
-                })
+                    else {
+                        $("#subcat2").var("");
+                        $("#subcat2").attr("disabled", "disabled");
+
+                    }
+                }
             }
+        }
+        $("#cat").change(function () {
+            getSubcatTree($(this).val(),"1")
         })
+     
+        $("#country").change(function () {
+            var val = $(this).val();
+            $.ajax({
+                url: "/Home/getcityPartial",
+                dataType: "html",
+                data: {
+                    result: val
+                },
+                success: function (data) {
+                    $("#cityHolder").html(data);
+
+                }
+            })
+        })
+
     </script>
 }
 
@@ -95,13 +138,24 @@
             </select>
         </li>
         <li>|</li>
-        <li>@Resources.res.logosection1</li>
+        @{
+            if (Session["token"] != null)
+            {
+                <li id="">@Resources.res.logosection0</li>
+            }
+            else
+            {
+                <li id="login">@Resources.res.logosection1</li>
+            }
+        }
         <li>|</li>
         <li>@Resources.res.logosection2</li>
         <li>|</li>
         <li>@Resources.res.logosection3</li>
         <li>|</li>
         <li id="addnew">@Resources.res.logosection4</li>
+        <li>|</li>
+        <li id="home">@Resources.res.logosection5</li>
 
 
 
@@ -110,7 +164,7 @@
     </ul>
 </div>
 <div class="contentHolder">
-    <div class="parent">
+    <div class="row  parent">
         <div class="ItemsHome">
             @{
                 int w = Request.Browser.ScreenPixelsWidth;
@@ -188,7 +242,7 @@
                         </div>
                         <div class="itemRow">
                             <p>@Resources.res.cat </p>
-                            @Html.DropDownList("cat", new SelectList(Model.cat, "ID", "title"), Resources.res.chooscat, new { @class = "form-control", id = "cat" })
+                            @Html.DropDownList("cat", new SelectList(Model.cat.Select(c => new { Id = c.id + "-" + c.IsFinal, title = c.title }), "ID", "title"), Resources.res.chooscat, new { @class = "form-control", id = "cat" })
 
                         </div>
                         <div class="itemRow">
@@ -201,8 +255,8 @@
                         </div>
                         <div class="itemRow">
                             <p>@Resources.res.subcat2 </p>
-                            <div id="subcat2Holder">
-                                @Html.DropDownList("subcat2", new SelectList(Model.cat, "ID", "title"), Resources.res.coosesubcattwo, new { @class = "form-control", id = "subcat2", @disabled = "disabled" })
+                            <div id="subcatHolder2">
+                                @Html.DropDownList("subcat2", new SelectList(Model.cat.Select(  c => new { Id = c.id + "-" + c.catLevel, title = c.title }), "ID", "title"), Resources.res.coosesubcattwo, new { @class = "form-control", id = "subcat2", @disabled = "disabled" })
 
                             </div>
 
@@ -214,7 +268,10 @@
                         </div>
                         <div class="itemRow">
                             <p>@Resources.res.city </p>
-                            @Html.DropDownList("city", new SelectList(Model.lands, "ID", "title"), Resources.res.chooseCity, new { @class = "form-control", id = "city" })
+                            <div id="cityHolder">
+                                @Html.DropDownList("city", new SelectList(Model.lands, "ID", "title"), Resources.res.chooseCity, new { @class = "form-control", id = "city", @disabled = "disabled" })
+
+                            </div>
 
                         </div>
                         <div class="itemRow">

@@ -183,6 +183,9 @@
   <data name="footertag" xml:space="preserve">
     <value>Stichworte</value>
   </data>
+  <data name="forgetPass" xml:space="preserve">
+    <value>Passwort vergessen</value>
+  </data>
   <data name="headerFormInput1" xml:space="preserve">
     <value>Wonach suchst du?</value>
   </data>
@@ -204,6 +207,21 @@
   <data name="instagram" xml:space="preserve">
     <value>instagram</value>
   </data>
+  <data name="login" xml:space="preserve">
+    <value>Anmeldung</value>
+  </data>
+  <data name="loginEmail" xml:space="preserve">
+    <value>Deine E-Mail</value>
+  </data>
+  <data name="loginEmailError" xml:space="preserve">
+    <value>Bitte stellen Sie Ihre E-Mail ein</value>
+  </data>
+  <data name="loginPass" xml:space="preserve">
+    <value>Deine Passwort</value>
+  </data>
+  <data name="loginPassError" xml:space="preserve">
+    <value>Bitte Passwort eingeben</value>
+  </data>
   <data name="logosection1" xml:space="preserve">
     <value>Einloggen oder Registrieren</value>
   </data>
@@ -218,6 +236,9 @@
   </data>
   <data name="more" xml:space="preserve">
     <value>Mehr</value>
+  </data>
+  <data name="OK" xml:space="preserve">
+    <value>überprüfen</value>
   </data>
   <data name="popularText1" xml:space="preserve">
     <value>Beliebt in allen Kategorien</value>
@@ -237,8 +258,14 @@
   <data name="recenttext2" xml:space="preserve">
     <value>Wir sind sowieso einige von uns</value>
   </data>
+  <data name="register" xml:space="preserve">
+    <value>registrieren</value>
+  </data>
   <data name="registration" xml:space="preserve">
     <value>Ländername</value>
+  </data>
+  <data name="rememberme" xml:space="preserve">
+    <value>behalte mich in Erinnerung</value>
   </data>
   <data name="subcat" xml:space="preserve">
     <value>Unterkategorie</value>
@@ -278,5 +305,44 @@
   </data>
   <data name="whatsapp" xml:space="preserve">
     <value>whatsapp</value>
+  </data>
+  <data name="captchatext" xml:space="preserve">
+    <value>Bitte geben Sie den obigen Code ein</value>
+  </data>
+  <data name="changeEmail" xml:space="preserve">
+    <value>Ändern Sie die E-Mail</value>
+  </data>
+  <data name="confirmRuleText" xml:space="preserve">
+    <value>Sie müssen den Allgemeinen Geschäftsbedingungen zustimmen</value>
+  </data>
+  <data name="logosection0" xml:space="preserve">
+    <value>profile</value>
+  </data>
+  <data name="logosection5" xml:space="preserve">
+    <value>Zuhause</value>
+  </data>
+  <data name="registerEmail" xml:space="preserve">
+    <value>Geben Sie Ihre E-Mail-Adresse ein</value>
+  </data>
+  <data name="registerEmailError" xml:space="preserve">
+    <value>Bitte geben Sie die richtige E-Mail-Adresse ein</value>
+  </data>
+  <data name="registerPassword" xml:space="preserve">
+    <value>neues Passwort einfügen</value>
+  </data>
+  <data name="registerPasswordError" xml:space="preserve">
+    <value>Die Passwortlänge muss mindestens 6 betragen</value>
+  </data>
+  <data name="registerPasswordRepeat" xml:space="preserve">
+    <value>Wiederhole das Passwort</value>
+  </data>
+  <data name="registerPasswordRepeatError" xml:space="preserve">
+    <value>Passwort muss identisch sein</value>
+  </data>
+  <data name="resendCode" xml:space="preserve">
+    <value>Code erneut senden</value>
+  </data>
+  <data name="verifyCode" xml:space="preserve">
+    <value>Bestätigungscode einfügen</value>
   </data>
 </root>

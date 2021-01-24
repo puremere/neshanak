@@ -1,0 +1,308 @@
+﻿@using BotDetect.Web.Mvc;
+@using neshanak.Classes;
+@{
+    Layout = "/Views/Shared/_loginLayout.cshtml";
+}
+@section HeadIncludes {
+    <link href="@BotDetect.Web.CaptchaUrls.Absolute.LayoutStyleSheetUrl"
+          rel="stylesheet" type="text/css" />
+}
+@section styles{
+    <title>ورود</title>
+
+}
+@section scripts{
+    <script>
+        $("#languagetOption").change(function () {
+            let id = $(this).val()
+            if (id != '') {
+
+                window.location.href = "/Home/ChangeLanguage?lang=" + id + "&actionstring=login";
+
+            }
+        });
+    </script>
+   
+    <script>
+
+        $(document).ready(function () {
+
+
+            document.getElementById("forgetclickevent").onclick = function () {
+
+
+                $("#submitdiv").css("display", "none");
+                $("#logindiv").css("display", "none");
+                $("#forgetdiv").css("display", "block");
+
+            }
+            document.getElementById("gobacktologin").onclick = function () {
+
+
+                $("#submitdiv").css("display", "block");
+                $("#logindiv").css("display", "block");
+                $("#forgetdiv").css("display", "none");
+
+            }
+
+            function isValidEmailAddress(emailAddress) {
+                var pattern = /^([a-zA-Z0-9_.+-])+\@@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+                return pattern.test(emailAddress);
+            };
+            function isValidPhonenumber(phonenumber) {
+                var pattern = /^09[0-9]{9}$/;
+                return pattern.test(phonenumber);
+            };
+            function isNotNull(str) {
+                if (str != "") {
+                    return true;
+                }
+                else {
+                    return false;
+                }
+
+            };
+
+
+
+        })
+    </script>
+    <script>
+        $(document).ready(function () {
+            function isValidPhonenumber(phonenumber) {
+                var pattern = /^09[0-9]{9}$/;
+                return pattern.test(phonenumber);
+            };
+            function isNotNull(str) {
+                var pattern = /^[A-Za-z0-9]{1,20}$/;
+                return pattern.test(str);
+            };
+            $('#registeremail').on('input', function (e) {
+
+                var val = $(this).val();
+                if (val.length > 0) {
+
+                    if (!isValidPhonenumber(val)) {
+
+                        $("#registererror").css("display", "block");
+                        $("#registeremail").css("color", "#ef5662");
+                        $("#registeremail").css("border", "1px solid #ef5662");
+                        $("#mainlabla").addClass("error");
+
+
+                    }
+                    else {
+                        $("#registererror").css("display", "none");
+                        $("#registeremail").css("color", "#777");
+                        $("#registeremail").css("border", "1px solid #c8c8c8");
+                        $("#mainlabla").removeClass("error");
+                    }
+
+                }
+                else {
+
+                    $("#registererror").css("display", "none");
+                    $("#registeremail").css("color", "#777");
+                    $("#registeremail").css("border", "1px solid #c8c8c8");
+                    $("#mainlabla").removeClass("error");
+                }
+
+            });
+            $('#registerpassword').on('input', function (e) {
+
+                var val = $(this).val();
+
+                if ($(this).val().length === 0) {
+                    $("#registerpassword-error").css("display", "block");
+                    $("#registeremail").css("color", "#ef5662");
+                    $("#registerpassword").css("border", "1px solid #ef5662");
+                    $("#mainlabla2").addClass("error");
+                }
+                else {
+                    $("#registerpassword-error").css("display", "none");
+                    $("#registeremail").css("color", "#777");
+                    $("#registerpassword").css("border", "1px solid #c8c8c8");
+                    $("#mainlabla2").removeClass("error");
+                }
+
+            });
+
+        })
+    </script>
+    <script>
+        $("#verify").click(function () {
+
+            alert("ssss");
+
+            //
+        })
+
+    </script>
+    
+    <script type="text/javascript">
+        function preventBack() { window.history.forward(); }
+        setTimeout("preventBack()", 0);
+        window.onunload = function () { null };
+    </script>
+    @Scripts.Render("~/Scripts/captcha.validate.js")
+
+    @{
+        if (ViewBag.message != null && ViewBag.message != "")
+        {
+            <script>
+
+            toastr.options = {
+                "debug": false,
+                "positionClass": "toast-top-center",
+                "onclick": null,
+                "fadeIn": 300,
+                "fadeOut": 1000,
+                "timeOut": 8000,
+                "extendedTimeOut": 1000,
+
+
+            }
+            toastr.error('@ViewBag.message');
+            </script>
+        }
+
+    }
+
+    <script>
+        function isValidPhonenumber(phonenumber) {
+                var pattern = /^09[0-9]{9}$/;
+                return pattern.test(phonenumber);
+        };
+            function validateEmail(email) {
+                const re = /^(([^<>()[\]\\.,;:\s@@"]+(\.[^<>()[\]\\.,;:\s@@"]+)*)|(".+"))@@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+                return re.test(String(email).toLowerCase());
+        };
+        $(".mainlabla").find("input").on("input", function () {
+            $(this).parent().find(".registererror").css("display", "none");
+        })
+        $("#verifyyy").click(function () {
+
+            var n = $("#accountAutoLogin:checked").length;
+            var pass = $("#registerpassword").val();
+            var val = $("#registeremail").val();
+
+            $(".mainlabla").find("input").each(function () {
+
+                var val = $(this).val();
+                if (val == "") {
+
+                    $(this).parent().find(".registererror").css("display", "block");
+                }
+                else {
+
+                    $(this).parent().find(".registererror").css("display", "none");
+                }
+            })
+            if (!validateEmail(val)) {
+                $("#registeremail").parent().find(".registererror").css("display", "block");
+            }
+
+          
+
+            if (validateEmail(val) && (pass.length > 5)) {
+                $("#registerForm").submit();
+            }
+
+        });
+    </script>
+}
+
+
+
+
+<div>
+    <main id="loginMain" style="">
+
+        <div class="c-account-box__content" style="padding:10px; width:60%; margin: 0 auto">
+            @using (Html.BeginForm("CustomerLoginWC", "CustomerLogIn", FormMethod.Post,
+new { @class = "c-form-account", enctype = "multipart/form-data", id = "registerForm" }))
+            {
+
+
+                @Html.AntiForgeryToken()
+                <input type="hidden" name="rc" value="ZURUU1UzMVowaHFXNFFGZEdCb01pdz09"><input type="hidden" name="rd" value="a3RYVkxNOER0Q0IvaFpnQlVZMVNpdXV2bGxSSWJvRDEvbU8wN0VvdjFFakowc1NVQU9wdW9JOFF5QXhldEx0cg~~">
+                <div class="rowholder">
+                    <label class="mainlabla">
+                        <input id="registeremail" class="" name="registeremail" placeholder="@Resources.res.loginEmail" value="@ViewBag.username">
+                        @* <input id="registeremail" class="" type="text" name="registeremail" placeholder="@Resources.res.loginEmail" value="@ViewBag.username" style="color: rgb(119, 119, 119) !important;  border: 1px solid rgb(200, 200, 200) !important;">*@
+                        <div id="" class="registererror"><p>@Resources.res.loginEmailError</p> </div>
+                    </label>
+                </div>
+
+                <div class="rowholder">
+                    <label class="mainlabla">
+                        <input id="registerpassword" class="" name="registerpassword" placeholder="@Resources.res.loginPass" value="@ViewBag.password">
+                        <div class="registererror"><p>@Resources.res.loginPassError</p></div>
+                    </label>
+                </div>
+                if (Convert.ToInt32(Session["LoginTime"]) > 2)
+                {
+                    <div class="rowholder">
+                        <div class="mainlabla">
+                            <div class="c-form-account__col">
+
+                                @{MvcCaptcha registrationCaptcha = CaptchaHelper.GetRegistrationCaptcha(); }
+                                @if (!registrationCaptcha.IsSolved)
+                                {
+                                    <div class="captchaparent">
+                                        <div class="captchaChild row col-md-12" style="">
+                                            @Html.Captcha(registrationCaptcha)
+                                        </div>
+                                        <div class="captchaChild row col-lg-12" style="margin-top:10px">
+                                            <label class="col-md-6 control-label" for="CaptchaCode" style=" margin-top:15px">@Resources.res.captchatext</label>
+
+                                            <div class="col-md-6">
+                                                @Html.TextBox("CaptchaCode", null, new { @class = "form-control captchaVal" })
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                }
+
+                <div class=" rowholder">
+                    <div class="rememberMe">
+                        <label class="c-ui-checkbox c-ui-checkbox--primary">
+                            <input type="checkbox" value="1" name="register" id="accountAutoLogin" checked="checked">
+                            <span id="span" class="c-ui-checkbox__check"></span>
+
+                        </label>
+
+                        <label for="accountAutoLogin">
+                            @Resources.res.rememberme
+                        </label>
+                    </div>
+
+                </div>
+
+                <div id="verifyyy" class="rowholder">
+                    <div class="mainlabla">
+                        <p style="float:left" class="">@Resources.res.OK</p>
+                    </div>
+                </div>
+                <div class="rowholder">
+                    <div class="mainlabla">
+                        <div class="buttonholder">
+                            <a href="/Home/forgetpass" class="">@Resources.res.forgetPass</a>&nbsp;&nbsp;&nbsp; |&nbsp;&nbsp;&nbsp; <a href="register">@Resources.res.register</a>
+
+                        </div>
+                    </div>
+                </div>
+
+                
+
+
+            }
+        </div>
+    
+
+    </main>
+</div>

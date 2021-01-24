@@ -79,11 +79,29 @@ namespace neshanak.App_GlobalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to please insert above code.
+        /// </summary>
+        public static string captchatext {
+            get {
+                return ResourceManager.GetString("captchatext", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to main category.
         /// </summary>
         public static string cat {
             get {
                 return ResourceManager.GetString("cat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to change email.
+        /// </summary>
+        public static string changeEmail {
+            get {
+                return ResourceManager.GetString("changeEmail", resourceCulture);
             }
         }
         
@@ -133,7 +151,16 @@ namespace neshanak.App_GlobalResources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to choose subcattwo.
+        ///   Looks up a localized string similar to you must consent with terms and conditions.
+        /// </summary>
+        public static string confirmRuleText {
+            get {
+                return ResourceManager.GetString("confirmRuleText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to choose subcat two.
         /// </summary>
         public static string coosesubcattwo {
             get {
@@ -259,6 +286,15 @@ namespace neshanak.App_GlobalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to forget your password.
+        /// </summary>
+        public static string forgetPass {
+            get {
+                return ResourceManager.GetString("forgetPass", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Where are you looking for?.
         /// </summary>
         public static string headerFormInput1 {
@@ -322,6 +358,60 @@ namespace neshanak.App_GlobalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to login.
+        /// </summary>
+        public static string login {
+            get {
+                return ResourceManager.GetString("login", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Your Email.
+        /// </summary>
+        public static string loginEmail {
+            get {
+                return ResourceManager.GetString("loginEmail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Please set valid email.
+        /// </summary>
+        public static string loginEmailError {
+            get {
+                return ResourceManager.GetString("loginEmailError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Your Password.
+        /// </summary>
+        public static string loginPass {
+            get {
+                return ResourceManager.GetString("loginPass", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to please insert password.
+        /// </summary>
+        public static string loginPassError {
+            get {
+                return ResourceManager.GetString("loginPassError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to profile.
+        /// </summary>
+        public static string logosection0 {
+            get {
+                return ResourceManager.GetString("logosection0", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Sign In or Register.
         /// </summary>
         public static string logosection1 {
@@ -358,11 +448,29 @@ namespace neshanak.App_GlobalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to home.
+        /// </summary>
+        public static string logosection5 {
+            get {
+                return ResourceManager.GetString("logosection5", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to more.
         /// </summary>
         public static string more {
             get {
                 return ResourceManager.GetString("more", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to verify.
+        /// </summary>
+        public static string OK {
+            get {
+                return ResourceManager.GetString("OK", resourceCulture);
             }
         }
         
@@ -421,11 +529,92 @@ namespace neshanak.App_GlobalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to register.
+        /// </summary>
+        public static string register {
+            get {
+                return ResourceManager.GetString("register", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to insert your email.
+        /// </summary>
+        public static string registerEmail {
+            get {
+                return ResourceManager.GetString("registerEmail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to please insert correct email.
+        /// </summary>
+        public static string registerEmailError {
+            get {
+                return ResourceManager.GetString("registerEmailError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to insert new password.
+        /// </summary>
+        public static string registerPassword {
+            get {
+                return ResourceManager.GetString("registerPassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to password lengh must be 6 at least.
+        /// </summary>
+        public static string registerPasswordError {
+            get {
+                return ResourceManager.GetString("registerPasswordError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to repeat password.
+        /// </summary>
+        public static string registerPasswordRepeat {
+            get {
+                return ResourceManager.GetString("registerPasswordRepeat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to password must be identical.
+        /// </summary>
+        public static string registerPasswordRepeatError {
+            get {
+                return ResourceManager.GetString("registerPasswordRepeatError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Country name.
         /// </summary>
         public static string registration {
             get {
                 return ResourceManager.GetString("registration", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remember Me.
+        /// </summary>
+        public static string rememberme {
+            get {
+                return ResourceManager.GetString("rememberme", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to resend code.
+        /// </summary>
+        public static string resendCode {
+            get {
+                return ResourceManager.GetString("resendCode", resourceCulture);
             }
         }
         
@@ -453,6 +642,15 @@ namespace neshanak.App_GlobalResources {
         public static string telegram {
             get {
                 return ResourceManager.GetString("telegram", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to insert verification code.
+        /// </summary>
+        public static string verifyCode {
+            get {
+                return ResourceManager.GetString("verifyCode", resourceCulture);
             }
         }
         

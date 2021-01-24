@@ -1,3 +1,22 @@
 ﻿@model neshanak.viewModel.IndexVM
 
-@Html.DropDownList("subcat", new SelectList(Model.cat, "ID", "title"), Resources.res.choossubcat, new { @class = "form-control", id = "subcat" })
+@{
+    if (Model.cat != null)
+    {
+        @Html.DropDownList("subcat", new SelectList(Model.cat.Select(c => new { Id = c.id + "-" + c.IsFinal, title = c.title }), "ID", "title"), Resources.res.choossubcat, new { @class = "form-control", id = "subcat" })
+
+    }
+    else
+    {
+        List<neshanak.viewModel.Cat> lst = new List<neshanak.viewModel.Cat>();
+        @Html.DropDownList("subcat", new SelectList(lst, "ID", "title"), Resources.res.choossubcat, new { @class = "form-control", id = "subcat", @disabled = "disabled" })
+
+    }
+}
+
+<script>
+    $("#subcat").change(function () {
+      
+        getSubcatTree($(this).val(), "2")
+    })
+</script>

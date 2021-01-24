@@ -177,6 +177,9 @@
   <data name="footertag" xml:space="preserve">
     <value>برچسب ها</value>
   </data>
+  <data name="forgetPass" xml:space="preserve">
+    <value>رمز عبور خود را فراموش کرده ام</value>
+  </data>
   <data name="headerFormInput1" xml:space="preserve">
     <value>مقصد مورد نظر خود را تایپ نمایید</value>
   </data>
@@ -198,6 +201,21 @@
   <data name="instagram" xml:space="preserve">
     <value>اینستاگرام</value>
   </data>
+  <data name="login" xml:space="preserve">
+    <value>ورود</value>
+  </data>
+  <data name="loginEmail" xml:space="preserve">
+    <value>ایمیل خود را وارد نمایید</value>
+  </data>
+  <data name="loginEmailError" xml:space="preserve">
+    <value>ایمیل صحیح وارد نمایید</value>
+  </data>
+  <data name="loginPass" xml:space="preserve">
+    <value>رمز عبور خود را وارد نمایید</value>
+  </data>
+  <data name="loginPassError" xml:space="preserve">
+    <value>رمز عبور را وارد نمایید</value>
+  </data>
   <data name="logosection1" xml:space="preserve">
     <value>ورود و ثبت نام</value>
   </data>
@@ -212,6 +230,9 @@
   </data>
   <data name="more" xml:space="preserve">
     <value>بیشتر</value>
+  </data>
+  <data name="OK" xml:space="preserve">
+    <value>تایید</value>
   </data>
   <data name="popularText1" xml:space="preserve">
     <value>موارد محبوب در تمامی طبقه بندی ها</value>
@@ -231,8 +252,14 @@
   <data name="recenttext2" xml:space="preserve">
     <value>تنها بخشی از موارد نشان داده شده اند</value>
   </data>
+  <data name="register" xml:space="preserve">
+    <value>ثبت نام</value>
+  </data>
   <data name="registration" xml:space="preserve">
     <value>رجیستر</value>
+  </data>
+  <data name="rememberme" xml:space="preserve">
+    <value>مرا به خاطر بسپار</value>
   </data>
   <data name="subcat" xml:space="preserve">
     <value>طبقه بندی فرعی</value>
@@ -272,5 +299,44 @@
   </data>
   <data name="whatsapp" xml:space="preserve">
     <value>واتساپ</value>
+  </data>
+  <data name="captchatext" xml:space="preserve">
+    <value>لطفا کد بالا را وارد نمایید</value>
+  </data>
+  <data name="changeEmail" xml:space="preserve">
+    <value>تغییر ایمیل</value>
+  </data>
+  <data name="confirmRuleText" xml:space="preserve">
+    <value>برای ثبت نام باید با موافقت خود را با این شرایط اعلام نمایید</value>
+  </data>
+  <data name="logosection0" xml:space="preserve">
+    <value>پروفایل</value>
+  </data>
+  <data name="logosection5" xml:space="preserve">
+    <value>خانه</value>
+  </data>
+  <data name="registerEmail" xml:space="preserve">
+    <value>ایمیل خود را وارد کنید</value>
+  </data>
+  <data name="registerEmailError" xml:space="preserve">
+    <value>ایمیل صحیح وارد کنید</value>
+  </data>
+  <data name="registerPassword" xml:space="preserve">
+    <value>رمز عبور خود را وارد نمایید</value>
+  </data>
+  <data name="registerPasswordError" xml:space="preserve">
+    <value>طول رمز عبور باید بیش از 6 حرف باشد</value>
+  </data>
+  <data name="registerPasswordRepeat" xml:space="preserve">
+    <value>تکرار رمز عبور</value>
+  </data>
+  <data name="registerPasswordRepeatError" xml:space="preserve">
+    <value>رمز عبور باید مشابه باشد</value>
+  </data>
+  <data name="resendCode" xml:space="preserve">
+    <value>ارسال مجدد کد</value>
+  </data>
+  <data name="verifyCode" xml:space="preserve">
+    <value>کد تایید را وارد نمایید</value>
   </data>
 </root>

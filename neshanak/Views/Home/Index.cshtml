@@ -30,6 +30,9 @@
         $("#addnew").click(function () {
             window.location.href = "/Home/createItem"
         })
+        $("#login").click(function () {
+            window.location.href = "/Home/login"
+        })
     </script>
     <script>
         if ('@Session["lang"]' == 'fa') {
@@ -79,7 +82,7 @@
                 <select id="languagetOption" style="padding:5px; border-radius:5px">
                     @{
                         List<string> list = new List<string>();
-                        list.Add("en"); list.Add("fa");list.Add("de");
+                        list.Add("en"); list.Add("fa"); list.Add("de");
                         foreach (var item in list)
                         {
 
@@ -103,7 +106,18 @@
                 </select>
             </li>
             <li>|</li>
-            <li>@Resources.res.logosection1</li>
+            @{
+                if (Session["token"] != null)
+                {
+                    <li id="">@Resources.res.logosection0</li>
+                }
+                else
+                {
+                    <li id="login">@Resources.res.logosection1</li>
+                }
+            }
+
+
             <li>|</li>
             <li>@Resources.res.logosection2</li>
             <li>|</li>

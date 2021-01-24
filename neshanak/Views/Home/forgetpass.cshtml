@@ -1,0 +1,167 @@
+﻿@model neshanak.viewModel.confrimVM
+
+@{
+    <title>تایید </title>
+    Layout = "/Views/Shared/_loginLayout.cshtml";
+}
+
+@section scripts{
+    <script>
+        $("#languagetOption").change(function () {
+            let id = $(this).val()
+            if (id != '') {
+
+                window.location.href = "/Home/ChangeLanguage?lang=" + id + "&actionstring=forgetpass";
+
+            }
+        });
+    </script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="~/Scripts/toastr.js"></script>
+
+
+   
+    <script>
+        function isValidPhonenumber(phonenumber) {
+            var pattern = /^09[0-9]{9}$/;
+            return pattern.test(phonenumber);
+        };
+        function validateEmail(email) {
+            const re = /^(([^<>()[\]\\.,;:\s@@"]+(\.[^<>()[\]\\.,;:\s@@"]+)*)|(".+"))@@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+            return re.test(String(email).toLowerCase());
+        };
+        $(".mainlabla").find("input").on("input", function () {
+            $(this).parent().find(".registererror").css("display", "none");
+        })
+        $("#fogetconfirm").click(function () {
+
+            var val = $("#forgettext").val();
+            $(".mainlabla").find("input").each(function () {
+
+                var val = $(this).val();
+                if (val == "") {
+
+                    $(this).parent().find(".registererror").css("display", "block");
+                }
+                else {
+
+                    $(this).parent().find(".registererror").css("display", "none");
+                }
+            })
+
+
+
+            if (!validateEmail(val)) {
+
+                $("#forgettext").parent().find(".registererror").css("display", "block");
+
+            }
+            else {
+
+                $.ajax({
+                    url: '/CustomerLogin/forgetPass',
+                    dataType: 'html',
+                    data: {
+
+                        phone: val
+                    },
+                    success: function (srt) {
+                        $("#loading").fadeOut();
+                        if (srt === "300") {
+                            toastr.options = {
+                                "debug": false,
+                                "positionClass": "toast-top-center",
+                                "onclick": null,
+                                "fadeIn": 300,
+                                "fadeOut": 1000,
+                                "timeOut": 8000,
+                                "extendedTimeOut": 1000,
+
+
+                            };
+                            toastr.error(' ایمیل وارد شده ثبت نشده است ');
+                        }
+
+
+                        if (srt === "200") {
+
+                            var url = '@Url.Action("confirm", "Home")';
+                            window.location.href = url;
+
+
+
+                        }
+
+
+
+
+
+
+
+
+                    },
+                    error: function () {
+                        toastr.options = {
+                            "debug": false,
+                            "positionClass": "toast-top-center",
+                            "onclick": null,
+                            "fadeIn": 300,
+                            "fadeOut": 1000,
+                            "timeOut": 8000,
+                            "extendedTimeOut": 1000,
+
+
+                        };
+                        toastr.error('خطای سیستمی، لطفاً با اپراتور تماس بگیرید ');
+
+                    }
+                });
+            };
+
+
+
+
+        });
+
+    </script>
+}
+
+
+
+
+<div>
+    <main id="loginMain" style="">
+
+        <div class="c-account-box__content" style="padding:10px; width:60%; margin: 0 auto">
+            @using (Html.BeginForm("CustomerLoginWC", "CustomerLogIn", FormMethod.Post,
+new { @class = "c-form-account", enctype = "multipart/form-data", id = "registerForm" }))
+            {
+
+
+                @Html.AntiForgeryToken()
+                <input type="hidden" name="rc" value="UURCRFdLdE1hN3FwMlAzRDdCZEJUUT09"><input type="hidden" name="rd" value="MURYd3dWZ3VEWDM0RmE4L1lSWFh2elpVUlFPNWNXWHJNZ3JxNjI0MHduQTUxL0NzcU5nbmwxaGRMKzVPRzNqMjd0M2Vta01wL1k4aENHRDRSWndiNkE9PQ~~">
+
+                <div class="rowholder">
+                    <label class="mainlabla">
+                        <input id="forgettext" class="c-ui-input__field" type="text" name="remember[email_phone]" placeholder=" @Resources.res.loginEmail">
+                        <div class="registererror"><p>@Resources.res.loginEmailError</p></div>
+                    </label>
+                </div>
+               
+                <div id="fogetconfirm" class="rowholder">
+                    <div class="mainlabla">
+                        <p style="float:left" class="">@Resources.res.OK</p>
+                    </div>
+                </div>
+
+
+
+
+
+            }
+        </div>
+    </main>
+</div>
+
+
+

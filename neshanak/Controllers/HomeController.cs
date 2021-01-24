@@ -12,9 +12,12 @@ using System.Security.Cryptography;
 using System.Net.Http;
 using System.Net;
 using System.IO;
+using neshanak.Classes;
 
 namespace neshanak.Controllers
 {
+
+    [SessionCheck]
     public class HomeController : Controller
     {
         static readonly string PasswordHash = "P@@Sw0rd";
@@ -38,6 +41,7 @@ namespace neshanak.Controllers
             if (name == "token" && req2 == "")
             {
                 CookieVM cookieModel = new CookieVM();
+                cookieModel.currentpage = "index";
                 string srt = JsonConvert.SerializeObject(cookieModel);
                 SetCookie(srt, "token");
                 return srt;
@@ -174,10 +178,39 @@ namespace neshanak.Controllers
             string subCatload = JsonConvert.SerializeObject(VMmodel);
             string resu = await wb.doPostData(server + "/GetCatsPage.php", subCatload);
             IndexVM model = JsonConvert.DeserializeObject<IndexVM>(resu);
-            return PartialView("/Views/Shared/_subcat.cshtml", model);
+            if (result.Split('-')[1] == "1")
+            {
+                return PartialView("/Views/Shared/_subcat.cshtml", model);
+
+            }
+            else
+            {
+                return PartialView("/Views/Shared/_subcat2.cshtml", model);
+            }
 
             //return View();
         }
+        public async Task<ActionResult> getcityPartial(string result)
+        {
+            string lang = Session["lang"] as string;
+
+            getLandCATVM VMmodel = new getLandCATVM()
+            {
+               
+                code = HomeController.code,
+                device = HomeController.device,
+                country = result,
+                lan = lang,
+
+            };
+            string subCatload = JsonConvert.SerializeObject(VMmodel);
+            string resu = await wb.doPostData(server + "/getLandscat.php", subCatload);
+            countryCityCatVM model = JsonConvert.DeserializeObject<countryCityCatVM>(resu);
+            return PartialView("/Views/Shared/_partialCity.cshtml", model);
+
+            //return View();
+        }
+        
 
         public void setValues(string result, string mallID)
         {
@@ -220,7 +253,7 @@ namespace neshanak.Controllers
             string device = RandomString();
             string mobile = "09194594505";
             string city = "teh";
-            string code = MD5Hash(mobile + city + device + "_banimo_hasdi1237e_");
+            string code = MD5Hash(mobile + city + device + "_neshanak_hasdi1237e_");
             var client = new HttpClient();
 
             string html = string.Empty;
@@ -369,5 +402,80 @@ namespace neshanak.Controllers
         }
 
 
+
+        public ActionResult Register(string message)
+        {
+            if (message == "1")
+            {
+                ViewBag.message = "عبارت امنیتی نادرست است";
+            }
+            else if (message == "2")
+            {
+                ViewBag.message = "این شماره قبلاً ثبت شده است";
+            }
+            else if (message == "3")
+            {
+                ViewBag.message = "خطا ! لطفاً مجددا تلاش کنید";
+            }
+            return View();
+        }
+        public ActionResult login(string message)
+        {
+           
+            CookieVM cookieModel = JsonConvert.DeserializeObject<CookieVM>(getCookie("token"));
+            ViewBag.username = cookieModel.Username;
+            ViewBag.password = cookieModel.Password;
+            if (Session["LoginTime"] == null)
+            {
+                Session["LoginTime"] = 0;
+            }
+            else
+            {
+                if (Convert.ToInt32(Session["LoginTime"]) > 0)
+                {
+                    if (message == "1")
+                    {
+                        ViewBag.message = "عبارت امنیتی نادرست است";
+
+                    }
+                    else if (message == null)
+                    {
+                        ViewBag.message = "";
+
+                    }
+                    else
+                    {
+
+                        ViewBag.message = "نام کاربری یا رمز عبور اشتباه است";
+                    }
+                }
+            }
+
+            return View();
+        }
+        public ActionResult confirm()
+        {
+            CookieVM cookieModel = JsonConvert.DeserializeObject<CookieVM>(getCookie("token"));
+
+            confrimVM model = new confrimVM()
+            {
+                id = cookieModel.id,
+                pass = cookieModel.pass
+            };
+            return View(model);
+        }
+        public ActionResult forgetpass(string type)
+        {
+
+            return View();
+        }
+        public ActionResult ChangePass(string Token)
+        {
+            if (Session["token"] != null)
+            {
+                RedirectToAction("index", "home");
+            }
+            return View();
+        }
     }
 }

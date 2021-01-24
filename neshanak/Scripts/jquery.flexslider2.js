@@ -1128,7 +1128,7 @@
     keyboard: true,                 //Boolean: Allow slider navigating via keyboard left/right keys
     multipleKeyboard: false,        //{NEW} Boolean: Allow keyboard navigation to affect multiple sliders. Default behavior cuts out keyboard navigation with more than one slider present.
     mousewheel: false,              //{UPDATED} Boolean: Requires jquery.mousewheel.js (https://github.com/brandonaaron/jquery-mousewheel) - Allows slider navigating via mousewheel
-    pausePlay: false,               //Boolean: Create pause/play dybanimoc element
+    pausePlay: false,               //Boolean: Create pause/play dyneshanakc element
     pauseText: "Pause",             //String: Set the text for the "pause" pausePlay item
     playText: "Play",               //String: Set the text for the "play" pausePlay item
 

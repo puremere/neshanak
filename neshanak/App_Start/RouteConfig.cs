@@ -11,6 +11,7 @@ namespace neshanak
     {
         public static void RegisterRoutes(RouteCollection routes)
         {
+            routes.IgnoreRoute("BotDetectCaptcha.ashx/{*pathInfo}");
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
             routes.MapRoute(
