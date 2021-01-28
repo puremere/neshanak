@@ -363,4 +363,16 @@
   <data name="blogtext2" xml:space="preserve">
     <value>و تنها بخشی از اخبار نمایش داده میشود</value>
   </data>
+  <data name="registerName" xml:space="preserve">
+    <value>نام خود را وارد کنید</value>
+  </data>
+  <data name="registerNameError" xml:space="preserve">
+    <value>نام باید وارد شود</value>
+  </data>
+  <data name="registerPhone" xml:space="preserve">
+    <value>تلفن خود را وارد کنید</value>
+  </data>
+  <data name="registerPhoneError" xml:space="preserve">
+    <value>تلفن باید وارد شود</value>
+  </data>
 </root>

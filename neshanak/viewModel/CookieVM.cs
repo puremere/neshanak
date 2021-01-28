@@ -7,7 +7,7 @@ namespace neshanak.viewModel
 {
     public class CookieVM
     {
-        public string magid { get; set; }
+      
         public string  result  { get; set; }
         public string mallID  { get; set; }
         public string floorID { get; set; }
@@ -17,5 +17,11 @@ namespace neshanak.viewModel
         public string currentpage { get; set; }
         public string Username { get; set; }
         public string Password { get; set; }
+    }
+
+    public class variabli
+    {
+        public string magid { get; set; }
+        public string result { get; set; }
     }
 }

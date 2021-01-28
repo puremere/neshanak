@@ -9,7 +9,7 @@
 @using BotDetect.Web.Mvc;
 @using neshanak.Classes;
 @{
-    Layout = "/Views/Shared/_loginLayout.cshtml";
+    Layout = "/Views/Shared/_Layout.cshtml";
 }
 @section HeadIncludes {
     <link href="@BotDetect.Web.CaptchaUrls.Absolute.LayoutStyleSheetUrl"
@@ -20,16 +20,7 @@
 
 }
 @section scripts{
-    <script>
-        $("#languagetOption").change(function () {
-            let id = $(this).val()
-            if (id != '') {
-
-                window.location.href = "/Home/ChangeLanguage?lang=" + id + "&actionstring=register";
-
-            }
-        });
-    </script>
+   
     <script src="~/Scripts/bootstrap.min.js"></script>
     @Scripts.Render("~/Scripts/captcha.validate.js")
     <script>
@@ -83,6 +74,7 @@
             ///  alert("ssss");
             var n = $("#accountAutoLogin:checked").length;
             var pass = $("#registerpassword").val();
+            var pass2 = $("#changetxtPassword2").val();
             var val = $("#registeremail").val();
             if (n != 1) {
                 $("#registeragreement-error").css("color", "red");
@@ -106,7 +98,9 @@
                 $("#registerpassword").parent().find(".registererror").css("display", "block");
             }
 
-
+            if (pass != pass2) {
+                $("#registerpassword2").parent().find(".registererror").css("display", "block");
+            }
             if (n === 1 && validateEmail(val) && (pass.length > 5)) {
                 $("form#registreForm").submit();
             }
@@ -143,7 +137,7 @@
 <div>
     <main id="loginMain" style="">
 
-        <div class="c-account-box__content" style="padding:10px; width:60%; margin: 0 auto">
+        <div class="c-account-box__content" style="padding:10px; width:60%; margin: 0 auto; height:85%; overflow-y:scroll;">
             @using (Html.BeginForm("CustomerVerification", "CustomerLogin", FormMethod.Post,
                             new { enctype = "multipart/form-data", id = "registreForm", @class = "c-form-account" }))
             {
@@ -151,6 +145,19 @@
 
                 @Html.AntiForgeryToken()
                 <input type="hidden" name="rc" value="ZURUU1UzMVowaHFXNFFGZEdCb01pdz09"><input type="hidden" name="rd" value="a3RYVkxNOER0Q0IvaFpnQlVZMVNpdXV2bGxSSWJvRDEvbU8wN0VvdjFFakowc1NVQU9wdW9JOFF5QXhldEx0cg~~">
+                <div class="rowholder">
+                    <label class="mainlabla">
+                        <input id="registername" class="c-ui-input__field c-ui-input__field--right-placeholder" type="text" name="registeremail" placeholder=" @Resources.res.registerName" value="">
+                        <div class="registererror"><p>@Resources.res.registerNameError</p>  </div>
+                    </label>
+                </div>
+                <div class="rowholder">
+                    <label class="mainlabla">
+                        <input id="registerephone" class="c-ui-input__field c-ui-input__field--right-placeholder" type="text" name="registeremail" placeholder=" @Resources.res.registerPhone" value="">
+
+                        <div class="registererror"><p>@Resources.res.registerPhoneError</p>  </div>
+                    </label>
+                </div>
                 <div class="rowholder">
                     <label class="mainlabla">
                         <input id="registeremail" class="c-ui-input__field c-ui-input__field--right-placeholder" type="text" name="registeremail" placeholder=" @Resources.res.registerEmail" value="">
@@ -163,6 +170,12 @@
                     <label class="mainlabla">
                         <input id="registerpassword" class="c-ui-input__field c-ui-input__field--right-placeholder" type="password" name="registerpassword" placeholder=" @Resources.res.registerPassword">
                         <div class="registererror"><p>@Resources.res.registerPasswordError</p> </div>
+                    </label>
+                </div>
+                <div class="rowholder">
+                    <label class="mainlabla">
+                        <input id="changetxtPassword2" class="c-ui-input__field" type="text" name="remember[email_phone]" placeholder=" @Resources.res.registerPasswordRepeat">
+                        <div class="registererror"><p>@Resources.res.registerPasswordRepeatError</p></div>
                     </label>
                 </div>
 

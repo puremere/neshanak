@@ -48,6 +48,13 @@ namespace neshanak.Controllers
                 SetCookie(srt, "token");
                 return srt;
             }
+            else if (name ==  "vari" && req2 == "")
+            {
+                variabli cookieModel = new variabli();
+                string srt = JsonConvert.SerializeObject(cookieModel);
+                SetCookie(srt, "vari");
+                return srt;
+            }
             return req2;
 
 
@@ -145,6 +152,19 @@ namespace neshanak.Controllers
 
         public async Task<ActionResult> GetSubCat(string result)
         {
+            CookieVM cookiemodel = JsonConvert.DeserializeObject<CookieVM>(getCookie("token"));
+            cookiemodel.currentpage = "GetSubCat";
+            SetCookie(JsonConvert.SerializeObject(cookiemodel), "token");
+            variabli varimodel = JsonConvert.DeserializeObject<variabli>(getCookie("vari"));
+            if (result == null)
+            {
+                result = varimodel.result; 
+            }
+            else
+            {
+                varimodel.result = result;
+            }
+            SetCookie(JsonConvert.SerializeObject(varimodel), "vari");
             string lang = Session["lang"] as string;
 
             getSubCatVM VMmodel = new getSubCatVM()
@@ -229,8 +249,9 @@ namespace neshanak.Controllers
         {
             // string result, string mallID, string floorID
             CookieVM model = JsonConvert.DeserializeObject<CookieVM>(getCookie("token"));
+            model.currentpage = "searchResult";
             string lang = Session["lang"] as string;
-
+            SetCookie(JsonConvert.SerializeObject(model), "token");
             searchResultVM VMmodel = new searchResultVM()
             {
                 city = "",
@@ -544,16 +565,21 @@ namespace neshanak.Controllers
         {
             CookieVM cookiemodel = JsonConvert.DeserializeObject<CookieVM>(getCookie("token"));
             cookiemodel.currentpage = "magDetail";
-           
+            SetCookie(JsonConvert.SerializeObject(cookiemodel), "token");
+
+
+            variabli varimodel = JsonConvert.DeserializeObject<variabli>(getCookie("vari"));
+
             if (id == null)
             {
-                id = cookiemodel.magid;
+                id = varimodel.magid;
             }
             else
             {
-                cookiemodel.magid = id;
+                varimodel.magid = id;
             }
-            SetCookie(JsonConvert.SerializeObject(cookiemodel), "token");
+            SetCookie(JsonConvert.SerializeObject(varimodel), "vari");
+           
             string token = "";
             if (Session["token"] != null)
             {

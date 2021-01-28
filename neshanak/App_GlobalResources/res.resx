@@ -363,4 +363,16 @@
   <data name="magSeedetail" xml:space="preserve">
     <value>see detail</value>
   </data>
+  <data name="registerName" xml:space="preserve">
+    <value>insert your name</value>
+  </data>
+  <data name="registerNameError" xml:space="preserve">
+    <value>name must be inserted</value>
+  </data>
+  <data name="registerPhone" xml:space="preserve">
+    <value>insert your phone</value>
+  </data>
+  <data name="registerPhoneError" xml:space="preserve">
+    <value>phone must be inserted</value>
+  </data>
 </root>

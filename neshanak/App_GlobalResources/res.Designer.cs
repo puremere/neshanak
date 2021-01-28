@@ -610,6 +610,24 @@ namespace neshanak.App_GlobalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to insert your name.
+        /// </summary>
+        public static string registerName {
+            get {
+                return ResourceManager.GetString("registerName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to name must be inserted.
+        /// </summary>
+        public static string registerNameError {
+            get {
+                return ResourceManager.GetString("registerNameError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to insert new password.
         /// </summary>
         public static string registerPassword {
@@ -642,6 +660,24 @@ namespace neshanak.App_GlobalResources {
         public static string registerPasswordRepeatError {
             get {
                 return ResourceManager.GetString("registerPasswordRepeatError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to insert your phone.
+        /// </summary>
+        public static string registerPhone {
+            get {
+                return ResourceManager.GetString("registerPhone", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to phone must be inserted.
+        /// </summary>
+        public static string registerPhoneError {
+            get {
+                return ResourceManager.GetString("registerPhoneError", resourceCulture);
             }
         }
         
