@@ -8,20 +8,66 @@
     @*@Scripts.Render("~/bundles/modernizr")*@
     <link href="~/Content/bootstrap.css" rel="stylesheet" />
     <link href="~/Content/fontawesome-all.css" rel="stylesheet" />
+    <link href="~/Content/toastr.css" rel="stylesheet" />
+   
     @RenderSection("styles", required: false)
+    @RenderSection("HeadIncludes", required: false)
+    <link href="~/Content/indexStyle.css" rel="stylesheet" />
 </head>
 <body>
- 
-    <div class="" style="width:100%; height:100%; position:absolute">
-        @RenderBody()
-       
+
+    <div class="logosectionalone">
+        <img src="~/Images/logo.png" />
+        <p id="addnew" style="width:150px; margin:0 15px" class="btn btn-success">@Resources.res.logosection4</p>
+
+        <ul>
+
+
+            @{
+                if (Session["token"] != null)
+                {
+                    <li id="">@Resources.res.logosection0</li>
+                }
+                else
+                {
+                    <li id="login">@Resources.res.logosection1</li>
+                }
+            }
+            <li>|</li>
+            <li>@Resources.res.logosection2</li>
+            <li>|</li>
+            <li id="support">@Resources.res.logosection3</li>
+
+            <li>|</li>
+            <li id="home">@Resources.res.logosection5</li>
+
+
+
+
+
+        </ul>
+        <div class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                @Session["lang"]
+            </button>
+            <div class="dropdown-menu lanParent" aria-labelledby="dropdownMenuButton">
+                <div class="row langHolder"> <a class="dropdown-item" href="#">en <img src="~/Images/en.png" /></a></div>
+
+                <div class="row langHolder"><a class="dropdown-item" href="#">fa <img src="~/Images/fa.png" /></a></div>
+                <div class="row langHolder"><a class="dropdown-item" href="#">de <img src="~/Images/de.png" /></a></div>
+            </div>
+        </div>
     </div>
+
+    @RenderBody()
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
+    <script src="~/Scripts/toastr.js"></script>
     @RenderSection("scripts", required: false)
+
     <script>
-          $("#login").click(function () {
+        $("#login").click(function () {
             window.location.href = "/Home/login"
         })
         $("#addnew").click(function () {
@@ -30,6 +76,51 @@
         $("#home").click(function () {
             window.location.href = "/Home/index"
         })
+
+         if ('@Session["lang"]' == 'fa') {
+            $("body").get(0).style.setProperty("--align", "right");
+             $("body").get(0).style.setProperty("--direction", "rtl");
+             $("body").get(0).style.setProperty("--font", "IRANSans ");
+
+        }
+        else {
+            $("body").get(0).style.setProperty("--align", "left");
+             $("body").get(0).style.setProperty("--direction", "ltr");
+             $("body").get(0).style.setProperty("--font", "helvica");
+        }
+    </script>
+    <script>
+        $(".langHolder").click(function () {
+            let id = $(this).find('a').text();
+            window.location.href = "/Home/ChangeLanguage?lang=" + id;
+        })
+    </script>
+    <script>
+
+        $("#addnew").click(function () {
+            window.location.href = "/Home/createItem"
+        })
+        $("#login").click(function () {
+            window.location.href = "/Home/login"
+        })
+    </script>
+    <script>
+        if ('@Session["lang"]' == 'fa') {
+
+            $("body").get(0).style.setProperty("--align", "right");
+            $("body").get(0).style.setProperty("--direction", "rtl");
+            $("body").get(0).style.setProperty("--font", "IRANSans");
+
+        }
+        else {
+
+            $("body").get(0).style.setProperty("--align", "left");
+            $("body").get(0).style.setProperty("--direction", "ltr");
+            $("body").get(0).style.setProperty("--font", "Myriad");
+
+
+        }
+
     </script>
 </body>
 </html>

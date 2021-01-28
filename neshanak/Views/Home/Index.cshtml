@@ -2,18 +2,19 @@
 @{
     ViewBag.Title = "Home Page";
     Layout = "/Views/Shared/_Layout.cshtml";
+    ViewBag.action = "index";
 }
 
 
 @section styles{
 
-    <link href="~/Content/root.css" rel="stylesheet" />
-    <link href="~/Content/indexStyle.css" rel="stylesheet" />
+    @*<link href="~/Content/root.css" rel="stylesheet" />*@
+
 
     <link href="~/Content/slick.css" rel="stylesheet" />
     <link href="~/Content/slick-theme.css" rel="stylesheet" />
 
-
+    <link href="~/Content/video.css" rel="stylesheet" />
 }
 @section scripts{
 
@@ -22,31 +23,6 @@
 
     <script type="text/javascript" src="~/Scripts/slick.js"></script>
 
-    <script>
-        $("#languagetOption").change(function () {
-            let id = $(this).val()
-            window.location.href = "/Home/ChangeLanguage?lang=" + id;
-        })
-        $("#addnew").click(function () {
-            window.location.href = "/Home/createItem"
-        })
-        $("#login").click(function () {
-            window.location.href = "/Home/login"
-        })
-    </script>
-    <script>
-        if ('@Session["lang"]' == 'fa') {
-            $("body").get(0).style.setProperty("--align", "right");
-            $("body").get(0).style.setProperty("--direction", "rtl");
-
-        }
-        else {
-            $("body").get(0).style.setProperty("--align", "left");
-            $("body").get(0).style.setProperty("--direction", "ltr");
-
-        }
-
-    </script>
 
     <script>
         $(document).ready(function () {
@@ -57,6 +33,13 @@
                 autoplaySpeed: 2000,
                 dots: true
             });
+            $('.countrylist').slick({
+                slidesToShow: 8,
+                slidesToScroll: 1,
+                autoplay: true,
+                autoplaySpeed: 2000,
+                dots: false
+            })
         });
 
     </script>
@@ -66,119 +49,96 @@
             var catid = $(this).attr('id');
             window.location.href = "/Home/GetSubCat?result=" + catid + "-1";
 
-        })
-
+        });
+        $(".blogList").click(function () {
+            window.location.href = "/Home/mag";
+        });
     </script>
+
 
 }
 
-<div class="headerSection">
-    <div class="logosection">
+<style>
 
-        <img src="~/Images/final2.png" />
-        <img src="~/Images/logo_text.png" />
-        <ul>
-            <li style="font-size:12px; color:black">
-                <select id="languagetOption" style="padding:5px; border-radius:5px">
-                    @{
-                        List<string> list = new List<string>();
-                        list.Add("en"); list.Add("fa"); list.Add("de");
-                        foreach (var item in list)
+</style>
+
+<header>
+    <div class="overlay"></div>
+    <video playsinline="playsinline" autoplay="autoplay" muted="muted" loop="loop">
+        <source src="https://storage.googleapis.com/coverr-main/mp4/Mt_Baker.mp4" type="video/mp4">
+    </video>
+    <div class="container h-100">
+        <div class="d-flex h-100 text-center align-items-center">
+            <div class="w-100 text-white">
+                <h1 style="margin-top:100px; color:white">@Resources.res.headertext1</h1>
+                <h2 style=" color:white">@Resources.res.headertext2</h2>
+                <div class="formsection">
+                    <input class="form-control" placeholder="@Resources.res.headerFormInput1" />
+                    @Html.DropDownList("SelectedItem", new SelectList(Model.lands, "ID", "title"), @Resources.res.headerFormInput3, new { @class = "form-control", id = "cityDropDown" })
+                    <input class="form-control" placeholder="@Resources.res.headerFormInput4" />
+                    <div class="searchButton">@Resources.res.headerFormInput2</div>
+                </div>
+                <div class="menuSection">
+                    @foreach (var item in Model.cat)
+                    {
+
+                        string ID = item.id.ToString();
+                        int index = Model.cat.IndexOf(item);
+                        string imageName = "lawyers_icon.png"; // Path.GetFileNameWithoutExtension(item.img) + "_icon.png";
+                        if (index < 6)
                         {
-
-                            if (Session["lang"] as string == item)
-                            {
-                                <option selected>
-                                    @item
-                                </option>
-                            }
-                            else
-                            {
-                                <option>
-                                    @item
-                                </option>
-
-                            }
+                            <div class="item  ITEMCAT" id=@ID style=" ">
+                                <span><img style="" src="http://supectco.com/neshanak/portal/uploads/@imageName" /></span>
+                                <span style="font-weight:600">@item.title</span>
+                            </div>
                         }
+
+
+
                     }
 
-
-                </select>
-            </li>
-            <li>|</li>
-            @{
-                if (Session["token"] != null)
-                {
-                    <li id="">@Resources.res.logosection0</li>
-                }
-                else
-                {
-                    <li id="login">@Resources.res.logosection1</li>
-                }
-            }
+                    <div class="item  ITEMCAT" style=" ">
+                        <span><img style="" src="http://supectco.com/neshanak/portal/uploads/lawyers_icon.png" /></span>
+                        <span style="font-weight:600">@Resources.res.more</span>
+                    </div>
 
 
-            <li>|</li>
-            <li>@Resources.res.logosection2</li>
-            <li>|</li>
-            <li>@Resources.res.logosection3</li>
-            <li>|</li>
-            <li id="addnew">@Resources.res.logosection4</li>
-
-
-
-
-
-        </ul>
-    </div>
-    <h1>@Resources.res.headertext1</h1>
-    <h2>@Resources.res.headertext2</h2>
-    <div class="formsection">
-        <input class="form-control" placeholder="@Resources.res.headerFormInput1" />
-        @Html.DropDownList("SelectedItem", new SelectList(Model.lands, "ID", "title"), @Resources.res.headerFormInput3, new { @class = "form-control", id = "cityDropDown" })
-        <input class="form-control" placeholder="@Resources.res.headerFormInput4" />
-        <div class="searchButton">@Resources.res.headerFormInput2</div>
-    </div>
-    <div class="menuSection">
-        @foreach (var item in Model.cat)
-        {
-
-            string ID = item.id.ToString();
-            int index = Model.cat.IndexOf(item);
-            string imageName = "lawyers_icon.png"; // Path.GetFileNameWithoutExtension(item.img) + "_icon.png";
-            if (index < 6)
-            {
-                <div class="item  ITEMCAT" id=@ID style=" ">
-                    <span><img style="" src="http://supectco.com/neshanak/portal/uploads/@imageName" /></span>
-                    <p>@item.title</p>
                 </div>
-            }
-
-
-
-        }
-
-        <div class="item  ITEMCAT" style=" ">
-            <span><img style="" src="http://supectco.com/neshanak/portal/uploads/lawyers_icon.png" /></span>
-            <p>@Resources.res.more</p>
+            </div>
         </div>
-
-
     </div>
+</header>
+
+
+
+
+<div class="countrylist">
+    @foreach (var item in Model.lands)
+    {
+        <div class="countryItem">
+            <p>
+                @item.title
+            </p>
+
+        </div>
+    }
 </div>
 <div class="viewProduct">
-    <h3> @Resources.res.popularText1</h3>
-    <h6> @Resources.res.popularText2</h6>
+    <div class="line"></div>
+    <h3 class="viewProductText"> @Resources.res.popularText1</h3>
+    <h6 class="viewProductText"> @Resources.res.popularText2</h6>
     <div class="slidHolder">
 
         <div class="your-class">
-
             @{
                 foreach (var item in Model.rec)
                 {
                     <div class="slidItemHolder" style="padding:10px">
-                        <img style="width:100%" src="~/Images/supectmarket.jpg" />
-                        <p>@item.title</p>
+                        <div class="imageholder;" style="width:100%; height:150px;object-fit:cover">
+                            <img style="width:100%;height:100% " src="~/Images/nodes/@item.img" />
+
+                        </div>
+                        <p class="title">@item.title</p>
                         <p>@item.desc</p>
                     </div>
                 }
@@ -191,27 +151,28 @@
 
 </div>
 <div class="mapsection">
-    <h3> @Resources.res.viewProductText1</h3>
-    <h6> @Resources.res.viewProductText2</h6>
-    <img src="~/Images/map.jpg" />
+    <h3> @Resources.res.maptext1 </h3>
+    <h6 style="background: inherit;"> @Resources.res.maptext2</h6>
+    <img src="/Images/map.jpg">
     <div class="textSection">
         <div>
-            <p class="hd">@Resources.res.viewProductHeader1</p>
-            <p class="content">@Resources.res.viewProductContent1</p>
+            <p class="hd">Save Time</p>
+            <p class="content">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus a lectus finibus, sagittis lorem vitae, pulvinar metus. Etiam placerat orci mauris, nec aliquet augue vulputate vitae. Interdum et malesuada fames ac ante ipsum primis in faucibus. Sed iaculis, risus eget volutpat vestibulum, ligula quam maximus diam, fringilla aliquet leo est ut lorem. Donec sit amet feugiat neque. Phasellus quis felis in magna elementum dapibus at nec dui. Nulla ut velit eu neque pulvinar pulvinar quis in orci. Vestibulum nisi neque,</p>
         </div>
         <div>
-            <p class="hd">@Resources.res.viewProductHeader2</p>
-            <p class="content">@Resources.res.viewProductContent2</p>
+            <p class="hd">Win Over The Team</p>
+            <p class="content">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus a lectus finibus, sagittis lorem vitae, pulvinar metus. Etiam placerat orci mauris, nec aliquet augue vulputate vitae. Interdum et malesuada fames ac ante ipsum primis in faucibus. Sed iaculis, risus eget volutpat vestibulum, ligula quam maximus diam, fringilla aliquet leo est ut lorem. Donec sit amet feugiat neque. Phasellus quis felis in magna elementum dapibus at nec dui. Nulla ut velit eu neque pulvinar pulvinar quis in orci. Vestibulum nisi neque,</p>
         </div>
         <div>
-            <p class="hd">@Resources.res.viewProductHeader3</p>
-            <p class="content">@Resources.res.viewProductContent3</p>
+            <p class="hd">Design Features</p>
+            <p class="content">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus a lectus finibus, sagittis lorem vitae, pulvinar metus. Etiam placerat orci mauris, nec aliquet augue vulputate vitae. Interdum et malesuada fames ac ante ipsum primis in faucibus. Sed iaculis, risus eget volutpat vestibulum, ligula quam maximus diam, fringilla aliquet leo est ut lorem. Donec sit amet feugiat neque. Phasellus quis felis in magna elementum dapibus at nec dui. Nulla ut velit eu neque pulvinar pulvinar quis in orci. Vestibulum nisi neque,</p>
         </div>
     </div>
 </div>
 <div class="viewProduct">
-    <h3> @Resources.res.recenttext1</h3>
-    <h6>
+    <div class="line"></div>
+    <h3 class="viewProductText"> @Resources.res.recenttext1</h3>
+    <h6 class="viewProductText">
         @Resources.res.recenttext2
     </h6>
     <div class="slidHolder">
@@ -222,8 +183,11 @@
                 foreach (var item in Model.rec)
                 {
                     <div class="slidItemHolder" style="padding:10px">
-                        <img style="width:100%" src="~/Images/supectmarket.jpg" />
-                        <p>@item.title</p>
+                        <div class="imageholder;" style="width:100%; height:150px;object-fit:cover">
+                            <img style="width:100%;height:100% " src="~/Images/nodes/@item.img" />
+
+                        </div>
+                        <p class="title">@item.title</p>
                         <p>@item.desc</p>
                     </div>
                 }
@@ -250,8 +214,9 @@
     </div>
 </div>
 <div class="viewProduct">
-    <h3> @Resources.res.randomtext1</h3>
-    <h6>
+    <div class="line"></div>
+    <h3 class="viewProductText"> @Resources.res.randomtext1</h3>
+    <h6 class="viewProductText">
         @Resources.res.randomtext2
     </h6>
     <div class="slidHolder">
@@ -263,9 +228,11 @@
                 {
 
                     <div class="slidItemHolder" style="padding:10px">
+                        <div class="imageholder;" style="width:100%; height:150px;object-fit:cover">
+                            <img style="width:100%;height:100% " src="~/Images/nodes/@item.img" />
 
-                        <img style="width:100%" src="~/Images/supectmarket.jpg" />
-                        <p>@item.title</p>
+                        </div>
+                        <p class="title">@item.title</p>
                         <p>@item.desc</p>
                     </div>
                 }
@@ -286,9 +253,10 @@
     </div>
 
 </div>
-<div class="blogHolder">
-    <h3> @Resources.res.blogtext1</h3>
-    <h6>
+<div class="blogHolder viewProduct">
+    <div class="line"></div>
+    <h3 class="viewProductText blogList"> @Resources.res.blogtext1</h3>
+    <h6 class="viewProductText">
         @Resources.res.blogtext1
     </h6>
     <div class="slidHolder">
@@ -300,9 +268,14 @@
                 {
                     <div style="padding:5px">
                         <div class="slidBlogHolder">
-                            <img style="width:100%" src="~/Images/city-nawpic.jpg" />
-                            <p class="titlecontnet">@item.title</p>
-                            <p class="blogcontnet">@item.content</p>
+                            <div class="imgParent" style="width:100%; object-fit:cover">
+                                <img style="width:100%; height:100%" src="~/Images/nodes/hiring.jpg" />
+                            </div>
+
+                            <div class="titlecontnet">@item.title</div>
+                            <div class="blogcontnet">@item.content</div>
+
+                            <div class="moreblog">@Resources.res.more</div>
                         </div>
                     </div>
 
@@ -317,13 +290,18 @@
 </div>
 <div class="footerSection">
     <div class="aboutUs">
-        <img src="~/Images/final2.png" />
-        <img src="~/Images/logo_text.png" />
-        <p>@Resources.res.footeraboutus</p>
+
+        <div class="footerIcon" style=""> <img src="~/Images/logo.png" /><i class="fa fa-twitter"><span>twitter</span></i><i class="fa fa-facebook"><span>facebook</span></i><i class="fa fa-wifi"><span>RSS</span></i><i class="fa fa-envelope"><span>Main</span></i></div>
+        <p style="color:white; line-height:2; font-size:14px">
+            <br />
+            @Resources.res.footeraboutus
+        </p>
+        <div class="footerIcon"><i class="link">about us</i> <i class="link"> contact us</i> <i class="link"> privacy</i></div>
+
 
     </div>
     <div class="Tag">
-        <p>@Resources.res.footertag</p>
+        <p style="color:white">@Resources.res.footertag</p>
         <div>
             <span>tag1</span><span>tag2tag2tag2</span><span>tag3tag3</span><span>tag4</span><span>tag5</span><span>tag6tag6tag6tag6tag6</span>
         </div>

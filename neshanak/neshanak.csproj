@@ -54,6 +54,9 @@
     <Reference Include="CaptchaMvc, Version=2.5.0.0, Culture=neutral, PublicKeyToken=fe46ad421dd3b0e6, processorArchitecture=MSIL">
       <HintPath>..\packages\CaptchaMvc.Mvc5.1.5.0\lib\net45-full\CaptchaMvc.dll</HintPath>
     </Reference>
+    <Reference Include="HtmlAgilityPack, Version=1.11.30.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
+      <HintPath>..\packages\HtmlAgilityPack.1.11.30\lib\Net45\HtmlAgilityPack.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -189,6 +192,7 @@
       <DependentUpon>res.resx</DependentUpon>
     </Compile>
     <Compile Include="Classes\webService.cs" />
+    <Compile Include="viewModel\ArticleListOfMag.cs" />
     <Compile Include="viewModel\BzListVM.cs" />
     <Compile Include="viewModel\confrimVM.cs" />
     <Compile Include="viewModel\CookieVM.cs" />
@@ -209,10 +213,13 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\css-circular-prog-bar.css" />
+    <Content Include="Content\cubeportfolio.min.css" />
     <Content Include="Content\flexslider.css" />
     <Content Include="Content\flexslider2.css" />
     <Content Include="Content\fontawesome-all.css" />
     <Content Include="Content\indexStyle.css" />
+    <Content Include="Content\magDetailStyle.css" />
+    <Content Include="Content\main.css" />
     <Content Include="Content\resCarousel.css" />
     <Content Include="Content\root.css" />
     <Content Include="Content\slick-theme.css" />
@@ -220,6 +227,7 @@
     <Content Include="Content\sliderStyle.css" />
     <Content Include="Content\subCatStyle.css" />
     <Content Include="Content\toastr.css" />
+    <Content Include="Content\video.css" />
     <Content Include="Extra\leaflet\images\layers-2x.png" />
     <Content Include="Extra\leaflet\images\layers.png" />
     <Content Include="Extra\leaflet\images\marker-icon-2x.png" />
@@ -248,16 +256,26 @@
     <Content Include="Images\banner5.jpg" />
     <Content Include="Images\banner6.jpg" />
     <Content Include="Images\city-nawpic.jpg" />
+    <Content Include="Images\de.png" />
+    <Content Include="Images\en.png" />
+    <Content Include="Images\fa.png" />
     <Content Include="Images\final2.png" />
+    <Content Include="Images\hero-area.jpg" />
     <Content Include="Images\images.jpg" />
     <Content Include="Images\logo_text.png" />
     <Content Include="Images\map.jpg" />
     <Content Include="Images\marker-green.png" />
     <Content Include="Images\marker-shadow.png" />
+    <Content Include="Images\logo.png" />
     <Content Include="Images\nodes\cell1.jpg" />
+    <Content Include="Images\nodes\doctor.jpg" />
+    <Content Include="Images\nodes\hiring.jpg" />
+    <Content Include="Images\nodes\blog1.jpg" />
+    <Content Include="Images\nodes\rentcar.jpg" />
+    <Content Include="Images\nodes\resturant.jpg" />
     <Content Include="Images\nodes\thumb\thumb_cell1.jpg" />
     <Content Include="Images\slide.jpg" />
-    <Content Include="Images\supectmarket.jpg" />
+    <Content Include="Images\nodes\supectmarket.jpg" />
     <Content Include="Images\trash.png" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -314,6 +332,7 @@
     <Content Include="Extra\leaflet\leaflet-src.esm.js.map" />
     <Content Include="Extra\leaflet\leaflet-src.js.map" />
     <Content Include="Extra\leaflet\leaflet.js.map" />
+    <Content Include="fonts\Myriad-Pro-Light.ttf" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Content\easy-autocomplete.min.css" />
@@ -324,6 +343,7 @@
     <Content Include="Scripts\jquery-3.3.1.slim.js" />
     <Content Include="Scripts\jquery-3.3.1.slim.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.cubeportfolio.min.js" />
     <Content Include="Scripts\jquery.easy-autocomplete.min.js" />
     <Content Include="Scripts\jquery.flexslider.js" />
     <Content Include="Scripts\jquery.flexslider2.js" />
@@ -333,11 +353,14 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\jssor.slider-28.0.0.min.js" />
+    <Content Include="Scripts\main.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\resCarousel.js" />
     <Content Include="Scripts\resCarousel.min.js" />
     <Content Include="Scripts\slick.js" />
     <Content Include="Scripts\toastr.js" />
+    <Content Include="video\sample.mp4" />
+    <Content Include="video\Wildlife.wmv" />
     <Content Include="Views\map.jpg" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -351,7 +374,7 @@
     <Content Include="Views\Web.config" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
-    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Shared\_loginjj.cshtml" />
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
@@ -367,7 +390,10 @@
     <Content Include="Views\Home\forgetpass.cshtml" />
     <Content Include="Views\Home\login.cshtml" />
     <Content Include="Views\Home\Register.cshtml" />
-    <Content Include="Views\Shared\_loginLayout.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Home\Mag.cshtml" />
+    <Content Include="Views\Home\magDetail.cshtml" />
+    <Content Include="video\sample.flv" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

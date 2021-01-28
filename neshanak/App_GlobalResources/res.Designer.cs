@@ -61,6 +61,15 @@ namespace neshanak.App_GlobalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to all.
+        /// </summary>
+        public static string all {
+            get {
+                return ResourceManager.GetString("all", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Recent Blog Post.
         /// </summary>
         public static string blogtext1 {
@@ -147,6 +156,15 @@ namespace neshanak.App_GlobalResources {
         public static string city {
             get {
                 return ResourceManager.GetString("city", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to comment.
+        /// </summary>
+        public static string comment {
+            get {
+                return ResourceManager.GetString("comment", resourceCulture);
             }
         }
         
@@ -453,6 +471,42 @@ namespace neshanak.App_GlobalResources {
         public static string logosection5 {
             get {
                 return ResourceManager.GetString("logosection5", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to there is no item abvailable.
+        /// </summary>
+        public static string magnoitem {
+            get {
+                return ResourceManager.GetString("magnoitem", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to see detail.
+        /// </summary>
+        public static string magSeedetail {
+            get {
+                return ResourceManager.GetString("magSeedetail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Anywhere and anytime, We are here to help.
+        /// </summary>
+        public static string maptext1 {
+            get {
+                return ResourceManager.GetString("maptext1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to And we mean that.
+        /// </summary>
+        public static string maptext2 {
+            get {
+                return ResourceManager.GetString("maptext2", resourceCulture);
             }
         }
         

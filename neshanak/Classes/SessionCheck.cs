@@ -1,4 +1,6 @@
-﻿using System.Web;
+﻿using neshanak.viewModel;
+using Newtonsoft.Json;
+using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
 
@@ -14,8 +16,10 @@ namespace neshanak.Classes
                 session["lang"] = "en";
             }
 
-            //var descriptor = filterContext.ActionDescriptor;
-            //var actionName = descriptor.ActionName;
+            var descriptor = filterContext.ActionDescriptor;
+            var actionName = descriptor.ActionName;
+
+
 
             //if (actionName != "Index" && actionName != "CustomerLogin" && actionName != "createUserReport")
             //{

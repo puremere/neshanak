@@ -6670,6 +6670,13 @@ button.close {
 		 url('../fonts/woff/IRANSansWeb(FaNum).woff') format('woff'),  /* FF3.6+, IE9, Chrome6+, Saf5.1+*/
 		 url('../fonts/ttf/IRANSansWeb(FaNum).ttf') format('truetype');
 }
+@font-face {
+    font-family: Myriad;
+    font-style: normal;
+    font-weight: normal;
+    src: url('../fonts/Myriad-Pro-Light.ttf') format('truetype');
+}
+
 
 body {
 	font-family: IRANSans !important;

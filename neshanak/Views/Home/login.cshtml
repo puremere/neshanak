@@ -1,7 +1,7 @@
 ﻿@using BotDetect.Web.Mvc;
 @using neshanak.Classes;
 @{
-    Layout = "/Views/Shared/_loginLayout.cshtml";
+    Layout = "/Views/Shared/_Layout.cshtml";
 }
 @section HeadIncludes {
     <link href="@BotDetect.Web.CaptchaUrls.Absolute.LayoutStyleSheetUrl"
@@ -13,12 +13,11 @@
 }
 @section scripts{
     <script>
-        $("#languagetOption").change(function () {
+        $(".langHolder").change(function () {
             let id = $(this).val()
+            alert(id);
             if (id != '') {
-
                 window.location.href = "/Home/ChangeLanguage?lang=" + id + "&actionstring=login";
-
             }
         });
     </script>

@@ -1,0 +1,68 @@
+﻿@model neshanak.viewModel.articleDetailVM
+@{
+    ViewBag.Title = "magDetail";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.action = "magdetail";
+}
+
+
+
+
+
+@section styles{
+    <title>ورود</title>
+    <link href="~/Content/main.css" rel="stylesheet" />
+}
+@section scripts{
+    <script>
+        $(".langHolder").change(function () {
+            let id = $(this).val();
+            alert(id);
+            if (id != '') {
+                window.location.href = "/Home/ChangeLanguage?lang=" + id + "&actionstring=login";
+            }
+        });
+    </script>
+}
+
+
+<div id="home" class="blog-hero-area">
+    <div class="overlay-light"></div>
+
+    <div class="container">
+        <div class="row justify-content-md-center">
+            <div class="col-md-10">
+                <div class="contents text-center">
+                    <h2 style="direction:rtl" class="wow fadeIn" data-wow-duration="1000ms" data-wow-delay="0.3s">@Model.articles.First().title</h2>
+                    <div class="post-meta" style="margin-top:50px">
+                        <ul>
+                            <li style="margin :0 15px"><i class="lni-calendar"></i> <a href="#">@Model.articles.First().date</a></li>
+                            <li style="margin :0 15px"><i class="lni-user"></i> <a href="#">@Model.articles.First().writer</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div id="blog-single">
+    <div class="container">
+        <div class="row justify-content-md-center">
+            <div class="col-md-12" style="border-radius: 8px; background-color:white; box-shadow: 2px 2px 5px -1px rgba(148,149,153,1)">
+                <div class="blog-post">
+                    <div class="post-content" style="direction:rtl; text-align:right">
+                        <p>@Html.Raw(Model.articles.First().content)</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+
+

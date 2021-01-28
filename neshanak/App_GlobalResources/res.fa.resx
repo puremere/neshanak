@@ -267,7 +267,7 @@
   <data name="subcat2" xml:space="preserve">
     <value>طبقه بندی فرعی دو</value>
   </data>
-  <data name="telgram" xml:space="preserve">
+  <data name="telegram" xml:space="preserve">
     <value>تلگرام</value>
   </data>
   <data name="viewProductContent1" xml:space="preserve">
@@ -338,5 +338,29 @@
   </data>
   <data name="verifyCode" xml:space="preserve">
     <value>کد تایید را وارد نمایید</value>
+  </data>
+  <data name="maptext1" xml:space="preserve">
+    <value>هر جا، هر مکان نزد شما هستیم تا به یاری شما بیاییم</value>
+  </data>
+  <data name="maptext2" xml:space="preserve">
+    <value>و برای انجام ان برنامه ریزی داریم</value>
+  </data>
+  <data name="all" xml:space="preserve">
+    <value>همه</value>
+  </data>
+  <data name="comment" xml:space="preserve">
+    <value>نظرات</value>
+  </data>
+  <data name="magnoitem" xml:space="preserve">
+    <value>نتیجه ای یافت نشد</value>
+  </data>
+  <data name="magSeedetail" xml:space="preserve">
+    <value>مشاهده جزئیات</value>
+  </data>
+  <data name="blogtext1" xml:space="preserve">
+    <value>آخرین اخبار</value>
+  </data>
+  <data name="blogtext2" xml:space="preserve">
+    <value>و تنها بخشی از اخبار نمایش داده میشود</value>
   </data>
 </root>

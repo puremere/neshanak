@@ -345,4 +345,22 @@
   <data name="verifyCode" xml:space="preserve">
     <value>Bestätigungscode einfügen</value>
   </data>
+  <data name="maptext1" xml:space="preserve">
+    <value>Überall und jederzeit sind wir für Sie da</value>
+  </data>
+  <data name="maptext2" xml:space="preserve">
+    <value>Und das meinen wir auch so</value>
+  </data>
+  <data name="all" xml:space="preserve">
+    <value>alle</value>
+  </data>
+  <data name="comment" xml:space="preserve">
+    <value>Kommentar</value>
+  </data>
+  <data name="magnoitem" xml:space="preserve">
+    <value>Es ist kein Artikel verfügbar</value>
+  </data>
+  <data name="magSeedetail" xml:space="preserve">
+    <value>siehe Detail</value>
+  </data>
 </root>

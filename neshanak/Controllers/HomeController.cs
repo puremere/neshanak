@@ -13,6 +13,8 @@ using System.Net.Http;
 using System.Net;
 using System.IO;
 using neshanak.Classes;
+using System.Collections.Specialized;
+using HtmlAgilityPack;
 
 namespace neshanak.Controllers
 {
@@ -116,8 +118,11 @@ namespace neshanak.Controllers
         public static string code = MD5Hash(device + "ncase8934f49909");
         public async Task<ActionResult> Index()
         {
-
+            CookieVM cookiemodel = JsonConvert.DeserializeObject<CookieVM>(getCookie("token"));
+            cookiemodel.currentpage = "index";
+            SetCookie(JsonConvert.SerializeObject(cookiemodel), "token");
             if (Session["lang"] == null)
+
             {
                 Session["lang"] = "en";
             }
@@ -250,6 +255,9 @@ namespace neshanak.Controllers
         }
         public ActionResult searchResultMap(string result, string mallID, string floorID)
         {
+            CookieVM cookiemodel = JsonConvert.DeserializeObject<CookieVM>(getCookie("token"));
+            cookiemodel.currentpage = "searchResultMap";
+            SetCookie(JsonConvert.SerializeObject(cookiemodel), "token");
             string device = RandomString();
             string mobile = "09194594505";
             string city = "teh";
@@ -283,14 +291,12 @@ namespace neshanak.Controllers
             // return View();
         }
 
-        public ActionResult ChangeLanguage(string lang, string actionstring)
+        public ActionResult ChangeLanguage(string lang)
         {
-            if (actionstring == null || actionstring == "")
-            {
-                actionstring = "index";
-            }
+            string current = JsonConvert.DeserializeObject<CookieVM>(getCookie("token")).currentpage;
+
             Session["lang"] = lang;
-            return RedirectToAction(actionstring, "Home");
+            return RedirectToAction(current);
 
         }
 
@@ -299,7 +305,9 @@ namespace neshanak.Controllers
 
         public async Task<ActionResult> createItem()
         {
-
+            CookieVM cookiemodel = JsonConvert.DeserializeObject<CookieVM>(getCookie("token"));
+            cookiemodel.currentpage = "createItem";
+            SetCookie(JsonConvert.SerializeObject(cookiemodel), "token");
             CookieVM model = JsonConvert.DeserializeObject<CookieVM>(getCookie("token"));
             //model.images = null;
             //SetCookie(JsonConvert.SerializeObject(model), "token");
@@ -405,6 +413,9 @@ namespace neshanak.Controllers
 
         public ActionResult Register(string message)
         {
+            CookieVM cookiemodel = JsonConvert.DeserializeObject<CookieVM>(getCookie("token"));
+            cookiemodel.currentpage = "message";
+            SetCookie(JsonConvert.SerializeObject(cookiemodel), "token");
             if (message == "1")
             {
                 ViewBag.message = "عبارت امنیتی نادرست است";
@@ -421,7 +432,9 @@ namespace neshanak.Controllers
         }
         public ActionResult login(string message)
         {
-           
+            CookieVM cookiemodel = JsonConvert.DeserializeObject<CookieVM>(getCookie("token"));
+            cookiemodel.currentpage = "login";
+            SetCookie(JsonConvert.SerializeObject(cookiemodel), "token");
             CookieVM cookieModel = JsonConvert.DeserializeObject<CookieVM>(getCookie("token"));
             ViewBag.username = cookieModel.Username;
             ViewBag.password = cookieModel.Password;
@@ -455,6 +468,9 @@ namespace neshanak.Controllers
         }
         public ActionResult confirm()
         {
+            CookieVM cookiemodel = JsonConvert.DeserializeObject<CookieVM>(getCookie("token"));
+            cookiemodel.currentpage = "confirm";
+            SetCookie(JsonConvert.SerializeObject(cookiemodel), "token");
             CookieVM cookieModel = JsonConvert.DeserializeObject<CookieVM>(getCookie("token"));
 
             confrimVM model = new confrimVM()
@@ -466,7 +482,7 @@ namespace neshanak.Controllers
         }
         public ActionResult forgetpass(string type)
         {
-
+           
             return View();
         }
         public ActionResult ChangePass(string Token)
@@ -476,6 +492,104 @@ namespace neshanak.Controllers
                 RedirectToAction("index", "home");
             }
             return View();
+        }
+
+
+        public ActionResult Mag()
+        {
+            CookieVM cookiemodel = JsonConvert.DeserializeObject<CookieVM>(getCookie("token"));
+            cookiemodel.currentpage = "Mag";
+            SetCookie(JsonConvert.SerializeObject(cookiemodel), "token");
+
+            string device = RandomString();
+            string code = MD5Hash(device + "ncase8934f49909");
+            string id = "";
+            string result = "";
+            string lan = Session["lang"] as string;
+            using (WebClient client = new WebClient())
+            {
+
+                var collection = new NameValueCollection();
+                collection.Add("device", device);
+                collection.Add("code", code);
+                collection.Add("id", id);
+                collection.Add("lan", lan);
+
+                //foreach (var myvalucollection in imaglist) {
+                //    collection.Add("imaglist[]", myvalucollection);
+                //}
+                byte[] response = client.UploadValues(server + "/getDataCatArticlesList.php?", collection);
+
+                result = System.Text.Encoding.UTF8.GetString(response);
+            }
+
+
+            ArticleListOfMag log = JsonConvert.DeserializeObject<ArticleListOfMag>(result);
+            if (log.articles != null)
+            {
+                foreach (var item in log.articles)
+                {
+                    HtmlDocument doc = new HtmlDocument();
+                    doc.LoadHtml(item.content);
+                    HtmlNode node = doc.DocumentNode;
+                    item.content = node.InnerText;
+
+                }
+            }
+
+
+            return View(log);
+        }
+        public ActionResult magDetail(string id)
+        {
+            CookieVM cookiemodel = JsonConvert.DeserializeObject<CookieVM>(getCookie("token"));
+            cookiemodel.currentpage = "magDetail";
+           
+            if (id == null)
+            {
+                id = cookiemodel.magid;
+            }
+            else
+            {
+                cookiemodel.magid = id;
+            }
+            SetCookie(JsonConvert.SerializeObject(cookiemodel), "token");
+            string token = "";
+            if (Session["token"] != null)
+            {
+                token = Session["token"].ToString();
+
+            }
+            string device = RandomString();
+            string code = MD5Hash(device + "ncase8934f49909");
+
+            string result = "";
+            string lan = Session["lang"] as string;
+            using (WebClient client = new WebClient())
+            {
+
+                var collection = new NameValueCollection();
+                collection.Add("device", device);
+                collection.Add("code", code);
+                collection.Add("id", id);
+                collection.Add("token", token);
+                collection.Add("lan", lan);
+
+
+                //foreach (var myvalucollection in imaglist) {
+                //    collection.Add("imaglist[]", myvalucollection);
+                //}
+                byte[] response =
+                client.UploadValues(server + "/getDataArticlesDetail.php", collection);
+
+                result = System.Text.Encoding.UTF8.GetString(response);
+            }
+
+            articleDetailVM log = JsonConvert.DeserializeObject<articleDetailVM>(result);
+
+
+            return View(log);
+
         }
     }
 }
