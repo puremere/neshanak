@@ -33,6 +33,6 @@ namespace neshanak.viewModel
     public class BzListVM
     {
         public List<Bzlist> bzlist { get; set; }
-
+        public List<Sld> sld { get; set; }
     }
 }

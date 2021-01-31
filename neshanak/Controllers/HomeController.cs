@@ -127,6 +127,8 @@ namespace neshanak.Controllers
         {
             CookieVM cookiemodel = JsonConvert.DeserializeObject<CookieVM>(getCookie("token"));
             cookiemodel.currentpage = "index";
+            cookiemodel.city = "1";
+            cookiemodel.country = "1";
             SetCookie(JsonConvert.SerializeObject(cookiemodel), "token");
             if (Session["lang"] == null)
 
@@ -138,7 +140,8 @@ namespace neshanak.Controllers
             {
                 code = device,
                 device = code,
-                city = "",
+                city = cookiemodel.city == null ? "" : cookiemodel.city,
+                country = cookiemodel.country == null ? "": cookiemodel.country,
                 lan = lang,
                 mobile = "",
                 nodeID = ""
@@ -217,6 +220,10 @@ namespace neshanak.Controllers
         }
         public async Task<ActionResult> getcityPartial(string result)
         {
+
+            CookieVM cookmodel = JsonConvert.DeserializeObject<CookieVM>(getCookie("token"));
+            cookmodel.country = result;
+            SetCookie(JsonConvert.SerializeObject(cookmodel), "token");
             string lang = Session["lang"] as string;
 
             getLandCATVM VMmodel = new getLandCATVM()
@@ -236,7 +243,12 @@ namespace neshanak.Controllers
             //return View();
         }
         
-
+        public void setCity (string id)
+        {
+            CookieVM cookiemodel = JsonConvert.DeserializeObject<CookieVM>(getCookie("token"));
+            cookiemodel.city = id;
+            SetCookie(JsonConvert.SerializeObject(cookiemodel), "token");
+        }
         public void setValues(string result, string mallID)
         {
             string srt = getCookie("token");
@@ -254,7 +266,8 @@ namespace neshanak.Controllers
             SetCookie(JsonConvert.SerializeObject(model), "token");
             searchResultVM VMmodel = new searchResultVM()
             {
-                city = "",
+                city = model.city == null ? "": model.city ,
+                country = model.country == null ? "" : model.country,
                 mobile = "",
                 subcat = model.result.Split('-')[0],
                 catLevel = model.result.Split('-')[1],
@@ -262,8 +275,8 @@ namespace neshanak.Controllers
                 device = HomeController.device,
                 lan = lang,
                 floorID = model.floorID,
-                mallID = model.mallID
-
+                mallID = model.mallID,
+               
             };
             string searchResultPayload = JsonConvert.SerializeObject(VMmodel);
             string resu = await wb.doPostData(server + "/GetSearchResult.php", searchResultPayload);
@@ -311,7 +324,10 @@ namespace neshanak.Controllers
             return View(model);
             // return View();
         }
+        public void setcountry(string id)
+        {
 
+        }
         public ActionResult ChangeLanguage(string lang)
         {
             string current = JsonConvert.DeserializeObject<CookieVM>(getCookie("token")).currentpage;
@@ -617,5 +633,42 @@ namespace neshanak.Controllers
             return View(log);
 
         }
+        public async Task<ActionResult> itemDetail(string id) {
+
+            CookieVM cookiemodel = JsonConvert.DeserializeObject<CookieVM>(getCookie("token"));
+            cookiemodel.currentpage = "itemDetail";
+            SetCookie(JsonConvert.SerializeObject(cookiemodel), "token");
+
+
+            variabli varimodel = JsonConvert.DeserializeObject<variabli>(getCookie("vari"));
+            if (id == null)
+            {
+                id = varimodel.detailID;
+            }
+            else
+            {
+                varimodel.detailID = id;
+            }
+            SetCookie(JsonConvert.SerializeObject(varimodel), "vari");
+
+            if (Session["lang"] == null)
+            {
+                Session["lang"] = "en";
+            }
+            string lang = Session["lang"] as string;
+            getItemDetail mainModel = new getItemDetail()
+            {
+                code = device,
+                device = code,
+                lan = lang,
+                NodeID = id
+
+            };
+            string contactpayload = JsonConvert.SerializeObject(mainModel);
+            string resu = await wb.doPostData(server + "/GetNodeData.php", contactpayload);
+            viewModel.itemDetailVM model = JsonConvert.DeserializeObject<viewModel.itemDetailVM>(resu);
+            return View(model);
+        }
+
     }
 }

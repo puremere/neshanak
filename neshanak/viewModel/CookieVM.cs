@@ -11,6 +11,8 @@ namespace neshanak.viewModel
         public string  result  { get; set; }
         public string mallID  { get; set; }
         public string floorID { get; set; }
+        public string country { get; set; }
+        public string city { get; set; }
         public string images { get; set; }
         public string id { get; set; }
         public string pass { get; set; }
@@ -23,5 +25,6 @@ namespace neshanak.viewModel
     {
         public string magid { get; set; }
         public string result { get; set; }
+        public string detailID { get; set; }
     }
 }

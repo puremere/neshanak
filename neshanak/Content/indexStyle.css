@@ -40,7 +40,7 @@ body {
 }
 
 .formsection {
-    width: 60%;
+    width: 80%;
     margin: 40px auto 0;
     display: flex;
     padding: 15px;
@@ -49,7 +49,10 @@ body {
     background-color: #EFEFEF;
     direction: var(--direction)
 }
-
+.dropdownholder{
+    padding:0 5px;
+    width:28%;
+}
 .searchButton {
     padding: 0px 25px;
     background-color: #F85C9B;
@@ -66,7 +69,7 @@ body {
     border: 1px solid #ddd;
     background-color: #EFEFEF;
     border-radius: 5px;
-    margin: 0 10px;
+  
     direction: var(--direction);
     text-align: var(--align);
     width: 33%;
@@ -115,7 +118,7 @@ body {
         overflow: hidden
     }
 
-#cityDropDown {
+#cityDropDown, #countryDropDown {
     width: 28%;
     height: 44px;
     background-color: #EFEFEF;
@@ -403,6 +406,13 @@ body {
 
 .imageholder {
     object-fit: cover;
+    z-index: 999;
+    position: relative;
+    top: 0;
+    left: 0;
+    display: block;
+    text-align: center;
+    display: flex
 }
 
     .imageholder img {
@@ -412,7 +422,12 @@ body {
 .itemRow {
     padding: 15px 5px;
     direction: var(--dir);
-    border-bottom: 1px solid #8c8c8c;
+    border: 1px solid #eee;
+    margin: 5px;
+    border-radius: 5px;
+    box-shadow: 2px 2px 5px -1px rgba(148,149,153,1);
+    background-color: #eee;
+    margin-bottom: 20px;
 }
 
     .itemRow p {
@@ -442,7 +457,9 @@ body {
     align-items: center;
     display: flex;
     cursor: pointer;
-    margin: 0 10px
+    margin: 0 10px;
+    border-radius:5px;
+    border:1px solid white
 }
 
     .imageCover img {
@@ -458,16 +475,14 @@ body {
     }
 
 .default {
-    max-width: 50% !important;
-    max-height: 50% !important;
+   width:100%
 }
 
 .contentHolder {
     width: 100%;
     height: 100%;
     padding-top: 70px;
-    background: url(/Images/images.jpg) no-repeat;
-    background-size: auto;
+    background: linear-gradient(to left, rgba(202, 119, 180, 0.5) 0%, rgba(202, 119, 180, 0.5) 100%), url(/Images/images.jpg) no-repeat; background-size: auto;
 }
 
 .parent {
@@ -487,6 +502,7 @@ body {
     border-radius: 5px;
     height: 90%;
     overflow-y: scroll;
+    margin-top:50px;
 }
 .creatButt {
     width: 100%;
@@ -670,11 +686,18 @@ h1, h2, h3, h4, h5, h6, input, textarea,p {
 }
     .countryItem p {
         background-color: white;
-        border-radius: 20px 0 20px 0
+        border-radius: 20px 0 20px 0;
+        direction: var(--direction);
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
-.countrylist{
-    padding:15px;
-}
+        .countryItem p span{
+            margin:0 5px;
+        }
+        .countrylist {
+            padding: 15px;
+        }
 .subcatHolder {
     margin: 10px;
     border: 1px solid #eee;
@@ -694,8 +717,9 @@ h1, h2, h3, h4, h5, h6, input, textarea,p {
     }
 
 .subcatimage {
-    max-width: 30px;
-    margin-left: 30px;
+    width: 100%;
+    height: 100%;
+    border-radius: 10px 10px 0 0px;
 }
 
 .subcatHolder img {
@@ -704,6 +728,70 @@ h1, h2, h3, h4, h5, h6, input, textarea,p {
 .itemHolder .DATA h4, h5 {
     text-align: var(--align);
     color: #4d4d4d
+}
+.blogList{
+    cursor:pointer
+}
+.slidItemHolder{
+    cursor:pointer
+}
+.detailField{
+    padding:15px;
+   
+    color: black
+}
+    .detailField p {
+        color: white;
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        max-width: initial;
+        text-align:var(--align);
+        font-size:15px
+    }
+        .detailField p.tile{
+            font-size:20px; 
+            font-weight:600;
+            text-align:center
+        }
+        .detailDesc {
+            color: black !important;
+            max-width: inherit !important;
+            direction: var(--direction) !important;
+            font-size: 15px;
+            font-family: var(--font);
+        }
+textarea {
+    text-align: var(--align)!important;
+}
+.notitemclass {
+    box-shadow: 2px 2px 3px 1px rgb(148 149 153);
+    width: 100%;
+    height: 300px;
+    background-color: white;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+}
+.catitem  {
+    width: 19%;
+    display: inline-block;
+    padding:10px;
+}
+.catitem div{
+   
+    border-radius: 10px;
+    background-color: white;
+    border: 1px solid #eee
+}
+.catitem p {
+    width: 100%;
+    text-align: center;
+}
+.detailField{
+    direction: var(--direction)
 }
 @media (max-width : 724px) {
     .ItemsHome {

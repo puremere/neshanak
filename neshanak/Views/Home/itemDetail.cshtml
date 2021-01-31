@@ -1,0 +1,130 @@
+﻿@model neshanak.viewModel.itemDetailVM
+@{
+    ViewBag.Title = "itemDetail";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section styles{
+
+    @*<link href="~/Content/root.css" rel="stylesheet" />*@
+
+
+    <link href="~/Content/slick.css" rel="stylesheet" />
+    <link href="~/Content/slick-theme.css" rel="stylesheet" />
+
+    <link href="~/Extra/leaflet/leaflet.css" rel="stylesheet" />
+}
+@section scripts
+    {
+    <script src="~/Scripts/jquery.migrate.js"></script>
+    <script type="text/javascript" src="~/Scripts/slick.js"></script>
+    <script>
+        $('.your-class').slick({
+            slidesToShow: 1,
+            slidesToScroll: 1,
+            autoplay: true,
+            autoplaySpeed: 1000,
+            dots: false,
+            prevArrow: false,
+            nextArrow: false
+        });
+    </script>
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+            integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+            crossorigin="">
+
+    </script>
+    <script>
+        var markers = {};
+        var mymap = L.map('mapid', { attributionControl: false}).setView([51.505, -0.09], 13);
+        L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
+            attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+            maxZoom: 18,
+            id: 'mapbox/streets-v11',
+            tileSize: 512,
+            zoomOffset: -1,
+            accessToken: 'pk.eyJ1IjoibWVyaW9saSIsImEiOiJja2p6dXhmdngwYmVvMnZwY2lyc2htNGxhIn0.Y9t__Bll6Fw9b9amb_rcHg',
+
+        }).addTo(mymap);
+        mymap.panTo(new L.LatLng(@Model.lat, @Model.lng));
+        var LeafIcon = L.Icon.extend({
+            options: {
+                shadowUrl: '/images/marker-shadow.png',
+                iconSize: [25, 41],
+                iconAnchor: [12, 41],
+                popupAnchor: [1, -34],
+                shadowSize: [41, 41]
+            }
+        });
+        var greenIcon = new LeafIcon({ iconUrl: '/images/marker-green.png' });
+        var marker;
+        marker = L.marker([@Model.lat, @Model.lng]);
+        marker.addTo(mymap).on('click', onClick);
+      
+       
+
+    
+
+    </script>
+}
+
+<div class="row" style="display:flex; padding:50px 10%;background-color: #690988;justify-content:center">
+    <div class="" style="width:50%; padding:30px; display:inline-block">
+        <div class="slidHolder">
+
+            <div class="your-class" style="">
+
+                @{
+
+                    foreach (var item in Model.sld)
+                    {
+                        <div class="detailImage;" style="width:100%;height:350px;  object-fit:cover;">
+                            <img style="width:100%;height:100%; margin:auto;border-radius:15px " src="@item.image" />
+                        </div>
+                    }
+                }
+
+            </div>
+
+        </div>
+        <div style="  margin-top: 10px;">
+
+            <div class="detailField"><p class="tile"> @Model.title</p></div>
+            @if (@Model.phone1 != "")
+            {
+                <div class="detailField"><p><span style="font-weight:600; font-size:17px">@Resources.res.phone</span> &nbsp;&nbsp;  :&nbsp; &nbsp;     @Model.phone1</p> </div>
+            }
+            @if (@Model.phone2 != "")
+            {
+                <div class="detailField"><p><span style="font-weight:600; font-size:17px">@Resources.res.phone 2</span> &nbsp;&nbsp;  :&nbsp; &nbsp;     @Model.phone2</p> </div>
+            }
+            @if (@Model.mobile1 != "")
+            {
+                <div class="detailField"><p><span style="font-weight:600; font-size:17px">@Resources.res.mobile</span> &nbsp;&nbsp;  :&nbsp; &nbsp;     @Model.mobile1</p> </div>
+
+            }
+            @if (@Model.mobile2 != "")
+            {
+                <div class="detailField"><p><span style="font-weight:600; font-size:17px">@Resources.res.mobile 2</span> &nbsp;&nbsp;  :&nbsp; &nbsp;     @Model.mobile2</p> </div>
+            }
+            @if (@Model.fax != "")
+            {
+                <div class="detailField"><p><span style="font-weight:600; font-size:17px">@Resources.res.fax 2</span> &nbsp;&nbsp;  :&nbsp; &nbsp;     @Model.fax</p> </div>
+
+            }
+
+            <div class="detailField"><p><span style="font-weight:600; font-size:17px">@Resources.res.email</span> &nbsp;&nbsp;  :&nbsp; &nbsp;     @Model.email</p> </div>
+            <div class="detailField"><p><span style="font-weight:600; font-size:17px">@Resources.res.website</span> &nbsp;&nbsp;  :&nbsp; &nbsp; @Model.website</p> </div>
+            <div class="detailField"><p><span style="font-weight:600; font-size:17px">@Resources.res.country</span> &nbsp;&nbsp;  :&nbsp; &nbsp; @Model.country</p></div>
+            <div class="detailField"><p><span style="font-weight:600; font-size:17px">@Resources.res.city</span> &nbsp;&nbsp;  :&nbsp; &nbsp; @Model.city</p></div>
+            <div class="detailField"><p><span style="font-weight:600; font-size:17px">@Resources.res.address</span> &nbsp;&nbsp;  :&nbsp; &nbsp; @Model.address</p></div>
+        </div>
+        <div style="padding:25px 20px;border-radius:15px;margin-top:40px; background-color:white;color :#8d8d8d" class="detailField"><div class="detailDesc">@Model.desc</div></div>
+
+        <div id="mapid" style="height:250px;border-radius:15px;margin-top:40px"></div>
+
+
+    </div>
+ 
+</div>
+
+

@@ -11,6 +11,8 @@ namespace neshanak.viewModel
         public string device { get; set; }
         public string mobile { get; set; }
         public string city { get; set; }
+        public string country { get; set; }
+        
         public string nodeID { get; set; }
         public string lan { get; set; }
     }

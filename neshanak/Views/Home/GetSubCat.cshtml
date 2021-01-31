@@ -62,41 +62,50 @@
 
 }
 
-    <div class="row" style="background-color:black">
-        <div id="slideHolder" style=" width:100%; height:auto; margin:auto;display:block">
-            <div class="your-class">
+<div class="row" style="background-color:black">
+    <div id="slideHolder" style=" width:100%; height:auto; margin:auto;display:block">
+        <div class="your-class">
+            @foreach (var slid in Model.sld)
+            {
                 <div class="imageholder">
-                    <img src="~/Images/slide.jpg" />
+                    <img src="@slid.image" />
                 </div>
-                <div class="imageholder">
-                    <img src="~/Images/slide.jpg" />
-                </div>
-                <div class="imageholder">
-                    <img src="~/Images/slide.jpg" />
-                </div>
-                <div class="imageholder">
-                    <img src="~/Images/slide.jpg" />
-                </div>
+            }
 
-            </div>
+           
+
+
         </div>
     </div>
+</div>
 
 <!-- #endregion Jssor Slider End -->
 <div style="" class="subcatHolder" data-slide="1" data-speed="500">
-    @foreach (var item in Model.cat)
-    {
-        if (item.IsFinal == 1)
+    <div>
+        @foreach (var item in Model.cat)
         {
-            <p class="final" id="@item.id-@item.catLevel"><img class="subcatimage" src="http://supectco.com/app/portal/uploads/@item.img" /><span>@item.title</span> </p>
+            if (item.IsFinal == 1)
+            {
+                <div class="final catitem" id="@item.id-@item.catLevel">
+                    <div>
+                        <img class="subcatimage" src="@item.img" /><p>@item.title</p>
+                    </div>
 
+                </div>
+
+            }
+            else
+            {
+                <div class="subcat catitem" id="@item.id-@item.catLevel">
+                    <div>
+                        <img class="subcatimage" src="@item.img" /><p>@item.title</p>
+                    </div>
+                </div>
+
+
+            }
         }
-        else
-        {
-            <p class="subcat" id="@item.id-@item.catLevel"><img class="subcatimage" src="http://supectco.com/app/portal/uploads/@item.img" /><span>@item.title</span> </p>
 
-        }
-    }
-
+    </div>
     @*<img class="bannerItem" src="http://supectco.com/app/portal/uploads/@Model.bnr.First().img" />*@
 </div>

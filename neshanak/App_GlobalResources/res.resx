@@ -147,8 +147,8 @@
   <data name="country" xml:space="preserve">
     <value>Country</value>
   </data>
-  <data name="createAbout" xml:space="preserve">
-    <value>About Us</value>
+  <data name="fax" xml:space="preserve">
+    <value>fax</value>
   </data>
   <data name="createAddress" xml:space="preserve">
     <value>Address</value>
@@ -160,7 +160,7 @@
     <value>Description</value>
   </data>
   <data name="createImage" xml:space="preserve">
-    <value>Upload image</value>
+    <value>Add image</value>
   </data>
   <data name="createLocation" xml:space="preserve">
     <value>Location</value>
@@ -374,5 +374,23 @@
   </data>
   <data name="registerPhoneError" xml:space="preserve">
     <value>phone must be inserted</value>
+  </data>
+  <data name="cancel" xml:space="preserve">
+    <value>cancel</value>
+  </data>
+  <data name="maincitychoose" xml:space="preserve">
+    <value>select your city</value>
+  </data>
+  <data name="noItemFound" xml:space="preserve">
+    <value>no item found</value>
+  </data>
+  <data name="address" xml:space="preserve">
+    <value>address</value>
+  </data>
+  <data name="mobile" xml:space="preserve">
+    <value>mobile</value>
+  </data>
+  <data name="phone" xml:space="preserve">
+    <value>phone</value>
   </data>
 </root>

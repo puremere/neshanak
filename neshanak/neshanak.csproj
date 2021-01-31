@@ -197,6 +197,7 @@
     <Compile Include="viewModel\confrimVM.cs" />
     <Compile Include="viewModel\CookieVM.cs" />
     <Compile Include="viewModel\createItem.cs" />
+    <Compile Include="viewModel\getItemDetail.cs" />
     <Compile Include="viewModel\getLandVM.cs" />
     <Compile Include="viewModel\getMainVM.cs" />
     <Compile Include="viewModel\getSubCatVM.cs" />
@@ -255,12 +256,19 @@
     <Content Include="Images\banner4.jpg" />
     <Content Include="Images\banner5.jpg" />
     <Content Include="Images\banner6.jpg" />
+    <Content Include="Images\blog1.jpg" />
     <Content Include="Images\city-nawpic.jpg" />
     <Content Include="Images\de.png" />
     <Content Include="Images\en.png" />
     <Content Include="Images\fa.png" />
     <Content Include="Images\final2.png" />
     <Content Include="Images\hero-area.jpg" />
+    <Content Include="Images\icon\doctors.png" />
+    <Content Include="Images\icon\lawyers.png" />
+    <Content Include="Images\icon\pharmacy.png" />
+    <Content Include="Images\icon\restaurant.png" />
+    <Content Include="Images\icon\supermarket.png" />
+    <Content Include="Images\icon\translation.png" />
     <Content Include="Images\images.jpg" />
     <Content Include="Images\logo_text.png" />
     <Content Include="Images\map.jpg" />
@@ -272,6 +280,7 @@
     <Content Include="Images\nodes\hiring.jpg" />
     <Content Include="Images\nodes\blog1.jpg" />
     <Content Include="Images\nodes\rentcar.jpg" />
+    <Content Include="Images\nodes\restaurant2.jpg" />
     <Content Include="Images\nodes\resturant.jpg" />
     <Content Include="Images\nodes\thumb\thumb_cell1.jpg" />
     <Content Include="Images\slide.jpg" />
@@ -394,6 +403,7 @@
     <Content Include="Views\Home\Mag.cshtml" />
     <Content Include="Views\Home\magDetail.cshtml" />
     <Content Include="video\sample.flv" />
+    <Content Include="Views\Home\itemDetail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

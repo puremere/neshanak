@@ -1,0 +1,140 @@
+﻿@model neshanak.ViewModel.BzListVM
+@{
+    /**/
+
+    ViewBag.Title = "searchResult";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section scripts{
+
+    <link href="~/Content/resCarousel.css" rel="stylesheet" />
+    <script src="~/Scripts/resCarousel.min.js"></script>
+    <link href="~/Content/Site.css" rel="stylesheet" />
+    <link href="~/Content/fontawesome-all.css" rel="stylesheet" />
+    <script>
+        var width = screen.width;
+        var number = "-" + width + "px";
+        $("#searchdiv").css("margin-right", number);
+
+
+    </script>
+    <link href="~/Content/searchListStyle.css" rel="stylesheet" />
+}
+
+<div class="topheader">
+    <i id="searchIcon" class="fa fa-search"></i>
+</div>
+<div class="filterHolder">
+    <div class="row inputSec">
+        <i class="fa fa-search"></i>
+        <input type="text" placeholder="جستجو..." />
+
+
+    </div>
+    <div class="row filterSec">
+        <div class="ButtItem">
+            <i class="fa fa-filter"></i>
+            <span>فیلتر</span>
+        </div>
+        <div class="ButtItem" style="float:left">
+            <i class="fa fa-map-marker"></i>
+            <span id="goToMap">نمایش بر روی نقشه</span>
+        </div>
+    </div>
+    <script>
+        $("#goToMap").click(function () {
+             var url = "/Home/searchResultMap?result=@ViewBag.result&mallID=@ViewBag.mallID&floorID=@ViewBag.floorID";
+        window.location.href = url
+        })
+       
+    </script>
+</div>
+
+@{
+    if (Model.bzlist != null && Model.bzlist.Count() > 0)
+    {
+
+        foreach (var item in Model.bzlist)
+        {
+
+            string ID = item.id.ToString();
+            string modalID = "modal" + ID;
+            <div class="item   ITEMparent" id="@ID">
+                <p style="display:none">@item.isShoppingCenter</p>
+                <div style="display:flex">
+                    <div style="width:35%; display:inline-block">
+                        <img src="http://supectco.com/app/portal/uploads/@item.img" />
+                    </div>
+
+                    <div class="titleHolder">
+                        <p>@item.title</p>
+                        <p>
+                            @if (item.eshop == 1)
+                            {
+                                <span class="shop">فروش آنلاین</span>
+                            }
+                            @if (item.dist == "1")
+                            {
+                                <span class="discount">تخفیف</span>
+                            }
+
+                        </p>
+                    </div>
+                </div>
+
+                <p>@item.desc</p>
+            </div>
+
+            if (item.ShoppingCenterFloors != null)
+            {
+                <div class="modal fade" id=@modalID tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+
+                            <div class="modal-body">
+                                @foreach (var floor in item.ShoppingCenterFloors)
+                                {
+                                    var floorID = @modalID + "-" + @floor.ID;
+                                    <p  style="width:100%; margin-top:10px" class="btn btn-info floor" id=@floorID>@floor.title</p>
+                                }
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            }
+            <script>
+                $(".floor").click(function () {
+                    var id = $(this).attr('id');
+                    var mallID = id.split('-')[0].replace("modal", "");
+                    var floorID = id.split('-')[1];
+                    var url = "/Home/searchResult?result=@ViewBag.result&mallID=" + mallID + "&floorID=" + floorID;
+                    //alert(url);
+                    $("#" + id.split('-')[0]).modal('toggle');
+                    window.location.href = url
+                })
+            </script>
+
+
+
+
+        }
+        <script>
+            $(".ITEMparent").click(function () {
+                var id = $(this).attr('id');
+                var isbool = $(this).children().first().text();
+
+                if (isbool === "True") {
+                    var modalid = "modal" + id;
+                    $("#" + modalid).modal('toggle');
+                }
+                else {
+                    alert("isnot")
+                }
+
+            })
+        </script>
+    }
+
+}

@@ -61,6 +61,15 @@ namespace neshanak.App_GlobalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to address.
+        /// </summary>
+        public static string address {
+            get {
+                return ResourceManager.GetString("address", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to all.
         /// </summary>
         public static string all {
@@ -84,6 +93,15 @@ namespace neshanak.App_GlobalResources {
         public static string blogtext2 {
             get {
                 return ResourceManager.GetString("blogtext2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to cancel.
+        /// </summary>
+        public static string cancel {
+            get {
+                return ResourceManager.GetString("cancel", resourceCulture);
             }
         }
         
@@ -196,15 +214,6 @@ namespace neshanak.App_GlobalResources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to About Us.
-        /// </summary>
-        public static string createAbout {
-            get {
-                return ResourceManager.GetString("createAbout", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Address.
         /// </summary>
         public static string createAddress {
@@ -232,7 +241,7 @@ namespace neshanak.App_GlobalResources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Upload image.
+        ///   Looks up a localized string similar to Add image.
         /// </summary>
         public static string createImage {
             get {
@@ -282,6 +291,15 @@ namespace neshanak.App_GlobalResources {
         public static string email {
             get {
                 return ResourceManager.GetString("email", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to fax.
+        /// </summary>
+        public static string fax {
+            get {
+                return ResourceManager.GetString("fax", resourceCulture);
             }
         }
         
@@ -493,6 +511,15 @@ namespace neshanak.App_GlobalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to select your city.
+        /// </summary>
+        public static string maincitychoose {
+            get {
+                return ResourceManager.GetString("maincitychoose", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Anywhere and anytime, We are here to help.
         /// </summary>
         public static string maptext1 {
@@ -511,6 +538,15 @@ namespace neshanak.App_GlobalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to mobile.
+        /// </summary>
+        public static string mobile {
+            get {
+                return ResourceManager.GetString("mobile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to more.
         /// </summary>
         public static string more {
@@ -520,11 +556,29 @@ namespace neshanak.App_GlobalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to no item found.
+        /// </summary>
+        public static string noItemFound {
+            get {
+                return ResourceManager.GetString("noItemFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to verify.
         /// </summary>
         public static string OK {
             get {
                 return ResourceManager.GetString("OK", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to phone.
+        /// </summary>
+        public static string phone {
+            get {
+                return ResourceManager.GetString("phone", resourceCulture);
             }
         }
         

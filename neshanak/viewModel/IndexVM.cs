@@ -5,6 +5,27 @@ using System.Web;
 
 namespace neshanak.viewModel
 {
+    public class itemDetailVM
+    {
+        public int id { get; set; }
+        public string img { get; set; }
+        public string title { get; set; }
+        public string phone1 { get; set; }
+        public string phone2 { get; set; }
+        public string mobile1 { get; set; }
+        public string mobile2 { get; set; }
+        public string fax { get; set; }
+        public string address { get; set; }
+        public string email { get; set; }
+        public string website { get; set; }
+        public string instagram { get; set; }
+        public string desc { get; set; }
+        public string lat { get; set; }
+        public string lng { get; set; }
+        public string country { get; set; }
+        public string city { get; set; }
+        public List<Sld> sld { get; set; }
+    }
     public class countryCityCatVM
     {
         public List<Land> lands { get; set; }
@@ -17,6 +38,16 @@ namespace neshanak.viewModel
         public int ID { get; set; }
         public string title { get; set; }
     }
+    public class Banner
+    {
+        public int ID { get; set; }
+        public string catIDOrLink { get; set; }
+        public string type { get; set; }
+        public string image { get; set; }
+        public string Ptitle { get; set; }
+        public string title { get; set; }
+        public string name { get; set; }
+    }
     public class IndexVM
     {
         public List<Sld> sld { get; set; }
@@ -28,28 +59,30 @@ namespace neshanak.viewModel
         public List<Rand> rand { get; set; }
         public List<Land> lands { get; set; }
         public List<Blog> blog { get; set; }
+        public List<Banner> banners { get; set; }
     }
     public class Blog
     {
         public int ID { get; set; }
         public object title { get; set; }
         public object content { get; set; }
+        public string  image { get; set; }
     }
     public class Land
     {
         public int ID { get; set; }
         public string title { get; set; }
+        public string flag { get; set; }
     }
     public class Sld
     {
         public int ID { get; set; }
-        public string dest { get; set; }
-        public string act { get; set; }
-        public string img { get; set; }
+        public string catIDOrLink { get; set; }
+        public string type { get; set; }
+        public string image { get; set; }
         public string Ptitle { get; set; }
         public string title { get; set; }
         public string name { get; set; }
-
     }
 
     public class Cat
