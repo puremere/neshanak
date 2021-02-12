@@ -5,8 +5,14 @@ using System.Web;
 
 namespace neshanak.viewModel
 {
-    public class itemDetailVM
+    public class itemDetailVM : main
     {
+        public List<Land> lands { get; set; }
+        public List<City> cities { get; set; }
+        public List<Cat> cat { get; set; }
+        public List<Subcat> subcat { get; set; }
+        public List<Subcat2> subcat2 { get; set; }
+        
         public int id { get; set; }
         public string img { get; set; }
         public string title { get; set; }
@@ -18,13 +24,17 @@ namespace neshanak.viewModel
         public string address { get; set; }
         public string email { get; set; }
         public string website { get; set; }
+        public string link { get; set; }
         public string instagram { get; set; }
         public string desc { get; set; }
         public string lat { get; set; }
         public string lng { get; set; }
-        public string country { get; set; }
-        public string city { get; set; }
-        public List<Sld> sld { get; set; }
+        public int country { get; set; }
+        public int city { get; set; }
+        public int catid { get; set; }
+        public int subcatid { get; set; }
+        public int subcatid2 { get; set; }
+        
     }
     public class countryCityCatVM
     {
@@ -38,16 +48,17 @@ namespace neshanak.viewModel
         public int ID { get; set; }
         public string title { get; set; }
     }
-    public class Banner
-    {
-        public int ID { get; set; }
-        public string catIDOrLink { get; set; }
-        public string type { get; set; }
-        public string image { get; set; }
-        public string Ptitle { get; set; }
-        public string title { get; set; }
-        public string name { get; set; }
-    }
+
+    //public class Banner
+    //{
+    //    public int ID { get; set; }
+    //    public string catIDOrLink { get; set; }
+    //    public string type { get; set; }
+    //    public string image { get; set; }
+    //    public string Ptitle { get; set; }
+    //    public string title { get; set; }
+    //    public string name { get; set; }
+    //}
     public class IndexVM
     {
         public List<Sld> sld { get; set; }
@@ -74,6 +85,12 @@ namespace neshanak.viewModel
         public string title { get; set; }
         public string flag { get; set; }
     }
+    public class City
+    {
+        public int ID { get; set; }
+        public string title { get; set; }
+        public string img { get; set; }
+    }
     public class Sld
     {
         public int ID { get; set; }
@@ -92,7 +109,25 @@ namespace neshanak.viewModel
         public int IsFinal { get; set; }
         public int catLevel { get; set; }
         public string img { get; set; }
+        public string flag { get; set; }
 
+    }
+    public class Subcat
+    {
+        public int id { get; set; }
+        public string title { get; set; }
+        public int IsFinal { get; set; }
+        public int catLevel { get; set; }
+        public string img { get; set; }
+    }
+
+    public class Subcat2
+    {
+        public int id { get; set; }
+        public string title { get; set; }
+        public int IsFinal { get; set; }
+        public int catLevel { get; set; }
+        public string img { get; set; }
     }
 
     public class Spc

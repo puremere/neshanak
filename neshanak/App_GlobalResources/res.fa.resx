@@ -160,10 +160,10 @@
     <value>موقعیت</value>
   </data>
   <data name="createPhone" xml:space="preserve">
-    <value>موبایل</value>
+    <value>شماره تلفن 1</value>
   </data>
   <data name="createPhone2" xml:space="preserve">
-    <value>تلفن</value>
+    <value>شماره تلفن 2</value>
   </data>
   <data name="createTitle" xml:space="preserve">
     <value>عنوان</value>
@@ -392,5 +392,98 @@
   </data>
   <data name="phone" xml:space="preserve">
     <value>تلفن</value>
+  </data>
+  <data name="activeinstall" xml:space="preserve">
+    <value>نصب فعال</value>
+  </data>
+  <data name="adminPanel" xml:space="preserve">
+    <value>پنل مدیریت</value>
+  </data>
+  <data name="bannman" xml:space="preserve">
+    <value>مدیریت بنر</value>
+  </data>
+  <data name="buscode" xml:space="preserve">
+    <value>کد صنف</value>
+  </data>
+  <data name="busiadd" xml:space="preserve">
+    <value>افزودن صنف</value>
+  </data>
+  <data name="busilist" xml:space="preserve">
+    <value>لیست اصناف</value>
+  </data>
+  <data name="busiman" xml:space="preserve">
+    <value>مدیریت اصناف</value>
+  </data>
+  <data name="bustitle" xml:space="preserve">
+    <value>عنوان صنف</value>
+  </data>
+  <data name="category" xml:space="preserve">
+    <value>طبقه بندی</value>
+  </data>
+  <data name="catnam" xml:space="preserve">
+    <value>مدیریت طبقه بندی</value>
+  </data>
+  <data name="col" xml:space="preserve">
+    <value>ردیف</value>
+  </data>
+  <data name="comman" xml:space="preserve">
+    <value>مدیریت نظرات</value>
+  </data>
+  <data name="dashbaord" xml:space="preserve">
+    <value>داشبورد</value>
+  </data>
+  <data name="delbusi" xml:space="preserve">
+    <value>آیا از حذف محصول اطمینان دارید</value>
+  </data>
+  <data name="delete" xml:space="preserve">
+    <value>حذف</value>
+  </data>
+  <data name="edit" xml:space="preserve">
+    <value>ویرایش</value>
+  </data>
+  <data name="inactive" xml:space="preserve">
+    <value>غیر فعال</value>
+  </data>
+  <data name="lastbusi" xml:space="preserve">
+    <value>آخرین محصولات ثبت شده</value>
+  </data>
+  <data name="link" xml:space="preserve">
+    <value>لینک</value>
+  </data>
+  <data name="mobile1" xml:space="preserve">
+    <value>شماره موبایل 1</value>
+  </data>
+  <data name="mobile2" xml:space="preserve">
+    <value>شماره موبایل 2</value>
+  </data>
+  <data name="newsman" xml:space="preserve">
+    <value>مدیریت اخبار</value>
+  </data>
+  <data name="offer" xml:space="preserve">
+    <value>پیشنهاد ویژه</value>
+  </data>
+  <data name="pageman" xml:space="preserve">
+    <value>مدیریت صفحات</value>
+  </data>
+  <data name="registerdbusi" xml:space="preserve">
+    <value>اصناف ثبت شده</value>
+  </data>
+  <data name="registerduser" xml:space="preserve">
+    <value>کاربران ثبت شده</value>
+  </data>
+  <data name="search" xml:space="preserve">
+    <value>جستجو</value>
+  </data>
+  <data name="slideman" xml:space="preserve">
+    <value>مدیریت اسلاید</value>
+  </data>
+  <data name="title" xml:space="preserve">
+    <value>عنوان</value>
+  </data>
+  <data name="userman" xml:space="preserve">
+    <value>مدیریت کاربران</value>
+  </data>
+  <data name="wellcome" xml:space="preserve">
+    <value>خوش آمدید</value>
   </data>
 </root>

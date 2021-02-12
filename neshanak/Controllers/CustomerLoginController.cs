@@ -159,7 +159,7 @@ namespace neshanak.Controllers
 
                 result = System.Text.Encoding.UTF8.GetString(response);
             }
-            signeupViewModel mymodel = JsonConvert.DeserializeObject<signeupViewModel>(result);
+            signeupviewModel mymodel = JsonConvert.DeserializeObject<signeupviewModel>(result);
 
 
             if (mymodel.status == 200)
@@ -422,7 +422,7 @@ namespace neshanak.Controllers
 
                 result = System.Text.Encoding.UTF8.GetString(response);
             }
-            var log = JsonConvert.DeserializeObject<signeInViewModel>(result);
+            var log = JsonConvert.DeserializeObject<signeInviewModel>(result);
 
             // Session["LogedInUser"] = log;
             Session["token"] = log.token;
@@ -452,7 +452,7 @@ namespace neshanak.Controllers
 
                 result = System.Text.Encoding.UTF8.GetString(response);
             }
-            var log = JsonConvert.DeserializeObject<signeupViewModel>(result);
+            var log = JsonConvert.DeserializeObject<signeupviewModel>(result);
             return Content(log.status + "");
             //return Content("");
         }

@@ -25,7 +25,7 @@ namespace neshanak.viewModel
         public List<userdata> data { get; set; }
     }
 
-    public class signeupViewModel
+    public class signeupviewModel
     {
         public int status { get; set; }
         public string token { get; set; }
@@ -37,7 +37,7 @@ namespace neshanak.viewModel
         public string status { get; set; }
         public string token { get; set; }
     }
-    public class signeInViewModel
+    public class signeInviewModel
     {
         public string ID { get; set; }
         public string token { get; set; }

@@ -17,6 +17,7 @@ namespace neshanak.viewModel
         public string id { get; set; }
         public string pass { get; set; }
         public string currentpage { get; set; }
+        public string controller = "home";
         public string Username { get; set; }
         public string Password { get; set; }
     }

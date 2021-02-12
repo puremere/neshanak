@@ -1,4 +1,4 @@
-﻿@model neshanak.viewModel.countryCityCatVM
+﻿@model neshanak.viewModel.itemDetailVM
 
 @{
     ViewBag.Title = "createItem";
@@ -39,45 +39,28 @@
         });
         var getSubcatTree = function (val, type) {
             if (val != "") {
-                var id = val.split('-')[0];
-                var isfinal = val.split('-')[1];
+                var id = val;
+               
+                $.ajax({
+                    url: "/Home/getSubcatJson",
+                    dataType: "html",
+                    data: {
+                        result: id,
+                        level: type
+                    },
+                    success: function (data) {
 
-                if (isfinal == "0") {
-                    id = id + "-" + type
-                    $.ajax({
-                        url: "/Home/getSubcatJson",
-                        dataType: "html",
-                        data: {
-                            result: id
-                        },
-                        success: function (data) {
+                        if (type == "1") {
 
-                            if (type == "1") {
-
-                                $("#subcatHolder").html(data);
-                            }
-                            else {
-                                $("#subcatHolder2").html(data);
-
-                            }
+                            $("#subcatHolder").html(data);
+                        }
+                        else {
+                            $("#subcatHolder2").html(data);
 
                         }
-                    })
-
-                }
-                else {
-                    if (type == "1") {
-                        $("#subcat").val("");
-                        $("#subcat2").var("");
-                        $("#subcat").attr("disabled", "disabled");
-                        $("#subcat2").attr("disabled", "disabled");
-                    }
-                    else {
-                        $("#subcat2").var("");
-                        $("#subcat2").attr("disabled", "disabled");
 
                     }
-                }
+                })
             }
         }
         $("#cat").change(function () {
@@ -154,25 +137,30 @@
 
                         <form id="createForm" action="addItem" method="post">
                             <div class="itemRow">
+                                <p>@Resources.res.link </p>
+
+                                <input value="@Model.link" id="link" name="link" class="form-control" />
+                            </div>
+                            <div class="itemRow">
                                 <p>@Resources.res.createTitle </p>
-                                <input  id="titleEn" name="titleEn" class="form-control" />
+                                <input id="title" name="title" class="form-control" />
                             </div>
 
 
                             <div class="itemRow">
                                 <p>@Resources.res.createDesc </p>
-                                <textarea style="height:100px"  id="descEn" name="descEn" class="form-control"></textarea>
+                                <textarea style="height:100px" id="desc" name="desc" class="form-control"></textarea>
 
                             </div>
                             <div class="itemRow">
                                 <p>@Resources.res.cat </p>
-                                @Html.DropDownList("cat", new SelectList(Model.cat.Select(c => new { Id = c.id + "-" + c.IsFinal, title = c.title }), "ID", "title"), Resources.res.chooscat, new { @class = "form-control", id = "cat" })
+                                @Html.DropDownList("catid", new SelectList(Model.cat, "ID", "title"), Resources.res.chooscat, new { @class = "form-control", id = "cat" })
 
                             </div>
                             <div class="itemRow">
                                 <p>@Resources.res.subcat </p>
                                 <div id="subcatHolder">
-                                    @Html.DropDownList("subcat", new SelectList(Model.cat, "ID", "title"), Resources.res.choossubcat, new { @class = "form-control", id = "subcat", @disabled = "disabled" })
+                                    @Html.DropDownList("subcatid", new SelectList(Model.cat, "ID", "title"), Resources.res.choossubcat, new { @class = "form-control", id = "subcat", @disabled = "disabled" })
 
                                 </div>
 
@@ -180,7 +168,7 @@
                             <div class="itemRow">
                                 <p>@Resources.res.subcat2 </p>
                                 <div id="subcatHolder2">
-                                    @Html.DropDownList("subcat2", new SelectList(Model.cat.Select(c => new { Id = c.id + "-" + c.catLevel, title = c.title }), "ID", "title"), Resources.res.coosesubcattwo, new { @class = "form-control", id = "subcat2", @disabled = "disabled" })
+                                    @Html.DropDownList("subcatid2", new SelectList(Model.cat, "ID", "title"), Resources.res.coosesubcattwo, new { @class = "form-control", id = "subcat2", @disabled = "disabled" })
 
                                 </div>
 
@@ -189,11 +177,11 @@
                             <div class="itemRow">
                                 <p>@Resources.res.createPhone </p>
 
-                                <input placeholder="" id="phone" name="phone" class="form-control" />
+                                <input placeholder="" id="phone1" name="phone1" class="form-control" />
 
                             </div>
                             <div class="itemRow">
-                                <p>@Resources.res.createPhone </p>
+                                <p>@Resources.res.createPhone2 </p>
 
                                 <input placeholder="" id="phone2" name="phone2" class="form-control" />
 
@@ -201,18 +189,18 @@
 
                             <div class="itemRow">
                                 <p>@Resources.res.fax </p>
-                                <input placeholder="" id="aboutusEn" name="aboutusEn" class="form-control" />
+                                <input placeholder="" id="fax" name="fax" class="form-control" />
                             </div>
                             <div class="itemRow">
-                                <p>@Resources.res.createPhone2 </p>
+                                <p>@Resources.res.mobile1 </p>
 
                                 <input placeholder="" id="mobile1" name="mobile1" class="form-control" />
 
                             </div>
                             <div class="itemRow">
-                                <p>@Resources.res.createPhone2 </p>
+                                <p>@Resources.res.mobile2 </p>
 
-                                <input placeholder="" id="mobile1" name="phone2" class="form-control" />
+                                <input placeholder="" id="mobile2" name="mobile2" class="form-control" />
 
                             </div>
                             <div class="itemRow">
@@ -253,8 +241,8 @@
                             </div>
                             <div class="itemRow">
                                 <p>@Resources.res.createAddress </p>
-                               <textarea style="height:100px"  id="addressEn" name="addressEn" class="form-control"></textarea>
-                               
+                                <textarea style="height:100px" id="address" name="address" class="form-control"></textarea>
+
                             </div>
                             <div class="itemRow">
                                 <p>@Resources.res.createLocation </p>

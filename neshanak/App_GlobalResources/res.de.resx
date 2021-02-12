@@ -393,4 +393,91 @@
   <data name="phone" xml:space="preserve">
     <value>Telefon</value>
   </data>
+  <data name="activeinstall" xml:space="preserve">
+    <value>aktive Installation</value>
+  </data>
+  <data name="adminPanel" xml:space="preserve">
+    <value>Administrationsmenü</value>
+  </data>
+  <data name="bannman" xml:space="preserve">
+    <value>Banner-Management</value>
+  </data>
+  <data name="buscode" xml:space="preserve">
+    <value>Geschäftscode</value>
+  </data>
+  <data name="busiadd" xml:space="preserve">
+    <value>Geschäft hinzufügen</value>
+  </data>
+  <data name="busilist" xml:space="preserve">
+    <value>Geschäftsliste</value>
+  </data>
+  <data name="busiman" xml:space="preserve">
+    <value>Unternehmen</value>
+  </data>
+  <data name="bustitle" xml:space="preserve">
+    <value>Geschäfts Titel</value>
+  </data>
+  <data name="category" xml:space="preserve">
+    <value>Kategorie</value>
+  </data>
+  <data name="catnam" xml:space="preserve">
+    <value>Kategori-Management</value>
+  </data>
+  <data name="col" xml:space="preserve">
+    <value>Säule</value>
+  </data>
+  <data name="comman" xml:space="preserve">
+    <value>Kommentarverwaltung</value>
+  </data>
+  <data name="delbusi" xml:space="preserve">
+    <value>bist du sicher?</value>
+  </data>
+  <data name="delete" xml:space="preserve">
+    <value>löschen</value>
+  </data>
+  <data name="edit" xml:space="preserve">
+    <value>bearbeiten</value>
+  </data>
+  <data name="inactive" xml:space="preserve">
+    <value>inaktiv</value>
+  </data>
+  <data name="link" xml:space="preserve">
+    <value>link</value>
+  </data>
+  <data name="mobile1" xml:space="preserve">
+    <value>mobile number 1</value>
+  </data>
+  <data name="mobile2" xml:space="preserve">
+    <value>mobile number 2</value>
+  </data>
+  <data name="newsman" xml:space="preserve">
+    <value>Nachrichtenmanagement</value>
+  </data>
+  <data name="offer" xml:space="preserve">
+    <value>Sonderangebot</value>
+  </data>
+  <data name="pageman" xml:space="preserve">
+    <value>Seitenverwaltung</value>
+  </data>
+  <data name="registerdbusi" xml:space="preserve">
+    <value>eingetragenes Geschäft</value>
+  </data>
+  <data name="registerduser" xml:space="preserve">
+    <value>registrierter Nutzer</value>
+  </data>
+  <data name="search" xml:space="preserve">
+    <value>Suche</value>
+  </data>
+  <data name="slideman" xml:space="preserve">
+    <value>Slider-Management</value>
+  </data>
+  <data name="title" xml:space="preserve">
+    <value>Titel</value>
+  </data>
+  <data name="userman" xml:space="preserve">
+    <value>Benutzerverwaltung</value>
+  </data>
+  <data name="wellcome" xml:space="preserve">
+    <value>gut willkommen</value>
+  </data>
 </root>

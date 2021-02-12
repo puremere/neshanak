@@ -177,7 +177,7 @@
                         string imageName = "lawyers_icon.png"; // Path.GetFileNameWithoutExtension(item.img) + "_icon.png";
                         if (index < 6)
                         {
-                            string imagurl = "/Images/icon/" + item.title + ".png";
+                            string imagurl = item.img != "" ? item.img.Replace("jpg","png") : "";
                             <div class="item  ITEMCAT" id=@ID style=" ">
                                 <span><img style="" src=@imagurl /></span>
                                 <span style="font-weight:600">@item.title</span>

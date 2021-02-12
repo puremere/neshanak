@@ -1,4 +1,4 @@
-﻿namespace banimo.Classes
+﻿namespace neshanak.Classes
 {
     internal class UserSessionModel
     {

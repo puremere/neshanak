@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-namespace banimo.Classes
+namespace neshanak.Classes
 {
     public class SessionAuthorizeAttribute : AuthorizeAttribute
     {

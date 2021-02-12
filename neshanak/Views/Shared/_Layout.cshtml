@@ -8,7 +8,7 @@
     @*@Scripts.Render("~/bundles/modernizr")*@
     <link href="~/Content/bootstrap.css" rel="stylesheet" />
     <link href="~/Content/fontawesome-all.css" rel="stylesheet" />
-    <link href="~/Content/toastr.css" rel="stylesheet" />
+   
    
     @RenderSection("styles", required: false)
     @RenderSection("HeadIncludes", required: false)
@@ -48,11 +48,10 @@
         </ul>
         <div class="dropdown">
             <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                @Session["lang"]
+                @Session["lang"].ToString().ToUpper()
             </button>
             <div class="dropdown-menu lanParent" aria-labelledby="dropdownMenuButton">
-                <div class="row langHolder"> <a class="dropdown-item" href="#">en <img src="~/Images/en.png" /></a></div>
-
+                <div class="row langHolder"><a class="dropdown-item" href="#">en <img src="~/Images/en.png" /></a></div>
                 <div class="row langHolder"><a class="dropdown-item" href="#">fa <img src="~/Images/fa.png" /></a></div>
                 <div class="row langHolder"><a class="dropdown-item" href="#">de <img src="~/Images/de.png" /></a></div>
             </div>
@@ -63,7 +62,7 @@
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
-    <script src="~/Scripts/toastr.js"></script>
+
     @RenderSection("scripts", required: false)
 
     <script>

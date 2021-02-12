@@ -4,12 +4,12 @@
     if (Model.cities != null)
     {
 
-        @Html.DropDownList("SelectedItem", new SelectList(Model.cities, "ID", "title"), @Resources.res.headerFormInput4, new { @class = "form-control", id = "cityDropDown", style = "width:100%" })
+        @Html.DropDownList("city", new SelectList(Model.cities, "ID", "title"), @Resources.res.headerFormInput4, new { @class = "form-control", id = "cityDropDown", style = "width:100%" })
     }
     else
     {
         List<neshanak.viewModel.city> lst = new List<neshanak.viewModel.city>();
-        @Html.DropDownList("SelectedItem", new SelectList(lst, "ID", "title"), @Resources.res.headerFormInput4, new { @class = "form-control", id = "cityDropDown", style = "width:100%", @disabled = "disabled" })
+        @Html.DropDownList("city", new SelectList(lst, "ID", "title"), @Resources.res.headerFormInput4, new { @class = "form-control", id = "cityDropDown", style = "width:100%", @disabled = "disabled" })
 
        
 

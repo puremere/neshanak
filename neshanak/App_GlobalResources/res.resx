@@ -166,10 +166,10 @@
     <value>Location</value>
   </data>
   <data name="createPhone" xml:space="preserve">
-    <value>Mobile</value>
+    <value>phone number 1</value>
   </data>
   <data name="createPhone2" xml:space="preserve">
-    <value>Phone</value>
+    <value>Phone number 2</value>
   </data>
   <data name="createTitle" xml:space="preserve">
     <value>Title </value>
@@ -392,5 +392,98 @@
   </data>
   <data name="phone" xml:space="preserve">
     <value>phone</value>
+  </data>
+  <data name="activeinstall" xml:space="preserve">
+    <value>active install</value>
+  </data>
+  <data name="adminPanel" xml:space="preserve">
+    <value>adminPanel</value>
+  </data>
+  <data name="bannman" xml:space="preserve">
+    <value>banner management</value>
+  </data>
+  <data name="buscode" xml:space="preserve">
+    <value>business code</value>
+  </data>
+  <data name="busiadd" xml:space="preserve">
+    <value>add business</value>
+  </data>
+  <data name="busilist" xml:space="preserve">
+    <value>business list</value>
+  </data>
+  <data name="busiman" xml:space="preserve">
+    <value>business managment</value>
+  </data>
+  <data name="bustitle" xml:space="preserve">
+    <value>business title</value>
+  </data>
+  <data name="category" xml:space="preserve">
+    <value>category</value>
+  </data>
+  <data name="catnam" xml:space="preserve">
+    <value>category management</value>
+  </data>
+  <data name="col" xml:space="preserve">
+    <value>column</value>
+  </data>
+  <data name="comman" xml:space="preserve">
+    <value>comment management</value>
+  </data>
+  <data name="dashbaord" xml:space="preserve">
+    <value>dashbaord</value>
+  </data>
+  <data name="delbusi" xml:space="preserve">
+    <value>are you sure?</value>
+  </data>
+  <data name="delete" xml:space="preserve">
+    <value>delete</value>
+  </data>
+  <data name="edit" xml:space="preserve">
+    <value>edit</value>
+  </data>
+  <data name="inactive" xml:space="preserve">
+    <value>inactive</value>
+  </data>
+  <data name="lastbusi" xml:space="preserve">
+    <value>last registerd business</value>
+  </data>
+  <data name="link" xml:space="preserve">
+    <value>link</value>
+  </data>
+  <data name="mobile1" xml:space="preserve">
+    <value>mobile number 1</value>
+  </data>
+  <data name="mobile2" xml:space="preserve">
+    <value>mobile number 2</value>
+  </data>
+  <data name="newsman" xml:space="preserve">
+    <value>news management</value>
+  </data>
+  <data name="offer" xml:space="preserve">
+    <value>special offer</value>
+  </data>
+  <data name="pageman" xml:space="preserve">
+    <value>page mangement</value>
+  </data>
+  <data name="registerdbusi" xml:space="preserve">
+    <value>registered business</value>
+  </data>
+  <data name="registerduser" xml:space="preserve">
+    <value>registered user</value>
+  </data>
+  <data name="search" xml:space="preserve">
+    <value>search</value>
+  </data>
+  <data name="slideman" xml:space="preserve">
+    <value>slider management</value>
+  </data>
+  <data name="title" xml:space="preserve">
+    <value>title</value>
+  </data>
+  <data name="userman" xml:space="preserve">
+    <value>user management</value>
+  </data>
+  <data name="wellcome" xml:space="preserve">
+    <value>wellcome</value>
   </data>
 </root>

@@ -4,7 +4,8 @@
 body {
     --direction: rtl;
     --align: left;
-    --font: IRANSans
+    --font: IRANSans;
+    font-size: 16px;
 }
 
 .headerSection {
@@ -121,7 +122,7 @@ body {
 #cityDropDown, #countryDropDown {
     width: 28%;
     height: 44px;
-    background-color: #EFEFEF;
+    background-color: white;
 }
 
 .mapsection {
@@ -494,14 +495,12 @@ body {
 
 .ItemsHome {
     padding: 15px;
-    background-color: white;
+   
     width: 40%;
     margin: auto;
     margin-top: 0px;
-    box-shadow: 2px 2px 5px -1px rgba(148,149,153,1);
+
     border-radius: 5px;
-    height: 90%;
-    overflow-y: scroll;
     margin-top:50px;
 }
 .creatButt {
@@ -517,9 +516,11 @@ body {
     background: linear-gradient(to left, rgba(202, 119, 180, 0.5) 0%, rgba(202, 119, 180, 0.5) 100%), url(/Images/images.jpg) no-repeat;
     background-size: auto;
     width: 100%;
-    height: 100vh;
+    height: 100%;
     display: flex;
     align-items: center;
+    background-attachment: fixed;
+    min-height: 800px;
 }
 .rowholder{
     width:100%;
@@ -590,10 +591,11 @@ body {
     margin: 0 auto;
     direction: var(--direction)
 }
-.buttonholder a{
-    text-decoration:none;
-    
-}
+    .buttonholder a {
+        text-decoration: none;
+        font-size: 15px;
+        color: white;
+    }
 #demo{
     font-family: var(--font)
 }
@@ -776,7 +778,7 @@ textarea {
     font-size: 18px;
 }
 .catitem  {
-    width: 19%;
+    width: 14%;
     display: inline-block;
     padding:10px;
 }
@@ -792,6 +794,21 @@ textarea {
 }
 .detailField{
     direction: var(--direction)
+}
+.flexdiv {
+    width: 100%;
+    display: inline-block;
+
+}
+.flexchild {
+    width: 45%;
+    display: inline-block;
+    padding: 50px
+}
+.flexchild2 {
+    width: 55%;
+    display: inline-block;
+    padding: 50px
 }
 @media (max-width : 724px) {
     .ItemsHome {

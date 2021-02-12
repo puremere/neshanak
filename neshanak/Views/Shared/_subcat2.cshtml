@@ -3,13 +3,13 @@
 @{
     if (Model.cat != null)
     {
-        @Html.DropDownList("subcat2", new SelectList(Model.cat, "ID", "title"), Resources.res.coosesubcattwo, new { @class = "form-control", id = "subcat2" })
+        @Html.DropDownList("subcatid2", new SelectList(Model.cat, "ID", "title"), Resources.res.coosesubcattwo, new { @class = "form-control", id = "subcat2" })
 
     }
     else
     {
         List<neshanak.viewModel.Cat> lst = new List<neshanak.viewModel.Cat>();
-        @Html.DropDownList("subcat2", new SelectList(lst, "ID", "title"), Resources.res.coosesubcattwo, new { @class = "form-control", id = "subcat2", @disabled = "disabled" })
+        @Html.DropDownList("subcatid2", new SelectList(lst, "ID", "title"), Resources.res.coosesubcattwo, new { @class = "form-control", id = "subcat2", @disabled = "disabled" })
 
     }
 }

@@ -188,14 +188,14 @@ namespace neshanak.Controllers
 
             //return View();
         }
-        public async Task<ActionResult> GetSubCatjson(string result)
+        public async Task<ActionResult> GetSubCatjson(string result,string level)
         {
             string lang = Session["lang"] as string;
 
             getSubCatVM VMmodel = new getSubCatVM()
             {
-                catLevel = result.Split('-')[1],
-                ID = result.Split('-')[0],
+                catLevel = level,
+                ID = result,
                 code = HomeController.code,
                 device = HomeController.device,
                 city = "",
@@ -206,7 +206,7 @@ namespace neshanak.Controllers
             string subCatload = JsonConvert.SerializeObject(VMmodel);
             string resu = await wb.doPostData(server + "/GetCatsPage.php", subCatload);
             IndexVM model = JsonConvert.DeserializeObject<IndexVM>(resu);
-            if (result.Split('-')[1] == "1")
+            if (level == "1")
             {
                 return PartialView("/Views/Shared/_subcat.cshtml", model);
 
@@ -280,11 +280,11 @@ namespace neshanak.Controllers
             };
             string searchResultPayload = JsonConvert.SerializeObject(VMmodel);
             string resu = await wb.doPostData(server + "/GetSearchResult.php", searchResultPayload);
-            BzListVM viewmodel = JsonConvert.DeserializeObject<BzListVM>(resu);
+            BzListVM viewModel = JsonConvert.DeserializeObject<BzListVM>(resu);
             ViewBag.result = model.result;
             ViewBag.mallID = model.mallID;
             ViewBag.floorID = model.floorID;
-            return View(viewmodel);
+            return View(viewModel);
             // return View();
         }
         public ActionResult searchResultMap(string result, string mallID, string floorID)
@@ -330,10 +330,12 @@ namespace neshanak.Controllers
         }
         public ActionResult ChangeLanguage(string lang)
         {
+           
+            lang = lang.ToLower();
             string current = JsonConvert.DeserializeObject<CookieVM>(getCookie("token")).currentpage;
-
+            string controller = JsonConvert.DeserializeObject<CookieVM>(getCookie("token")).controller;
             Session["lang"] = lang;
-            return RedirectToAction(current);
+            return RedirectToAction(current, controller);
 
         }
 
@@ -344,6 +346,7 @@ namespace neshanak.Controllers
         {
             CookieVM cookiemodel = JsonConvert.DeserializeObject<CookieVM>(getCookie("token"));
             cookiemodel.currentpage = "createItem";
+            cookiemodel.controller = "home";
             SetCookie(JsonConvert.SerializeObject(cookiemodel), "token");
             CookieVM model = JsonConvert.DeserializeObject<CookieVM>(getCookie("token"));
             //model.images = null;
@@ -366,43 +369,23 @@ namespace neshanak.Controllers
             };
             string searchResultPayload = JsonConvert.SerializeObject(VMmodel);
             string resu = await wb.doPostData(server + "/getLandscat.php", searchResultPayload);
-            countryCityCatVM viewmodel = JsonConvert.DeserializeObject<countryCityCatVM>(resu);
+            itemDetailVM viewModel = JsonConvert.DeserializeObject<itemDetailVM>(resu);
 
-            return View(viewmodel);
+            return View(viewModel);
 
         }
         [HttpPost]
-        public async Task<ActionResult> addITem(createItem model)
+        public async Task<ActionResult> addITem(itemDetailVM model )
         {
             CookieVM cookie = JsonConvert.DeserializeObject<CookieVM>(getCookie("token"));
             string lang = Session["lang"] as string;
-            createItemToSend modelTosend = new createItemToSend()
-            {
-                title = JsonConvert.SerializeObject(new languageVM() { en = model.titleEn != null ? model.titleEn : "", fa = model.titleFa != null ? model.titleFa : "", de = model.titleDe != null ? model.titleDe : "" }),
-                desc = JsonConvert.SerializeObject(new languageVM() { en = model.descEn != null ? model.descEn : "", fa = model.descFa != null ? model.descFa : "", de = model.descDe != null ? model.descDe : "" }),
-                aboutus = JsonConvert.SerializeObject(new languageVM() { en = model.aboutusEn != null ? model.aboutusEn : "", fa = model.aboutusFa != null ? model.aboutusFa : "", de = model.aboutusDe != null ? model.aboutusDe : "" }),
-                address = JsonConvert.SerializeObject(new languageVM() { en = model.addressEn != null ? model.addressEn : "", fa = model.addressFa != null ? model.addressFa : "", de = model.addressDe != null ? model.addressDe : "" }),
-                country = model.country,
-                city = model.city,
-                email = model.email,
-                instagram = model.instagram,
-                lat = model.lat,
-                lng = model.lng,
-                mobile = model.mobile,
-                phone = model.phone,
-                telegram = model.telegram,
-                website = model.website,
-                whatsapp = model.whatsapp,
-                image = cookie.images.Trim(','),
-                code = code,
-                device = device,
-                lan = lang
-
-
-            };
-            string searchResultPayload = JsonConvert.SerializeObject(modelTosend);
-            string resu = await wb.doPostData(server + "/addItem.php", searchResultPayload);
-            countryCityCatVM viewmodel = JsonConvert.DeserializeObject<countryCityCatVM>(resu);
+            model.code = code;
+            model.device = device;
+            model.lan = lang;
+            model.img = cookie.images;
+            string searchResultPayload = JsonConvert.SerializeObject(model);
+            string resu = await wb.doPostData(server + "/additem.php", searchResultPayload);
+            countryCityCatVM viewModel = JsonConvert.DeserializeObject<countryCityCatVM>(resu);
             return RedirectToAction("createItem");
 
         }
@@ -443,6 +426,7 @@ namespace neshanak.Controllers
             System.IO.File.Delete(savedFileName);
             CookieVM model = JsonConvert.DeserializeObject<CookieVM>(getCookie("token"));
             model.images = model.images.Replace(id + ",", "");
+            
             SetCookie(JsonConvert.SerializeObject(model), "token");
         }
 
