@@ -61,6 +61,15 @@ namespace neshanak.App_GlobalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to about.
+        /// </summary>
+        public static string about {
+            get {
+                return ResourceManager.GetString("about", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to active install.
         /// </summary>
         public static string activeinstall {
@@ -70,11 +79,29 @@ namespace neshanak.App_GlobalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to add new category.
+        /// </summary>
+        public static string addBlogCat {
+            get {
+                return ResourceManager.GetString("addBlogCat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to address.
         /// </summary>
         public static string address {
             get {
                 return ResourceManager.GetString("address", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to managment portal.
+        /// </summary>
+        public static string adminEntryTitle {
+            get {
+                return ResourceManager.GetString("adminEntryTitle", resourceCulture);
             }
         }
         
@@ -102,6 +129,33 @@ namespace neshanak.App_GlobalResources {
         public static string bannman {
             get {
                 return ResourceManager.GetString("bannman", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to blog categories.
+        /// </summary>
+        public static string BlogCat {
+            get {
+                return ResourceManager.GetString("BlogCat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to blog category list.
+        /// </summary>
+        public static string blogCatList {
+            get {
+                return ResourceManager.GetString("blogCatList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to blog list.
+        /// </summary>
+        public static string blogList {
+            get {
+                return ResourceManager.GetString("blogList", resourceCulture);
             }
         }
         
@@ -268,6 +322,15 @@ namespace neshanak.App_GlobalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to code is wrong.
+        /// </summary>
+        public static string codeWrong {
+            get {
+                return ResourceManager.GetString("codeWrong", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to column.
         /// </summary>
         public static string col {
@@ -295,11 +358,38 @@ namespace neshanak.App_GlobalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to please complete all field.
+        /// </summary>
+        public static string completeAll {
+            get {
+                return ResourceManager.GetString("completeAll", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to you must consent with terms and conditions.
         /// </summary>
         public static string confirmRuleText {
             get {
                 return ResourceManager.GetString("confirmRuleText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to contact.
+        /// </summary>
+        public static string contact {
+            get {
+                return ResourceManager.GetString("contact", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to content.
+        /// </summary>
+        public static string content {
+            get {
+                return ResourceManager.GetString("content", resourceCulture);
             }
         }
         
@@ -399,6 +489,15 @@ namespace neshanak.App_GlobalResources {
         public static string dashbaord {
             get {
                 return ResourceManager.GetString("dashbaord", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to date.
+        /// </summary>
+        public static string date {
+            get {
+                return ResourceManager.GetString("date", resourceCulture);
             }
         }
         
@@ -525,6 +624,15 @@ namespace neshanak.App_GlobalResources {
         public static string headertext2 {
             get {
                 return ResourceManager.GetString("headertext2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to image.
+        /// </summary>
+        public static string image {
+            get {
+                return ResourceManager.GetString("image", resourceCulture);
             }
         }
         
@@ -745,11 +853,29 @@ namespace neshanak.App_GlobalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to new blog.
+        /// </summary>
+        public static string newBlog {
+            get {
+                return ResourceManager.GetString("newBlog", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to news management.
         /// </summary>
         public static string newsman {
             get {
                 return ResourceManager.GetString("newsman", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to email not registered.
+        /// </summary>
+        public static string noemail {
+            get {
+                return ResourceManager.GetString("noemail", resourceCulture);
             }
         }
         
@@ -817,6 +943,15 @@ namespace neshanak.App_GlobalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to privacy.
+        /// </summary>
+        public static string privacy {
+            get {
+                return ResourceManager.GetString("privacy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Random Suggestion.
         /// </summary>
         public static string randomtext1 {
@@ -849,6 +984,15 @@ namespace neshanak.App_GlobalResources {
         public static string recenttext2 {
             get {
                 return ResourceManager.GetString("recenttext2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to recover date.
+        /// </summary>
+        public static string recoverDate {
+            get {
+                return ResourceManager.GetString("recoverDate", resourceCulture);
             }
         }
         
@@ -1033,6 +1177,24 @@ namespace neshanak.App_GlobalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to supect tech portal.
+        /// </summary>
+        public static string supectPanel {
+            get {
+                return ResourceManager.GetString("supectPanel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to tags.
+        /// </summary>
+        public static string tags {
+            get {
+                return ResourceManager.GetString("tags", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to telegram.
         /// </summary>
         public static string telegram {
@@ -1164,6 +1326,15 @@ namespace neshanak.App_GlobalResources {
         public static string whatsapp {
             get {
                 return ResourceManager.GetString("whatsapp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to writer.
+        /// </summary>
+        public static string writer {
+            get {
+                return ResourceManager.GetString("writer", resourceCulture);
             }
         }
     }

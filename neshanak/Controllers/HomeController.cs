@@ -44,6 +44,7 @@ namespace neshanak.Controllers
             {
                 CookieVM cookieModel = new CookieVM();
                 cookieModel.currentpage = "index";
+                cookieModel.controller = "home";
                 string srt = JsonConvert.SerializeObject(cookieModel);
                 SetCookie(srt, "token");
                 return srt;
@@ -127,6 +128,7 @@ namespace neshanak.Controllers
         {
             CookieVM cookiemodel = JsonConvert.DeserializeObject<CookieVM>(getCookie("token"));
             cookiemodel.currentpage = "index";
+            cookiemodel.controller = "home";
             cookiemodel.city = "1";
             cookiemodel.country = "1";
             SetCookie(JsonConvert.SerializeObject(cookiemodel), "token");
@@ -157,6 +159,7 @@ namespace neshanak.Controllers
         {
             CookieVM cookiemodel = JsonConvert.DeserializeObject<CookieVM>(getCookie("token"));
             cookiemodel.currentpage = "GetSubCat";
+            cookiemodel.controller = "home";
             SetCookie(JsonConvert.SerializeObject(cookiemodel), "token");
             variabli varimodel = JsonConvert.DeserializeObject<variabli>(getCookie("vari"));
             if (result == null)
@@ -188,6 +191,87 @@ namespace neshanak.Controllers
 
             //return View();
         }
+
+        public async Task<ActionResult> about()
+        {
+            CookieVM cookiemodel = JsonConvert.DeserializeObject<CookieVM>(getCookie("token"));
+            cookiemodel.currentpage = "about";
+            cookiemodel.controller = "home";
+            SetCookie(JsonConvert.SerializeObject(cookiemodel), "token");
+            string lang = Session["lang"] as string;
+            getPageVM mainModel = new getPageVM()
+            {
+                code = device,
+                device = code,
+                lan = lang,
+                page = "about"
+
+            };
+            string contactpayload = JsonConvert.SerializeObject(mainModel);
+            string resu = await wb.doPostData(server + "/getPage.php", contactpayload);
+            ViewBag.message = resu;
+            return View();
+          
+        }
+        public async Task<ActionResult> contact()
+        {
+            CookieVM cookiemodel = JsonConvert.DeserializeObject<CookieVM>(getCookie("token"));
+            cookiemodel.currentpage = "contact";
+            cookiemodel.controller = "home";
+            SetCookie(JsonConvert.SerializeObject(cookiemodel), "token");
+            string lang = Session["lang"] as string;
+            getPageVM mainModel = new getPageVM()
+            {
+                code = device,
+                device = code,
+                lan = lang,
+                page = "contact"
+
+            };
+            string contactpayload = JsonConvert.SerializeObject(mainModel);
+            string resu = await wb.doPostData(server + "/getPage.php", contactpayload);
+            ViewBag.message = resu;
+            return View();
+
+        }
+        public async Task<ActionResult> privacy()
+        {
+           
+            CookieVM cookiemodel = JsonConvert.DeserializeObject<CookieVM>(getCookie("token"));
+            cookiemodel.currentpage = "contact";
+            cookiemodel.controller = "home";
+            SetCookie(JsonConvert.SerializeObject(cookiemodel), "token");
+            string lang = Session["lang"] as string;
+            getPageVM mainModel = new getPageVM()
+            {
+                code = device,
+                device = code,
+                lan = lang,
+                page = "privacy"
+
+            };
+            string contactpayload = JsonConvert.SerializeObject(mainModel);
+            string resu = await wb.doPostData(server + "/getPage.php", contactpayload);
+            ViewBag.message = resu;
+            return View();
+
+        }
+        public ActionResult setCat(string result)
+        {
+            
+            variabli varimodel = JsonConvert.DeserializeObject<variabli>(getCookie("token"));
+            if (result == null)
+            {
+                result = varimodel.result;
+            }
+            else
+            {
+                varimodel.result = result;
+            }
+            SetCookie(JsonConvert.SerializeObject(varimodel), "token");
+            return RedirectToAction("searchResult");
+        }
+
         public async Task<ActionResult> GetSubCatjson(string result,string level)
         {
             string lang = Session["lang"] as string;
@@ -262,6 +346,7 @@ namespace neshanak.Controllers
             // string result, string mallID, string floorID
             CookieVM model = JsonConvert.DeserializeObject<CookieVM>(getCookie("token"));
             model.currentpage = "searchResult";
+            model.controller = "home";
             string lang = Session["lang"] as string;
             SetCookie(JsonConvert.SerializeObject(model), "token");
             searchResultVM VMmodel = new searchResultVM()
@@ -291,6 +376,7 @@ namespace neshanak.Controllers
         {
             CookieVM cookiemodel = JsonConvert.DeserializeObject<CookieVM>(getCookie("token"));
             cookiemodel.currentpage = "searchResultMap";
+            cookiemodel.controller = "home";
             SetCookie(JsonConvert.SerializeObject(cookiemodel), "token");
             string device = RandomString();
             string mobile = "09194594505";
@@ -436,6 +522,7 @@ namespace neshanak.Controllers
         {
             CookieVM cookiemodel = JsonConvert.DeserializeObject<CookieVM>(getCookie("token"));
             cookiemodel.currentpage = "message";
+            cookiemodel.controller = "home";
             SetCookie(JsonConvert.SerializeObject(cookiemodel), "token");
             if (message == "1")
             {
@@ -455,6 +542,7 @@ namespace neshanak.Controllers
         {
             CookieVM cookiemodel = JsonConvert.DeserializeObject<CookieVM>(getCookie("token"));
             cookiemodel.currentpage = "login";
+            cookiemodel.controller = "home";
             SetCookie(JsonConvert.SerializeObject(cookiemodel), "token");
             CookieVM cookieModel = JsonConvert.DeserializeObject<CookieVM>(getCookie("token"));
             ViewBag.username = cookieModel.Username;
@@ -491,6 +579,7 @@ namespace neshanak.Controllers
         {
             CookieVM cookiemodel = JsonConvert.DeserializeObject<CookieVM>(getCookie("token"));
             cookiemodel.currentpage = "confirm";
+            cookiemodel.controller = "home";
             SetCookie(JsonConvert.SerializeObject(cookiemodel), "token");
             CookieVM cookieModel = JsonConvert.DeserializeObject<CookieVM>(getCookie("token"));
 
@@ -520,6 +609,7 @@ namespace neshanak.Controllers
         {
             CookieVM cookiemodel = JsonConvert.DeserializeObject<CookieVM>(getCookie("token"));
             cookiemodel.currentpage = "Mag";
+            cookiemodel.controller = "home";
             SetCookie(JsonConvert.SerializeObject(cookiemodel), "token");
 
             string device = RandomString();
@@ -565,6 +655,7 @@ namespace neshanak.Controllers
         {
             CookieVM cookiemodel = JsonConvert.DeserializeObject<CookieVM>(getCookie("token"));
             cookiemodel.currentpage = "magDetail";
+            cookiemodel.controller = "home";
             SetCookie(JsonConvert.SerializeObject(cookiemodel), "token");
 
 
@@ -621,6 +712,7 @@ namespace neshanak.Controllers
 
             CookieVM cookiemodel = JsonConvert.DeserializeObject<CookieVM>(getCookie("token"));
             cookiemodel.currentpage = "itemDetail";
+            cookiemodel.controller = "home";
             SetCookie(JsonConvert.SerializeObject(cookiemodel), "token");
 
 

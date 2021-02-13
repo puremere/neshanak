@@ -486,4 +486,61 @@
   <data name="wellcome" xml:space="preserve">
     <value>خوش آمدید</value>
   </data>
+  <data name="adminEntryTitle" xml:space="preserve">
+    <value>سامانه مدیریت مطالب</value>
+  </data>
+  <data name="supectPanel" xml:space="preserve">
+    <value>پنل کاربری گروه سوپکت</value>
+  </data>
+  <data name="about" xml:space="preserve">
+    <value>درباره ما</value>
+  </data>
+  <data name="completeAll" xml:space="preserve">
+    <value>لطفاً تمامی موارد را کامل کنید</value>
+  </data>
+  <data name="contact" xml:space="preserve">
+    <value>تماس با ما</value>
+  </data>
+  <data name="privacy" xml:space="preserve">
+    <value>حریم خصوصی</value>
+  </data>
+  <data name="recoverDate" xml:space="preserve">
+    <value>بازیابی اطلاعات</value>
+  </data>
+  <data name="addBlogCat" xml:space="preserve">
+    <value>افزودن سرفصل جدید</value>
+  </data>
+  <data name="BlogCat" xml:space="preserve">
+    <value>سرفصل مقالات</value>
+  </data>
+  <data name="blogCatList" xml:space="preserve">
+    <value>لیست سرفصل ها</value>
+  </data>
+  <data name="blogList" xml:space="preserve">
+    <value>لیست مقالات</value>
+  </data>
+  <data name="codeWrong" xml:space="preserve">
+    <value>کد تایید صحیح نیست</value>
+  </data>
+  <data name="content" xml:space="preserve">
+    <value>متن</value>
+  </data>
+  <data name="date" xml:space="preserve">
+    <value>تاریخ</value>
+  </data>
+  <data name="image" xml:space="preserve">
+    <value>عکس </value>
+  </data>
+  <data name="newBlog" xml:space="preserve">
+    <value>مقاله جدید</value>
+  </data>
+  <data name="noemail" xml:space="preserve">
+    <value>ایمیل ثبت نشده است</value>
+  </data>
+  <data name="tags" xml:space="preserve">
+    <value>تگ ها</value>
+  </data>
+  <data name="writer" xml:space="preserve">
+    <value>نویسنده</value>
+  </data>
 </root>

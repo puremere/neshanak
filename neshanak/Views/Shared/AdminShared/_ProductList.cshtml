@@ -44,7 +44,7 @@
                             $("#myModal").modal('hide');
                             var id = $("#modalValue").text();
                             $.ajax({
-                                url: '/Admin/Delete',
+                                url: '/Admin/DeleteNode',
                                 dataType: 'html',
                                 data: {
                                     id: id,
@@ -219,7 +219,7 @@
                 var selectedCatID = $("#listofproduct").val();
                 var url = "@Url.Action("Edit", "Admin", new { id = "__id__"})";
                 var url2 = url.replace("__id__", this.id);
-                window.location.href = url2;
+                window.open(url2);
             });
         </script>
         <script>

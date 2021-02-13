@@ -546,7 +546,7 @@ body .container.body .right_col {
 body {
     color: #000;
     background: #2A3F54;
-    font-family:  sans-serif;
+  
     font-size: 13px;
     font-weight: 400;
     line-height: 1.471
@@ -2578,7 +2578,7 @@ span.tag a {
 .tagsinput input {
     width: 80px;
     margin: 0px;
-    font-family: helvetica;
+  
     font-size: 13px;
     border: 1px solid transparent;
     padding: 3px;
@@ -3230,7 +3230,7 @@ ul.project_files li a i {
     padding: 0 4px
 }
 .view p {
-    font-family: Georgia, serif;
+  
     font-style: italic;
     font-size: 12px;
     position: relative;
@@ -3389,7 +3389,7 @@ ul.project_files li a i {
     color: #666;
     background: rgba(243, 242, 243, 0.8);
     border: solid 2px rgba(195, 194, 196, 0.8);
-    font-family: sans-serif;
+  
     font-size: 12px;
     text-align: center
 }
@@ -3558,7 +3558,7 @@ background-color: #fff;
     text-decoration: underline
 }
     .login_content h1 {
-        font: normal 25px Helvetica, Arial, sans-serif;
+     
         letter-spacing: -0.05em;
         line-height: 20px;
         margin: 20px -50px 100px -50px;

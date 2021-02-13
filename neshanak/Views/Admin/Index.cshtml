@@ -11,16 +11,9 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
-
     <title>پرتال مشتریان </title>
-
     <link href="~/AdminPanel/Content/bootstrap.min.css" rel="stylesheet" />
-
-
-
     <link href="~/AdminPanel/Content/font-awesome/css/font-awesome.css" rel="stylesheet" />
-
     <!-- Custom Theme Style -->
     <link href="~/AdminPanel/build/css/custom.css" rel="stylesheet">
     @*<link href="~/AdminPanel/build/css/bootstrap-rlt.css" rel="stylesheet" />*@
@@ -44,15 +37,34 @@
 
     </script>
   
+    <script>
+        if ('@Session["lang"]' == 'fa') {
+
+            $("body").get(0).style.setProperty("--align", "right");
+            $("body").get(0).style.setProperty("--direction", "rtl");
+            $("body").get(0).style.setProperty("--font", "IRANSans");
+
+        }
+        else {
+
+            $("body").get(0).style.setProperty("--align", "left");
+            $("body").get(0).style.setProperty("--direction", "ltr");
+            $("body").get(0).style.setProperty("--font", "Myriad");
+
+
+        }
+
+    </script>
+
 </head>
 
 <body class="login">
-   
+
     <script>
-                    var iOS = !!navigator.platform && /iPad|iPhone|iPod/.test(navigator.platform);
-                    if (true) {
-                        $('#iosModal').modal('show');
-                    }
+        var iOS = !!navigator.platform && /iPad|iPhone|iPod/.test(navigator.platform);
+        if (true) {
+            $('#iosModal').modal('show');
+        }
     </script>
     <div id="loading" style="display:none">
         <div style="z-index:99999; padding:15px 35px; background-color:white;position:fixed;overflow: visible;margin: auto;top: 0;left: 0; bottom: 0; right: 0;max-height:150px; max-width:250px">
@@ -73,38 +85,52 @@
             <div class="animate form login_form">
                 <section class="login_content">
                     <form>
-                        <h1>سامانه مدیریت مطالب</h1>
+                        <h1 style="">@Resources.res.adminEntryTitle</h1>
+                        <div style="text-align:left">
+                            <div style="display:inline-block;" class="dropdown">
+                                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    @Session["lang"].ToString().ToUpper()
+                                </button>
+                                <div class="dropdown-menu lanParent" aria-labelledby="dropdownMenuButton" style=" margin: 5px">
+                                    <div class="row langHolder" style="margin:5px"><a style="color:white" class="dropdown-item" href="#">EN <img src="~/Images/en.png" /></a></div>
+                                    <div class="row langHolder" style="margin:5px"><a style="color:white" class="dropdown-item" href="#">FA <img src="~/Images/fa.png" /></a></div>
+                                    <div class="row langHolder" style="margin:5px"><a style="color:white" class="dropdown-item" href="#">DE <img src="~/Images/de.png" /></a></div>
+                                </div>
+                            </div>
+
+                        </div>
+
 
                         @{
                             if (Model.username != null)
                             {
                                 <div>
-                                    <input value=@Model.username id="login-urser" type="text" class="form-control" placeholder="نام کاربری" required="" />
+                                    <input value=@Model.username id="login-urser" type="text" class="form-control" placeholder="@Resources.res.userman" required="" />
                                 </div>
                                 <div>
-                                    <input value=@Model.pass id="login-password" type="password" class="form-control" placeholder="رمز عبور" required="" />
+                                    <input value=@Model.pass id="login-password" type="password" class="form-control" placeholder="@Resources.res.loginPass" required="" />
                                 </div>
                             }
                             else
                             {
                                 <div>
-                                    <input id="login-urser" type="text" class="form-control" placeholder="نام کاربری" required="" />
+                                    <input id="login-urser" type="text" class="form-control" placeholder="@Resources.res.userman" required="" />
                                 </div>
                                 <div>
-                                    <input id="login-password" type="password" class="form-control" placeholder="رمز عبور" required="" />
+                                    <input id="login-password" type="password" class="form-control" placeholder="@Resources.res.loginPass" required="" />
                                 </div>
                             }
                         }
 
                         <div style="margin-bottom: 120px; margin-top: -20px;">
                             <input style="float:right " type="checkbox" id="rememberme" value="">
-                            <label style="float: right; margin-right: 10px;" for="rememberme"><span></span>مرابه خاطر بسپار</label>
+                            <label style="float: right; margin-right: 10px;" for="rememberme"><span></span>@Resources.res.rememberme</label>
                         </div>
 
 
                         <div>
                             @*<a class="btn btn-default submit" href="index.html">وارد </a>*@
-                            <a id="lgnsubmitt">تایید</a>
+                            <a id="lgnsubmitt">@Resources.res.OK</a>
                         </div>
 
 
@@ -124,7 +150,7 @@
 
                             <div>
 
-                                <p>پنل کاربری گروه سوپکت</p>
+                                <p></p>
                             </div>
                         </div>
                     </form>
@@ -169,7 +195,7 @@
                     },
                     success: function (data) {
 
-                       
+
                         var srt = data.substring(0, 1);
                         var URL = data.substring(1, data.length);
 
@@ -239,6 +265,11 @@
 
         }
     </script>
-
+    <script>
+        $(".langHolder").click(function () {
+            let id = $(this).find('a').text();
+            window.location.href = "/admin/ChangeLanguage?lang=" + id;
+        })
+    </script>
 </body>
 </html>

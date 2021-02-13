@@ -480,4 +480,61 @@
   <data name="wellcome" xml:space="preserve">
     <value>gut willkommen</value>
   </data>
+  <data name="adminEntryTitle" xml:space="preserve">
+    <value>Verwaltungsportal</value>
+  </data>
+  <data name="supectPanel" xml:space="preserve">
+    <value>supect Tech-Portal</value>
+  </data>
+  <data name="about" xml:space="preserve">
+    <value>Überما</value>
+  </data>
+  <data name="completeAll" xml:space="preserve">
+    <value>Bitte füllen Sie alle Felder aus</value>
+  </data>
+  <data name="contact" xml:space="preserve">
+    <value>Kontakt</value>
+  </data>
+  <data name="privacy" xml:space="preserve">
+    <value>Privatsphäre</value>
+  </data>
+  <data name="recoverDate" xml:space="preserve">
+    <value>Wiederherstellungsdatum</value>
+  </data>
+  <data name="addBlogCat" xml:space="preserve">
+    <value>neue Kategorie hinzufügen</value>
+  </data>
+  <data name="BlogCat" xml:space="preserve">
+    <value>Blog-Kategorien</value>
+  </data>
+  <data name="blogCatList" xml:space="preserve">
+    <value>Blog-Kategorieliste</value>
+  </data>
+  <data name="blogList" xml:space="preserve">
+    <value>Blog-Liste</value>
+  </data>
+  <data name="codeWrong" xml:space="preserve">
+    <value>Code ist falsch</value>
+  </data>
+  <data name="date" xml:space="preserve">
+    <value>Datum</value>
+  </data>
+  <data name="image" xml:space="preserve">
+    <value>Bild</value>
+  </data>
+  <data name="Inhalt" xml:space="preserve">
+    <value>content</value>
+  </data>
+  <data name="newBlog" xml:space="preserve">
+    <value>neuer Blog</value>
+  </data>
+  <data name="noemail" xml:space="preserve">
+    <value>E-Mail nicht registriert</value>
+  </data>
+  <data name="tags" xml:space="preserve">
+    <value>tags</value>
+  </data>
+  <data name="writer" xml:space="preserve">
+    <value>Schriftsteller</value>
+  </data>
 </root>

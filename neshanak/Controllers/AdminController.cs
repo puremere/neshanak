@@ -35,6 +35,7 @@ using iTextSharp.text.html;
 using Rectangle = iTextSharp.text.Rectangle;
 using neshanak.viewModel;
 using neshanak.viewModel.comment;
+using System.Text.RegularExpressions;
 
 namespace neshanak.Controllers
 {
@@ -48,6 +49,7 @@ namespace neshanak.Controllers
         static readonly string PasswordHash = "P@@Sw0rd";
         static readonly string SaltKey = "S@LT&KEY";
         static readonly string VIKey = "@1B2c3D4e5F6g7H8";
+        
         private void SetCookie(string mymodel, string name)
         {
 
@@ -284,13 +286,15 @@ namespace neshanak.Controllers
         }
         public ActionResult Index()
         {
-
+            CookieVM cookiemodel = JsonConvert.DeserializeObject<CookieVM>(getCookie("token"));
+            cookiemodel.currentpage = "index";
+            cookiemodel.controller = "admin";
             if (Session["imageList"] == null)
                 Session["imageList"] = "";
 
 
             AdminPanel.ViewModel.BaseViewModel basemodel = new AdminPanel.ViewModel.BaseViewModel();
-
+            SetCookie(JsonConvert.SerializeObject(cookiemodel), "token");
             return View(basemodel);
         }
         public static IEnumerable<SelectListItem> GetProvincesList()
@@ -2790,11 +2794,16 @@ namespace neshanak.Controllers
         public ActionResult blog()
         {
 
+            CookieVM cookiemodel = JsonConvert.DeserializeObject<CookieVM>(getCookie("token"));
+            cookiemodel.currentpage = "blog";
+            cookiemodel.controller = "admin";
+            SetCookie(JsonConvert.SerializeObject(cookiemodel), "token");
             Session["imageListAdd"] = "";
             Session["imageListEdit"] = "";
             string device = RandomString(10);
             string code = MD5Hash(device + "ncase8934f49909");
             string result = "";
+            string lang = Session["lang"] as string;
             using (WebClient client = new WebClient())
             {
 
@@ -2802,6 +2811,7 @@ namespace neshanak.Controllers
                 collection.Add("device", device);
                 collection.Add("code", code);
                 collection.Add("servername", servername);
+                collection.Add("lan", lang);
                 byte[] response = client.UploadValues(server + "/Admin/getDataCatArticle.php", collection);
 
                 result = System.Text.Encoding.UTF8.GetString(response);
@@ -2831,6 +2841,7 @@ namespace neshanak.Controllers
             string device = RandomString(10);
             string code = MD5Hash(device + "ncase8934f49909");
             string result = "";
+            string lan = Session["lang"] as string;
             using (WebClient client = new WebClient())
             {
 
@@ -2839,6 +2850,7 @@ namespace neshanak.Controllers
                 collection.Add("code", code);
                 collection.Add("id", id);
                 collection.Add("search", search);
+                collection.Add("lan", lan);
                 collection.Add("servername", servername);
                 byte[] response = client.UploadValues(server + "/Admin/getDataCatArticlesList.php", collection);
 
@@ -2858,16 +2870,24 @@ namespace neshanak.Controllers
             model.tag = model.tag.Replace(",", "-");
 
             string ss = Session["imageListAdd"] as string;
-            ss = ss.Substring(0, ss.Length - 1);
-            List<string> imageList = ss.Split(',').ToList();
+
             string imagename = "";
-            if (imageList != null)
+            if (ss != "")
             {
-                imagename = imageList[0];
+                ss = ss.Substring(0, ss.Length - 1);
+                List<string> imageList = ss.Split(',').ToList();
+                
+                if (imageList != null)
+                {
+                    imagename = imageList[0];
+                }
             }
+            
             string device = RandomString(10);
             string code = MD5Hash(device + "ncase8934f49909");
             string result = "";
+            string newContent = Regex.Replace(model.description, @">\s*<", "><", RegexOptions.Multiline).Replace("\"", "\\\"");
+            string lang = Session["lang"] as string;
             using (WebClient client = new WebClient())
             {
 
@@ -2878,9 +2898,10 @@ namespace neshanak.Controllers
                 collection.Add("tag", model.tag);
                 collection.Add("title", model.title);
                 collection.Add("cat", model.catList);
-                collection.Add("content", model.description);
+                collection.Add("content", newContent);
                 collection.Add("type", "add");
                 collection.Add("ID", "");
+                collection.Add("lan", lang);
                 collection.Add("servername", servername);
                 byte[] response = client.UploadValues(server + "/Admin/UpdateArticles.php", collection);
 
@@ -2912,6 +2933,7 @@ namespace neshanak.Controllers
             string device = RandomString(10);
             string code = MD5Hash(device + "ncase8934f49909");
             string result = "";
+            string lan = Session["lang"] as string;
             using (WebClient client = new WebClient())
             {
 
@@ -2920,7 +2942,7 @@ namespace neshanak.Controllers
                 collection.Add("code", code);
                 collection.Add("image", imagename);
                 collection.Add("title", title);
-                collection.Add("servername", servername);
+                collection.Add("lan", lan);
                 byte[] response = client.UploadValues(server + "/Admin/setNewCatArticle.php", collection);
 
                 result = System.Text.Encoding.UTF8.GetString(response);
@@ -2939,6 +2961,8 @@ namespace neshanak.Controllers
             // ss = ss + filename;
             ss = ss.Substring(0, ss.Length - 1);
             List<string> imaglist = ss.Split(',').ToList();
+            string lan = Session["lang"] as string;
+            string newContent = Regex.Replace(model.descriptionupdate, @">\s*<", "><", RegexOptions.Multiline).Replace("\"", "\\\"");
             using (WebClient client = new WebClient())
             {
 
@@ -2950,8 +2974,9 @@ namespace neshanak.Controllers
                 collection.Add("tag", model.tagupdate);
                 collection.Add("title", model.titleupdate);
                 collection.Add("cat", model.catListupdate);
-                collection.Add("content", model.descriptionupdate);
+                collection.Add("content", newContent);
                 collection.Add("type", "update");
+                collection.Add("lan", lan);
                 collection.Add("ID", model.IDupdate);
 
                 byte[] response = client.UploadValues(server + "/Admin/UpdateArticles.php", collection);
@@ -2963,36 +2988,7 @@ namespace neshanak.Controllers
         }
 
 
-        public ActionResult updatePages(viewModel.updatePagesVM model)
-        {
-
-            string device = RandomString(10);
-            string code = MD5Hash(device + "ncase8934f49909");
-            string result = "";
-
-            string content = model.name == "contactus" ? model.contentContactUs : model.content;
-            using (WebClient client = new WebClient())
-            {
-
-                var collection = new NameValueCollection();
-                collection.Add("servername", servername);
-                collection.Add("device", device);
-                collection.Add("code", code);
-                collection.Add("content", content);
-                collection.Add("name", model.name);
-
-
-                byte[] response = client.UploadValues(server + "/Admin/UpdatePages.php", collection);
-
-                result = System.Text.Encoding.UTF8.GetString(response);
-            }
-            if (model.name == "aboutus")
-            {
-                Response.Cookies["imageAboutUs"].Value = "";
-            }
-
-            return RedirectToAction("pages");
-        }
+       
         public ActionResult updateCArticle(string CIDupdate, string Cimageupdate, string Ctitleupdate)
         {
             string imagename = "";
@@ -3029,6 +3025,7 @@ namespace neshanak.Controllers
             string device = RandomString(10);
             string code = MD5Hash(device + "ncase8934f49909");
             string result = "";
+            string lan = Session["lang"] as string;
             using (WebClient client = new WebClient())
             {
 
@@ -3039,6 +3036,7 @@ namespace neshanak.Controllers
                 collection.Add("image", imagename);
                 collection.Add("title", Ctitleupdate);
                 collection.Add("ID", CIDupdate);
+                collection.Add("lan", lan);
 
                 byte[] response = client.UploadValues(server + "/Admin/UpdateCArticles.php", collection);
 
@@ -3099,9 +3097,13 @@ namespace neshanak.Controllers
 
                     result = System.Text.Encoding.UTF8.GetString(response);
                 }
-                string pathString = "~/images/panelimages";
-                string savedFileName = Path.Combine(Server.MapPath(pathString), Path.GetFileName(result));
-                System.IO.File.Delete(savedFileName);
+                if (result != "")
+                {
+                    string pathString = "~/images/panelimages";
+                    string savedFileName = Path.Combine(Server.MapPath(pathString), Path.GetFileName(result));
+                    System.IO.File.Delete(savedFileName);
+                }
+               
 
                 //string imagename = result;
                 //string savedFileName = Path.Combine(Server.MapPath(pathString), imagename);
@@ -3344,6 +3346,7 @@ namespace neshanak.Controllers
 
             CookieVM cookiemodel = JsonConvert.DeserializeObject<CookieVM>(getCookie("token"));
             cookiemodel.currentpage = "product";
+            cookiemodel.controller = "admin";
             SetCookie(JsonConvert.SerializeObject(cookiemodel), "token");
             if (true)
             {
@@ -3819,15 +3822,48 @@ namespace neshanak.Controllers
                 Response.Cookies["imageContactUs"].Value = ss;
                 model.type = "contactus";
             }
+            else if (filename == "privacy")
+            {
+                ss = Request.Cookies["imageprivacy"].Value + tobeaddedtoimagename + ".jpg,";
+                Response.Cookies["imageprivacy"].Value = ss;
+                model.type = "privacy";
+            }
 
 
-            //ss = ss ;
-            ss = ss.Substring(0, ss.Length - 1);
+                //ss = ss ;
+                ss = ss.Substring(0, ss.Length - 1);
 
             model.data = ss;
 
             return PartialView("/Views/Shared/AdminShared/_imageForMCEPages.cshtml", model);
             // return Content(tobeaddedtoimagename);
+        }
+
+        public ActionResult getImageList(string filename)
+        {
+            viewModel.imageForEMCVM model = new viewModel.imageForEMCVM();
+            string ss = "";
+            if (filename == "aboutus")
+            {
+                ss = Request.Cookies["imageAboutUs"].Value;
+                model.type = "aboutus";
+            }
+            else if (filename == "contactus")
+            {
+                ss = Request.Cookies["imageContactUs"].Value;
+              
+                model.type = "contactus";
+            }
+            else if (filename == "privacy")
+            {
+                ss = Request.Cookies["imageprivacy"].Value;
+                
+            }
+
+            ss = ss.Substring(0, ss.Length - 1);
+            model.data = ss;
+
+            return PartialView("/Views/Shared/AdminShared/_imageForMCEPages.cshtml", model);
         }
         public ActionResult GetImageForMCEEditContext(string srt, string image)
         {
@@ -3865,9 +3901,19 @@ namespace neshanak.Controllers
                     cookie = Request.Cookies["imageContactUs"].Value.Replace(srt, "") + srt;
                     Response.Cookies["imageContactUs"].Value = cookie;
                 }
+                else if (type == "privacy")
+                {
+                    srt = srt.Replace("../images/panelimages/", "");
+                    cookie = Request.Cookies["imageprivacy"].Value.Replace(srt, "") + srt;
+                    Response.Cookies["imageprivacy"].Value = cookie;
+                }
 
                 model.data = cookie.Substring(0, cookie.Length - 1);
                 model.type = type;
+            }
+            else
+            {
+                
             }
 
             return PartialView("/Views/Shared/AdminShared/_imageForMCEPages.cshtml", model);
@@ -4032,7 +4078,7 @@ namespace neshanak.Controllers
             return Json("Uploaded " + Request.Files.Count + " files");
         }
 
-        public ActionResult Delete(string id)
+        public ActionResult DeleteNode(string id)
         {
 
             ViewBag.Message = "Your application description page.";
@@ -4056,7 +4102,7 @@ namespace neshanak.Controllers
                 result = System.Text.Encoding.UTF8.GetString(response);
             }
 
-
+            return Content("1");
             imagelistViwModel log = JsonConvert.DeserializeObject<imagelistViwModel>(result);
 
             if (log.List != null)
@@ -4816,28 +4862,67 @@ namespace neshanak.Controllers
         }
         public ActionResult Pages()
         {
+            CookieVM cookiemodel = JsonConvert.DeserializeObject<CookieVM>(getCookie("token"));
+            cookiemodel.currentpage = "Pages";
+            cookiemodel.controller = "admin";
+            SetCookie(JsonConvert.SerializeObject(cookiemodel), "token");
+
             Response.Cookies["imageAboutUs"].Value = "";
             Response.Cookies["imageContactUs"].Value = "";
+            Response.Cookies["imageprivacy"].Value = "";
+
 
             string device = RandomString(10);
             string code = MD5Hash(device + "ncase8934f49909");
             string result = "";
+            string lang = Session["lang"] as string;
             using (WebClient client = new WebClient())
             {
 
                 var collection = new NameValueCollection();
                 collection.Add("device", device);
                 collection.Add("code", code);
-                collection.Add("servername", servername);
+                collection.Add("lan", lang);
                 byte[] response = client.UploadValues(server + "/Admin/getPages.php", collection);
 
                 result = System.Text.Encoding.UTF8.GetString(response);
             }
             pagesVM model = JsonConvert.DeserializeObject<pagesVM>(result);
-
             return View(model);
         }
+       
+        public ActionResult updatePages(viewModel.updatePagesVM model)
+        {
+           
+            string device = RandomString(10);
+            string code = MD5Hash(device + "ncase8934f49909");
+            string result = "";
 
+
+            string newContent = Regex.Replace(model.content, @">\s*<", "><", RegexOptions.Multiline).Replace("\"","\\\"");
+            string lang = Session["lang"] as string;
+            using (WebClient client = new WebClient())
+            {
+
+                var collection = new NameValueCollection();
+                collection.Add("servername", servername);
+                collection.Add("device", device);
+                collection.Add("code", code);
+                collection.Add("content", newContent);
+                collection.Add("name", model.name);
+                collection.Add("lan", lang);
+
+                byte[] response = client.UploadValues(server + "/Admin/UpdatePages.php", collection);
+
+                result = System.Text.Encoding.UTF8.GetString(response);
+            }
+            if (model.name == "aboutus")
+            {
+                Response.Cookies["imageAboutUs"].Value = "";
+            }
+
+            return RedirectToAction("pages");
+        }
         public ActionResult partner()
         {
 
@@ -4956,1023 +5041,8 @@ namespace neshanak.Controllers
         }
 
 
-
-        public ContentResult UpdatePartnerForCat(string partner, string catP)
-        {
-
-            if (partner != "" && catP != "")
-            {
-                string device = RandomString(10);
-                string code = MD5Hash(device + "ncase8934f49909");
-                string result = "";
-                using (WebClient client = new WebClient())
-                {
-
-                    var collection = new NameValueCollection();
-                    collection.Add("servername", servername);
-                    collection.Add("device", device);
-                    collection.Add("code", code);
-                    collection.Add("partner", partner);
-                    collection.Add("cat", catP);
-
-
-                    byte[] response = client.UploadValues(server + "/Admin/UpdatePartnerForCat.php", collection);
-
-                    result = System.Text.Encoding.UTF8.GetString(response);
-                }
-                return Content("200");
-            }
-            else
-            {
-                return Content("500");
-            }
-
-        }
-        public ContentResult UpdatePartner(string price, string partner, string product, string cat)
-        {
-
-            if (partner != "" && price != "")
-            {
-                string device = RandomString(10);
-                string code = MD5Hash(device + "ncase8934f49909");
-                string result = "";
-                using (WebClient client = new WebClient())
-                {
-
-                    var collection = new NameValueCollection();
-                    collection.Add("servername", servername);
-                    collection.Add("device", device);
-                    collection.Add("code", code);
-                    collection.Add("partner", partner);
-                    collection.Add("price", price);
-                    collection.Add("product", product);
-                    collection.Add("cat", cat);
-
-
-                    byte[] response = client.UploadValues(server + "/Admin/UpdatePartner.php", collection);
-
-                    result = System.Text.Encoding.UTF8.GetString(response);
-                }
-                return Content("200");
-            }
-            else
-            {
-                return Content("500");
-            }
-
-        }
-
-        [HttpPost]
-        public ActionResult setNewPartner(string phone, string title)
-        {
-            string device = RandomString(10);
-            string code = MD5Hash(device + "ncase8934f49909");
-            string result = "";
-            using (WebClient client = new WebClient())
-            {
-
-                var collection = new NameValueCollection();
-                collection.Add("device", device);
-                collection.Add("code", code);
-                collection.Add("phone", phone);
-                collection.Add("title", title);
-                collection.Add("servername", servername);
-                byte[] response = client.UploadValues(server + "/Admin/setNewPartner.php", collection);
-
-                result = System.Text.Encoding.UTF8.GetString(response);
-            }
-            return RedirectToAction("partner");
-        }
-
-        [HttpPost]
-        public ActionResult updatePartnerInfo(string Ctitleupdate, string CPhoneupdate, string CIDupdate)
-        {
-
-            string device = RandomString(10);
-            string code = MD5Hash(device + "ncase8934f49909");
-            string result = "";
-            using (WebClient client = new WebClient())
-            {
-
-                var collection = new NameValueCollection();
-                collection.Add("device", device);
-                collection.Add("code", code);
-                collection.Add("phone", CPhoneupdate);
-                collection.Add("title", Ctitleupdate);
-                collection.Add("ID", CIDupdate);
-                collection.Add("servername", servername);
-                byte[] response = client.UploadValues(server + "/Admin/setNewPartner.php", collection);
-
-                result = System.Text.Encoding.UTF8.GetString(response);
-            }
-            return RedirectToAction("partner");
-        }
-
-
-        public void DeletePartner(string ID)
-        {
-            if (true)
-            {
-                string device = RandomString(10);
-                string code = MD5Hash(device + "ncase8934f49909");
-                string result = "";
-                using (WebClient client = new WebClient())
-                {
-
-                    var collection = new NameValueCollection();
-                    collection.Add("device", device);
-                    collection.Add("code", code);
-
-                    collection.Add("ID", ID);
-                    collection.Add("servername", servername);
-                    byte[] response = client.UploadValues(server + "/Admin/deletePartner.php", collection);
-
-                    result = System.Text.Encoding.UTF8.GetString(response);
-                }
-            }
-
-
-        }
-
-        [HttpPost]
-
-        public void createUserReport(string data, string type, string id, string date, string orderID)
-        {
-            if (true)
-            {
-                List<ViewModelPost.ReportMyProduct> model = JsonConvert.DeserializeObject<List<ViewModelPost.ReportMyProduct>>(data);
-
-
-                string device = RandomString(10);
-                string code = MD5Hash(device + "ncase8934f49909");
-                string result = "";
-
-                if (type == "partner")
-                {
-                    using (WebClient client = new WebClient())
-                    {
-
-                        var collection = new NameValueCollection();
-                        collection.Add("device", device);
-                        collection.Add("code", code);
-                        collection.Add("ID", id);
-                        collection.Add("servername", servername);
-
-                        byte[] response = client.UploadValues(server + "/Admin/GetPartnerInfo.php", collection);
-
-                        result = System.Text.Encoding.UTF8.GetString(response);
-                    }
-                }
-                else
-                {
-                    using (WebClient client = new WebClient())
-                    {
-
-                        var collection = new NameValueCollection();
-                        collection.Add("device", device);
-                        collection.Add("code", code);
-                        collection.Add("id", model.First().orderID);
-                        collection.Add("servername", servername);
-                        byte[] response = client.UploadValues(server + "/Admin/GetOrderInfo.php", collection);
-
-                        result = System.Text.Encoding.UTF8.GetString(response);
-                    }
-                }
-
-
-                string strHtml = string.Empty;
-                string filename = RandomString(5);
-                string pdfFileName = Server.MapPath("/files/" + filename + ".pdf");
-                CreatePDFFromHTMLFile("", pdfFileName, data, type, result, date);
-                Response.ContentType = "application/pdf";
-                Response.AddHeader("Content-Disposition", string.Format("attachment; filename=\"{0}\"", filename + ".pdf"));
-                Response.ContentEncoding = Encoding.UTF8;
-                Response.WriteFile(pdfFileName);
-                Response.HeaderEncoding = Encoding.UTF8;
-                Response.Flush();
-                Response.End();
-            }
-
-
-        }
-
-        private void CreatePDFFromHTMLFile(string html, string FileName, string data, string type, string info, string date)
-        {
-
-            if (true)
-            {
-
-
-                Document document = new Document(PageSize.A4);
-                PdfWriter writer = PdfWriter.GetInstance(document, new FileStream(FileName, FileMode.Create));
-                document.Open();
-                document.NewPage();
-
-                string imageString = "~/images";
-                string savedimageString = Path.Combine(Server.MapPath(imageString), "pdflogo.png");
-                iTextSharp.text.Image topImage = iTextSharp.text.Image.GetInstance(savedimageString);
-                topImage.WidthPercentage = 20;
-                topImage.Alignment = Element.ALIGN_CENTER;
-                document.Add(topImage);
-
-                string pathString = "~/fonts/ttf";
-                string savedFileName = Path.Combine(Server.MapPath(pathString), "IRANSansWeb(FaNum).ttf");
-                BaseFont bfTimes = BaseFont.CreateFont(savedFileName, BaseFont.IDENTITY_H, false);
-                Font font = new Font(bfTimes, 12);
-                Font fontbig = new Font(bfTimes, 14);
-                Font fontSMALL = new Font(bfTimes, 10);
-                Font fontSMALLHeader = new Font(bfTimes);
-                Font fontbigBold = new Font(bfTimes, 14, Font.BOLD);
-                fontSMALLHeader.SetColor(0, 0, 0);
-
-                PdfPTable toptable = new PdfPTable(1);
-                toptable.DefaultCell.NoWrap = false;
-                toptable.RunDirection = PdfWriter.RUN_DIRECTION_RTL;
-                toptable.PaddingTop = 200;
-
-                PdfContentByte content = writer.DirectContent;
-                Rectangle rectangle = new Rectangle(document.PageSize);
-                rectangle.Left += document.LeftMargin - 10;
-                rectangle.Right -= document.RightMargin - 10;
-                rectangle.Top -= document.TopMargin - 10;
-                rectangle.Bottom += document.BottomMargin - 10;
-                content.SetColorStroke(WebColors.GetRGBColor("#2a85ae"));
-                content.Rectangle(rectangle.Left, rectangle.Bottom, rectangle.Width, rectangle.Height);
-                content.Stroke();
-
-                content = writer.DirectContent;
-                rectangle = new Rectangle(document.PageSize);
-                rectangle.Left += document.LeftMargin - 15;
-                rectangle.Right -= document.RightMargin - 15;
-                rectangle.Top -= document.TopMargin - 15;
-                rectangle.Bottom += document.BottomMargin - 15;
-                content.SetColorStroke(WebColors.GetRGBColor("#2a85ae"));
-                content.Rectangle(rectangle.Left, rectangle.Bottom, rectangle.Width, rectangle.Height);
-                content.Stroke();
-
-                //PdfPCell empty = new PdfPCell(new Phrase("  ", fontbig))
-                //{
-                //    Border = PdfPCell.NO_BORDER,
-                //    HorizontalAlignment = Element.ALIGN_RIGHT
-                //};
-                //empty.RunDirection = PdfWriter.RUN_DIRECTION_RTL;
-                //empty.NoWrap = false;
-                //empty.PaddingBottom = 0;
-                //empty.VerticalAlignment = Element.ALIGN_MIDDLE;
-                //empty.HorizontalAlignment = Element.ALIGN_CENTER;
-                //toptable.AddCell(empty);
-
-                PdfPTable table = new PdfPTable(13);
-                table.DefaultCell.NoWrap = false;
-                table.RunDirection = PdfWriter.RUN_DIRECTION_RTL;
-                table.PaddingTop = 100;
-
-                if (type == "partner")
-                {
-                    List<PartnerOrder> list = JsonConvert.DeserializeObject<List<PartnerOrder>>(data);
-                    list = (from p in list
-                            group p by p.title into g
-                            select new PartnerOrder
-                            {
-                                quantity = g.Sum(x => x.quantity),
-                                title = g.First().title,
-                                Price = g.First().Price,
-                                ProductId = g.First().ProductId,
-                                Rdate = g.First().Rdate
-
-                            }
-
-                                                              ).ToList();
-
-                    int finalItemTotal = list.Select(x => x.quantity).Sum();
-                    partnerVM log2 = JsonConvert.DeserializeObject<partnerVM>(info);
-                    int final = 0;
-                    foreach (var item in list)
-                    {
-                        final = (item.Price * item.quantity) + final;
-                    }
-
-                    PdfPCell cell = new PdfPCell(new Phrase("فاکتور فروش", fontbig))
-                    {
-                        Border = PdfPCell.NO_BORDER,
-                        HorizontalAlignment = Element.ALIGN_RIGHT
-                    };
-                    cell.RunDirection = PdfWriter.RUN_DIRECTION_RTL;
-                    cell.NoWrap = false;
-
-                    cell.Padding = 35;
-                    cell.VerticalAlignment = Element.ALIGN_MIDDLE;
-                    cell.HorizontalAlignment = Element.ALIGN_CENTER;
-                    toptable.AddCell(cell);
-                    document.Add(toptable);
-
-
-                    PdfPCell fullname = new PdfPCell(new Phrase(" آقا/ خانم : " + log2.partnerList.First().title, fontSMALL));
-                    fullname.RunDirection = PdfWriter.RUN_DIRECTION_RTL;
-                    fullname.NoWrap = false;
-                    fullname.SetLeading(14, 0);
-                    fullname.Colspan = 6;
-                    fullname.PaddingBottom = 15;
-                    fullname.VerticalAlignment = Element.ALIGN_MIDDLE;
-                    fullname.HorizontalAlignment = Element.ALIGN_CENTER;
-                    table.AddCell(fullname);
-
-                    PdfPCell phone = new PdfPCell(new Phrase("شماره تماس : " + log2.partnerList.First().phone, fontSMALL));
-                    phone.RunDirection = PdfWriter.RUN_DIRECTION_RTL;
-                    phone.NoWrap = false;
-                    phone.SetLeading(14, 0);
-                    phone.Colspan = 7;
-                    phone.PaddingBottom = 15;
-                    phone.VerticalAlignment = Element.ALIGN_MIDDLE;
-                    phone.HorizontalAlignment = Element.ALIGN_CENTER;
-                    table.AddCell(phone);
-
-                    phone = new PdfPCell(new Phrase("تاریخ سفارش : ", fontSMALL))
-                    {
-                        Border = PdfPCell.BOTTOM_BORDER | PdfPCell.RIGHT_BORDER | PdfPCell.TOP_BORDER,
-
-                    };
-                    phone.RunDirection = PdfWriter.RUN_DIRECTION_RTL;
-                    phone.NoWrap = false;
-                    phone.SetLeading(14, 0);
-                    phone.Colspan = 3;
-                    phone.PaddingBottom = 15;
-                    phone.VerticalAlignment = Element.ALIGN_MIDDLE;
-                    phone.HorizontalAlignment = Element.ALIGN_RIGHT;
-                    table.AddCell(phone);
-
-                    phone = new PdfPCell(new Phrase(date, fontSMALL))
-                    {
-                        Border = PdfPCell.BOTTOM_BORDER | PdfPCell.LEFT_BORDER | PdfPCell.TOP_BORDER,
-
-
-                    };
-                    //phone.RunDirection = PdfWriter.RUN_DIRECTION_RTL;
-                    phone.NoWrap = false;
-                    phone.SetLeading(14, 0);
-                    phone.Colspan = 3;
-                    phone.PaddingBottom = 15;
-                    phone.VerticalAlignment = Element.ALIGN_MIDDLE;
-                    phone.HorizontalAlignment = Element.ALIGN_LEFT;
-                    table.AddCell(phone);
-
-                    phone = new PdfPCell(new Phrase("مبلغ کل سفارش : " + final + " تومان", fontSMALL));
-                    phone.RunDirection = PdfWriter.RUN_DIRECTION_RTL;
-                    phone.NoWrap = false;
-                    phone.SetLeading(14, 0);
-                    phone.Colspan = 7;
-                    phone.PaddingBottom = 15;
-                    phone.VerticalAlignment = Element.ALIGN_MIDDLE;
-                    phone.HorizontalAlignment = Element.ALIGN_CENTER;
-                    table.AddCell(phone);
-
-
-                    PdfPCell radif = new PdfPCell(new Phrase("ردیف", fontSMALLHeader));
-                    radif.RunDirection = PdfWriter.RUN_DIRECTION_RTL;
-                    radif.NoWrap = false;
-                    radif.SetLeading(14, 0);
-                    radif.PaddingBottom = 15;
-                    radif.PaddingTop = 5;
-                    radif.PaddingRight = 2;
-                    radif.VerticalAlignment = Element.ALIGN_MIDDLE;
-                    radif.HorizontalAlignment = Element.ALIGN_CENTER;
-                    radif.BackgroundColor = WebColors.GetRGBColor("#ddd");
-
-                    table.AddCell(radif);
-
-                    PdfPCell nam = new PdfPCell(new Phrase("نام محصول", fontSMALLHeader));
-                    nam.RunDirection = PdfWriter.RUN_DIRECTION_RTL;
-                    nam.NoWrap = false;
-                    nam.SetLeading(14, 0);
-                    nam.Colspan = 4;
-                    nam.PaddingBottom = 15;
-                    nam.PaddingTop = 5;
-                    nam.PaddingRight = 2;
-                    nam.VerticalAlignment = Element.ALIGN_MIDDLE;
-                    nam.HorizontalAlignment = Element.ALIGN_CENTER;
-                    nam.BackgroundColor = WebColors.GetRGBColor("#ddd");
-                    table.AddCell(nam);
-
-                    PdfPCell tedad = new PdfPCell(new Phrase("تعداد", fontSMALLHeader));
-                    tedad.RunDirection = PdfWriter.RUN_DIRECTION_RTL;
-                    tedad.NoWrap = false;
-                    tedad.SetLeading(14, 0);
-                    tedad.PaddingBottom = 15;
-                    tedad.PaddingTop = 5;
-                    tedad.PaddingRight = 2;
-                    tedad.Colspan = 1;
-                    tedad.VerticalAlignment = Element.ALIGN_MIDDLE;
-                    tedad.HorizontalAlignment = Element.ALIGN_CENTER;
-                    tedad.BackgroundColor = WebColors.GetRGBColor("#ddd");
-
-                    table.AddCell(tedad);
-
-                    PdfPCell gheymat = new PdfPCell(new Phrase("قیمت واحد", fontSMALLHeader));
-                    gheymat.RunDirection = PdfWriter.RUN_DIRECTION_RTL;
-                    gheymat.NoWrap = false;
-                    gheymat.SetLeading(14, 0);
-                    gheymat.PaddingBottom = 15;
-                    gheymat.PaddingTop = 5;
-                    gheymat.PaddingRight = 2;
-                    gheymat.Colspan = 2;
-                    gheymat.VerticalAlignment = Element.ALIGN_MIDDLE;
-                    gheymat.HorizontalAlignment = Element.ALIGN_CENTER;
-                    gheymat.BackgroundColor = WebColors.GetRGBColor("#ddd");
-
-                    table.AddCell(gheymat);
-
-                    PdfPCell gheymatkol = new PdfPCell(new Phrase("قیمت کل", fontSMALLHeader));
-                    gheymatkol.RunDirection = PdfWriter.RUN_DIRECTION_RTL;
-                    gheymatkol.NoWrap = false;
-                    gheymatkol.SetLeading(14, 0);
-                    gheymatkol.PaddingBottom = 15;
-                    gheymatkol.PaddingTop = 5;
-                    gheymatkol.PaddingRight = 2;
-                    gheymatkol.Colspan = 2;
-                    gheymatkol.VerticalAlignment = Element.ALIGN_MIDDLE;
-                    gheymatkol.HorizontalAlignment = Element.ALIGN_CENTER;
-                    gheymatkol.BackgroundColor = WebColors.GetRGBColor("#ddd");
-
-                    table.AddCell(gheymatkol);
-
-                    PdfPCell tozihat = new PdfPCell(new Phrase("توضیحات", fontSMALLHeader));
-                    tozihat.RunDirection = PdfWriter.RUN_DIRECTION_RTL;
-                    tozihat.NoWrap = false;
-                    tozihat.SetLeading(14, 0);
-                    tozihat.Colspan = 3;
-                    tozihat.PaddingBottom = 15;
-                    tozihat.PaddingTop = 5;
-                    tozihat.PaddingRight = 2;
-                    tozihat.VerticalAlignment = Element.ALIGN_MIDDLE;
-                    tozihat.HorizontalAlignment = Element.ALIGN_CENTER;
-                    tozihat.BackgroundColor = WebColors.GetRGBColor("#ddd");
-                    table.AddCell(tozihat);
-
-                    PdfPCell tozihatEmpty = new PdfPCell(new Phrase("", fontSMALLHeader));
-                    tozihatEmpty.RunDirection = PdfWriter.RUN_DIRECTION_RTL;
-                    tozihatEmpty.NoWrap = false;
-                    tozihatEmpty.SetLeading(14, 0);
-                    tozihatEmpty.Colspan = 3;
-                    tozihatEmpty.PaddingBottom = 15;
-                    tozihatEmpty.PaddingTop = 5;
-                    tozihatEmpty.PaddingRight = 2;
-                    tozihatEmpty.VerticalAlignment = Element.ALIGN_MIDDLE;
-                    foreach (var item in list)
-                    {
-                        PdfPCell countIN = new PdfPCell(new Phrase((list.IndexOf(item) + 1).ToString(), fontSMALL));
-                        countIN.HorizontalAlignment = Element.ALIGN_CENTER;
-                        countIN.VerticalAlignment = Element.ALIGN_MIDDLE;
-                        countIN.Colspan = 1;
-                        table.AddCell(countIN);
-
-
-
-
-                        PdfPCell title = new PdfPCell(new Phrase(item.title, fontSMALL));
-                        title.RunDirection = PdfWriter.RUN_DIRECTION_RTL;
-                        title.NoWrap = false;
-                        title.SetLeading(14, 0);
-                        title.Colspan = 4;
-                        title.PaddingBottom = 15;
-                        title.PaddingTop = 5;
-                        title.PaddingRight = 2;
-                        title.VerticalAlignment = Element.ALIGN_MIDDLE;
-                        table.AddCell(title);
-
-
-                        PdfPCell amountTot = new PdfPCell(new Phrase(item.quantity.ToString(), fontSMALL));
-                        amountTot.HorizontalAlignment = Element.ALIGN_CENTER;
-                        amountTot.VerticalAlignment = Element.ALIGN_MIDDLE;
-                        amountTot.Colspan = 1;
-                        table.AddCell(amountTot);
-
-                        PdfPCell price = new PdfPCell(new Phrase(item.Price.ToString(), fontSMALL));
-                        price.HorizontalAlignment = Element.ALIGN_CENTER;
-                        price.VerticalAlignment = Element.ALIGN_MIDDLE;
-                        price.Colspan = 2;
-
-                        table.AddCell(price);
-
-
-
-                        //final = final + (item.quantity * item.Price);
-                        PdfPCell priceToT = new PdfPCell(new Phrase((item.quantity * item.Price).ToString(), fontSMALL));
-                        priceToT.HorizontalAlignment = Element.ALIGN_CENTER;
-                        priceToT.VerticalAlignment = Element.ALIGN_MIDDLE;
-                        priceToT.Colspan = 2;
-                        table.AddCell(priceToT);
-
-                        table.AddCell(tozihatEmpty);
-                    }
-
-                    PdfPCell counthaz = new PdfPCell(new Phrase((list.Count() + 1).ToString(), fontSMALL));
-                    counthaz.HorizontalAlignment = Element.ALIGN_CENTER;
-                    counthaz.VerticalAlignment = Element.ALIGN_MIDDLE;
-                    counthaz.Colspan = 1;
-                    table.AddCell(counthaz);
-                    PdfPCell totalsrt = new PdfPCell(new Phrase("جمع کل", fontbigBold));
-                    totalsrt.RunDirection = PdfWriter.RUN_DIRECTION_RTL;
-                    totalsrt.NoWrap = false;
-                    totalsrt.Colspan = 4;
-                    totalsrt.PaddingBottom = 15;
-                    totalsrt.VerticalAlignment = Element.ALIGN_MIDDLE;
-
-
-                    table.AddCell(totalsrt);
-
-                    PdfPCell finalItemTotalCell = new PdfPCell(new Phrase(finalItemTotal.ToString(), fontSMALL));
-                    finalItemTotalCell.HorizontalAlignment = Element.ALIGN_CENTER;
-                    finalItemTotalCell.VerticalAlignment = Element.ALIGN_MIDDLE;
-                    finalItemTotalCell.Colspan = 1;
-                    table.AddCell(finalItemTotalCell);
-
-                    PdfPCell amount = new PdfPCell(new Phrase(final.ToString() + " تومان", fontbigBold));
-                    amount.HorizontalAlignment = Element.ALIGN_CENTER;
-                    amount.VerticalAlignment = Element.ALIGN_MIDDLE;
-                    amount.Colspan = 4;
-
-                    table.AddCell(amount);
-                    table.AddCell(tozihatEmpty);
-
-                }
-                else
-                {
-                    List<ViewModelPost.ReportMyProduct> list = JsonConvert.DeserializeObject<List<ViewModelPost.ReportMyProduct>>(data);
-                    ViewModelPost.orderINFOVM log2 = JsonConvert.DeserializeObject<ViewModelPost.orderINFOVM>(info);
-                    int finalItemTotal = list.Select(x => x.nums).Sum();
-                    PdfPCell cell = new PdfPCell(new Phrase("فاکتور فروش", fontbig))
-                    {
-                        Border = PdfPCell.NO_BORDER,
-                        HorizontalAlignment = Element.ALIGN_RIGHT
-                    };
-                    cell.RunDirection = PdfWriter.RUN_DIRECTION_RTL;
-                    cell.NoWrap = false;
-
-                    cell.Padding = 35;
-                    cell.VerticalAlignment = Element.ALIGN_MIDDLE;
-                    cell.HorizontalAlignment = Element.ALIGN_CENTER;
-                    toptable.AddCell(cell);
-
-                    document.Add(toptable);
-
-
-
-                    int final = 0;
-
-                    PdfPCell fullname = new PdfPCell(new Phrase("نام شخص : آقا/ خانم " + log2.data.fullname, fontSMALL));
-                    fullname.RunDirection = PdfWriter.RUN_DIRECTION_RTL;
-                    fullname.NoWrap = false;
-                    fullname.SetLeading(14, 0);
-                    fullname.Colspan = 6;
-                    fullname.PaddingBottom = 15;
-                    fullname.VerticalAlignment = Element.ALIGN_MIDDLE;
-                    fullname.HorizontalAlignment = Element.ALIGN_CENTER;
-                    table.AddCell(fullname);
-
-                    PdfPCell phone = new PdfPCell(new Phrase("شماره تماس : " + log2.data.phoneNumber, fontSMALL));
-                    phone.RunDirection = PdfWriter.RUN_DIRECTION_RTL;
-                    phone.NoWrap = false;
-                    phone.SetLeading(14, 0);
-                    phone.Colspan = 7;
-                    phone.PaddingBottom = 15;
-                    phone.VerticalAlignment = Element.ALIGN_MIDDLE;
-                    phone.HorizontalAlignment = Element.ALIGN_CENTER;
-                    table.AddCell(phone);
-
-                    fullname = new PdfPCell(new Phrase("شماره سفارش : " + log2.data.orderNumber, fontSMALL));
-                    fullname.RunDirection = PdfWriter.RUN_DIRECTION_RTL;
-                    fullname.NoWrap = false;
-                    fullname.SetLeading(14, 0);
-                    fullname.Colspan = 6;
-                    fullname.PaddingBottom = 15;
-                    fullname.VerticalAlignment = Element.ALIGN_MIDDLE;
-                    fullname.HorizontalAlignment = Element.ALIGN_CENTER;
-                    table.AddCell(fullname);
-
-                    phone = new PdfPCell(new Phrase("تاریخ سفارش : ", fontSMALL))
-                    {
-                        Border = PdfPCell.BOTTOM_BORDER | PdfPCell.RIGHT_BORDER | PdfPCell.TOP_BORDER,
-
-                    };
-                    phone.RunDirection = PdfWriter.RUN_DIRECTION_RTL;
-                    phone.NoWrap = false;
-                    phone.SetLeading(14, 0);
-                    phone.Colspan = 4;
-                    phone.PaddingBottom = 15;
-                    phone.VerticalAlignment = Element.ALIGN_MIDDLE;
-                    phone.HorizontalAlignment = Element.ALIGN_RIGHT;
-                    table.AddCell(phone);
-
-                    phone = new PdfPCell(new Phrase(log2.data.registerDate, fontSMALL))
-                    {
-                        Border = PdfPCell.BOTTOM_BORDER | PdfPCell.LEFT_BORDER | PdfPCell.TOP_BORDER,
-
-
-                    };
-                    //phone.RunDirection = PdfWriter.RUN_DIRECTION_RTL;
-                    phone.NoWrap = false;
-                    phone.SetLeading(14, 0);
-                    phone.Colspan = 3;
-                    phone.PaddingBottom = 15;
-                    phone.VerticalAlignment = Element.ALIGN_MIDDLE;
-                    phone.HorizontalAlignment = Element.ALIGN_LEFT;
-                    table.AddCell(phone);
-
-
-
-                    phone = new PdfPCell(new Phrase("مبلغ کل سفارش : " + log2.data.totalPrice + " تومان", fontSMALL));
-                    phone.RunDirection = PdfWriter.RUN_DIRECTION_RTL;
-                    phone.NoWrap = false;
-                    phone.SetLeading(14, 0);
-                    phone.Colspan = 6;
-                    phone.PaddingBottom = 15;
-                    phone.VerticalAlignment = Element.ALIGN_MIDDLE;
-                    phone.HorizontalAlignment = Element.ALIGN_CENTER;
-                    table.AddCell(phone);
-
-
-                    phone = new PdfPCell(new Phrase("زمان ارسال : " + log2.data.dayText + " - ساعت : " + log2.data.timeFrom + "-" + log2.data.timeTo + " ", fontSMALL))
-                    {
-                        Border = PdfPCell.BOTTOM_BORDER | PdfPCell.RIGHT_BORDER | PdfPCell.TOP_BORDER,
-
-                    };
-                    phone.RunDirection = PdfWriter.RUN_DIRECTION_RTL;
-                    phone.NoWrap = false;
-                    phone.SetLeading(14, 0);
-                    phone.Colspan = 5;
-                    phone.PaddingBottom = 15;
-                    phone.VerticalAlignment = Element.ALIGN_MIDDLE;
-                    phone.HorizontalAlignment = Element.ALIGN_CENTER;
-                    table.AddCell(phone);
-
-
-                    phone = new PdfPCell(new Phrase("(" + log2.data.deliveryDate + ")", fontSMALL))
-                    {
-                        Border = PdfPCell.BOTTOM_BORDER | PdfPCell.LEFT_BORDER | PdfPCell.TOP_BORDER,
-                        HorizontalAlignment = Element.ALIGN_RIGHT
-                    };
-                    //phone.RunDirection = PdfWriter.RUN_DIRECTION_RTL;
-                    phone.NoWrap = false;
-                    phone.SetLeading(14, 0);
-                    phone.Colspan = 2;
-                    phone.PaddingBottom = 15;
-                    //phone.VerticalAlignment = Element.ALIGN_MIDDLE;
-                    phone.HorizontalAlignment = Element.ALIGN_CENTER;
-                    table.AddCell(phone);
-
-
-                    phone = new PdfPCell(new Phrase(" آدرس : " + log2.data.address, fontSMALL));
-                    phone.RunDirection = PdfWriter.RUN_DIRECTION_RTL;
-                    phone.NoWrap = false;
-                    phone.SetLeading(14, 0);
-                    phone.Colspan = 13;
-                    phone.PaddingBottom = 15;
-                    phone.VerticalAlignment = Element.ALIGN_MIDDLE;
-                    phone.HorizontalAlignment = Element.ALIGN_CENTER;
-                    table.AddCell(phone);
-
-
-                    PdfPCell radif = new PdfPCell(new Phrase("ردیف", fontSMALLHeader));
-                    radif.RunDirection = PdfWriter.RUN_DIRECTION_RTL;
-                    radif.NoWrap = false;
-                    radif.SetLeading(14, 0);
-                    radif.PaddingBottom = 15;
-                    radif.PaddingTop = 5;
-                    radif.PaddingRight = 2;
-                    radif.VerticalAlignment = Element.ALIGN_MIDDLE;
-                    radif.HorizontalAlignment = Element.ALIGN_CENTER;
-                    radif.BackgroundColor = WebColors.GetRGBColor("#ddd");
-
-                    table.AddCell(radif);
-
-                    PdfPCell nam = new PdfPCell(new Phrase("نام محصول", fontSMALLHeader));
-                    nam.RunDirection = PdfWriter.RUN_DIRECTION_RTL;
-                    nam.NoWrap = false;
-                    nam.SetLeading(14, 0);
-                    nam.Colspan = 4;
-                    nam.PaddingBottom = 15;
-                    nam.PaddingTop = 5;
-                    nam.PaddingRight = 2;
-                    nam.VerticalAlignment = Element.ALIGN_MIDDLE;
-                    nam.HorizontalAlignment = Element.ALIGN_CENTER;
-                    nam.BackgroundColor = WebColors.GetRGBColor("#ddd");
-                    table.AddCell(nam);
-
-                    PdfPCell tedad = new PdfPCell(new Phrase("تعداد", fontSMALLHeader));
-                    tedad.RunDirection = PdfWriter.RUN_DIRECTION_RTL;
-                    tedad.NoWrap = false;
-                    tedad.SetLeading(14, 0);
-                    tedad.PaddingBottom = 15;
-                    tedad.PaddingTop = 5;
-                    tedad.PaddingRight = 2;
-                    tedad.Colspan = 1;
-                    tedad.VerticalAlignment = Element.ALIGN_MIDDLE;
-                    tedad.HorizontalAlignment = Element.ALIGN_CENTER;
-                    tedad.BackgroundColor = WebColors.GetRGBColor("#ddd");
-
-                    table.AddCell(tedad);
-
-                    PdfPCell gheymat = new PdfPCell(new Phrase("قیمت واحد", fontSMALLHeader));
-                    gheymat.RunDirection = PdfWriter.RUN_DIRECTION_RTL;
-                    gheymat.NoWrap = false;
-                    gheymat.SetLeading(14, 0);
-                    gheymat.PaddingBottom = 15;
-                    gheymat.PaddingTop = 5;
-                    gheymat.PaddingRight = 2;
-                    gheymat.Colspan = 2;
-                    gheymat.VerticalAlignment = Element.ALIGN_MIDDLE;
-                    gheymat.HorizontalAlignment = Element.ALIGN_CENTER;
-                    gheymat.BackgroundColor = WebColors.GetRGBColor("#ddd");
-
-                    table.AddCell(gheymat);
-
-                    PdfPCell gheymatkol = new PdfPCell(new Phrase("قیمت کل", fontSMALLHeader));
-                    gheymatkol.RunDirection = PdfWriter.RUN_DIRECTION_RTL;
-                    gheymatkol.NoWrap = false;
-                    gheymatkol.SetLeading(14, 0);
-                    gheymatkol.PaddingBottom = 15;
-                    gheymatkol.PaddingTop = 5;
-                    gheymatkol.PaddingRight = 2;
-                    gheymatkol.Colspan = 2;
-                    gheymatkol.VerticalAlignment = Element.ALIGN_MIDDLE;
-                    gheymatkol.HorizontalAlignment = Element.ALIGN_CENTER;
-                    gheymatkol.BackgroundColor = WebColors.GetRGBColor("#ddd");
-
-                    table.AddCell(gheymatkol);
-
-                    PdfPCell tozihat = new PdfPCell(new Phrase("توضیحات", fontSMALLHeader));
-                    tozihat.RunDirection = PdfWriter.RUN_DIRECTION_RTL;
-                    tozihat.NoWrap = false;
-                    tozihat.SetLeading(14, 0);
-                    tozihat.Colspan = 3;
-                    tozihat.PaddingBottom = 15;
-                    tozihat.PaddingTop = 5;
-                    tozihat.PaddingRight = 2;
-                    tozihat.VerticalAlignment = Element.ALIGN_MIDDLE;
-                    tozihat.HorizontalAlignment = Element.ALIGN_CENTER;
-                    tozihat.BackgroundColor = WebColors.GetRGBColor("#ddd");
-                    table.AddCell(tozihat);
-
-
-                    PdfPCell tozihatEmpty = new PdfPCell(new Phrase("", fontSMALLHeader));
-                    tozihatEmpty.RunDirection = PdfWriter.RUN_DIRECTION_RTL;
-                    tozihatEmpty.NoWrap = false;
-                    tozihatEmpty.SetLeading(14, 0);
-                    tozihatEmpty.Colspan = 3;
-                    tozihatEmpty.PaddingBottom = 15;
-                    tozihatEmpty.PaddingTop = 5;
-                    tozihatEmpty.PaddingRight = 2;
-                    tozihatEmpty.VerticalAlignment = Element.ALIGN_MIDDLE;
-
-
-
-                    foreach (var item in list)
-                    {
-                        PdfPCell countIN = new PdfPCell(new Phrase((list.IndexOf(item) + 1).ToString(), fontSMALL));
-                        countIN.HorizontalAlignment = Element.ALIGN_CENTER;
-                        countIN.VerticalAlignment = Element.ALIGN_MIDDLE;
-                        countIN.Colspan = 1;
-                        table.AddCell(countIN);
-
-
-
-
-                        PdfPCell title = new PdfPCell(new Phrase(item.title, fontSMALL));
-                        title.RunDirection = PdfWriter.RUN_DIRECTION_RTL;
-                        title.NoWrap = false;
-                        title.SetLeading(14, 0);
-                        title.Colspan = 4;
-                        title.PaddingBottom = 15;
-                        title.PaddingTop = 5;
-                        title.PaddingRight = 2;
-                        title.VerticalAlignment = Element.ALIGN_MIDDLE;
-                        table.AddCell(title);
-
-
-                        PdfPCell amountTot = new PdfPCell(new Phrase(item.nums.ToString(), fontSMALL));
-                        amountTot.HorizontalAlignment = Element.ALIGN_CENTER;
-                        amountTot.VerticalAlignment = Element.ALIGN_MIDDLE;
-                        amountTot.Colspan = 1;
-                        table.AddCell(amountTot);
-
-                        PdfPCell price = new PdfPCell(new Phrase(item.price.ToString(), fontSMALL));
-                        price.HorizontalAlignment = Element.ALIGN_CENTER;
-                        price.VerticalAlignment = Element.ALIGN_MIDDLE;
-                        price.Colspan = 2;
-
-                        table.AddCell(price);
-
-
-
-                        final = final + (item.nums * item.price);
-                        PdfPCell priceToT = new PdfPCell(new Phrase((item.nums * item.price).ToString(), fontSMALL));
-                        priceToT.HorizontalAlignment = Element.ALIGN_CENTER;
-                        priceToT.VerticalAlignment = Element.ALIGN_MIDDLE;
-                        priceToT.Colspan = 2;
-                        table.AddCell(priceToT);
-
-                        table.AddCell(tozihatEmpty);
-                    }
-                    int i = 1;
-
-                    if (log2.data.gift != null)
-                    {
-                        PdfPCell counthaz0 = new PdfPCell(new Phrase((list.Count() + i).ToString(), fontSMALL));
-                        counthaz0.HorizontalAlignment = Element.ALIGN_CENTER;
-                        counthaz0.VerticalAlignment = Element.ALIGN_MIDDLE;
-                        counthaz0.Colspan = 1;
-                        table.AddCell(counthaz0);
-                        i++;
-
-                        PdfPCell TITLE = new PdfPCell(new Phrase(log2.data.gift, fontSMALL));
-                        TITLE.RunDirection = PdfWriter.RUN_DIRECTION_RTL;
-                        TITLE.NoWrap = false;
-                        TITLE.SetLeading(14, 0);
-                        TITLE.Colspan = 4;
-                        TITLE.PaddingBottom = 15;
-                        TITLE.VerticalAlignment = Element.ALIGN_MIDDLE;
-                        table.AddCell(TITLE);
-
-                        PdfPCell amountTo = new PdfPCell(new Phrase("1", fontSMALL));
-                        amountTo.HorizontalAlignment = Element.ALIGN_CENTER;
-                        amountTo.VerticalAlignment = Element.ALIGN_MIDDLE;
-                        amountTo.Colspan = 1;
-                        table.AddCell(amountTo);
-
-
-
-                        PdfPCell priceToT = new PdfPCell(new Phrase("هدیه دارچین", fontSMALL));
-                        priceToT.HorizontalAlignment = Element.ALIGN_CENTER;
-                        priceToT.VerticalAlignment = Element.ALIGN_MIDDLE;
-                        priceToT.Colspan = 4;
-                        table.AddCell(priceToT);
-
-                        table.AddCell(tozihatEmpty);
-
-                    }
-
-
-
-
-
-
-                    PdfPCell counthaz = new PdfPCell(new Phrase((list.Count() + i).ToString(), fontSMALL));
-                    counthaz.HorizontalAlignment = Element.ALIGN_CENTER;
-                    counthaz.VerticalAlignment = Element.ALIGN_MIDDLE;
-                    counthaz.Colspan = 1;
-                    table.AddCell(counthaz);
-                    i++;
-
-
-
-                    PdfPCell ersal = new PdfPCell(new Phrase("هزینه ارسال", fontSMALL));
-                    ersal.RunDirection = PdfWriter.RUN_DIRECTION_RTL;
-                    ersal.NoWrap = false;
-                    ersal.SetLeading(14, 0);
-                    ersal.Colspan = 5;
-                    ersal.PaddingBottom = 15;
-                    ersal.VerticalAlignment = Element.ALIGN_MIDDLE;
-                    table.AddCell(ersal);
-
-                    PdfPCell ersalhezar = new PdfPCell(new Phrase(log2.deliver.ToString() + " تومان", fontSMALL));
-                    ersalhezar.HorizontalAlignment = Element.ALIGN_CENTER;
-                    ersalhezar.VerticalAlignment = Element.ALIGN_MIDDLE;
-                    ersalhezar.Colspan = 4;
-                    table.AddCell(ersalhezar);
-
-                    table.AddCell(tozihatEmpty);
-
-
-                    counthaz = new PdfPCell(new Phrase((list.Count() + i).ToString(), fontSMALL));
-                    counthaz.HorizontalAlignment = Element.ALIGN_CENTER;
-                    counthaz.VerticalAlignment = Element.ALIGN_MIDDLE;
-                    counthaz.Colspan = 1;
-                    table.AddCell(counthaz);
-                    i++;
-
-
-                    PdfPCell takhfif = new PdfPCell(new Phrase("تخفیف", fontSMALL));
-                    takhfif.RunDirection = PdfWriter.RUN_DIRECTION_RTL;
-                    takhfif.NoWrap = false;
-                    takhfif.SetLeading(14, 0);
-                    takhfif.Colspan = 5;
-                    takhfif.PaddingBottom = 15;
-                    takhfif.VerticalAlignment = Element.ALIGN_MIDDLE;
-
-                    table.AddCell(takhfif);
-
-                    string takhfifstring = "";
-                    if (list.First().discount == null)
-                    {
-                        takhfifstring = "0 تومان";
-                    }
-                    else
-                    {
-                        takhfifstring = list.First().discount + " تومان";
-                    }
-                    PdfPCell takh = new PdfPCell(new Phrase(takhfifstring, fontSMALL));
-                    takh.HorizontalAlignment = Element.ALIGN_CENTER;
-                    takh.VerticalAlignment = Element.ALIGN_MIDDLE;
-                    takh.Colspan = 4;
-                    table.AddCell(takh);
-
-                    table.AddCell(tozihatEmpty);
-
-
-
-
-                    counthaz = new PdfPCell(new Phrase((list.Count() + i).ToString(), fontSMALL));
-                    counthaz.HorizontalAlignment = Element.ALIGN_CENTER;
-                    counthaz.VerticalAlignment = Element.ALIGN_MIDDLE;
-                    counthaz.Colspan = 1;
-                    table.AddCell(counthaz);
-                    i++;
-                    PdfPCell totalsrt = new PdfPCell(new Phrase("جمع کل", fontSMALL));
-                    totalsrt.RunDirection = PdfWriter.RUN_DIRECTION_RTL;
-                    totalsrt.NoWrap = false;
-                    totalsrt.Colspan = 4;
-                    totalsrt.PaddingBottom = 15;
-                    totalsrt.VerticalAlignment = Element.ALIGN_MIDDLE;
-
-
-                    table.AddCell(totalsrt);
-
-                    PdfPCell finalItemTotalCell = new PdfPCell(new Phrase(finalItemTotal.ToString(), fontSMALL));
-                    finalItemTotalCell.HorizontalAlignment = Element.ALIGN_CENTER;
-                    finalItemTotalCell.VerticalAlignment = Element.ALIGN_MIDDLE;
-                    finalItemTotalCell.Colspan = 1;
-                    table.AddCell(finalItemTotalCell);
-
-
-                    PdfPCell amount = new PdfPCell(new Phrase(final.ToString() + " تومان", fontbigBold));
-                    amount.HorizontalAlignment = Element.ALIGN_CENTER;
-                    amount.VerticalAlignment = Element.ALIGN_MIDDLE;
-                    amount.Colspan = 4;
-
-                    table.AddCell(amount);
-                    table.AddCell(tozihatEmpty);
-
-                    counthaz = new PdfPCell(new Phrase((list.Count() + i).ToString(), fontSMALL));
-                    counthaz.HorizontalAlignment = Element.ALIGN_CENTER;
-                    counthaz.VerticalAlignment = Element.ALIGN_MIDDLE;
-                    counthaz.Colspan = 1;
-                    table.AddCell(counthaz);
-                    i++;
-                    PdfPCell totalpay = new PdfPCell(new Phrase("مبلغ قابل پرداخت", fontSMALL));
-                    totalpay.RunDirection = PdfWriter.RUN_DIRECTION_RTL;
-                    totalpay.NoWrap = false;
-                    totalpay.Colspan = 5;
-                    totalpay.PaddingBottom = 15;
-                    totalpay.VerticalAlignment = Element.ALIGN_MIDDLE;
-
-                    table.AddCell(totalpay);
-
-                    string dis = list.First().discount == null ? "0" : list.First().discount;
-
-                    int phrase = final - Int32.Parse(dis) + Int32.Parse(log2.deliver);
-
-                    PdfPCell afterDiscount = new PdfPCell(new Phrase(phrase.ToString() + " تومان", fontbigBold));
-                    afterDiscount.HorizontalAlignment = Element.ALIGN_CENTER;
-                    afterDiscount.VerticalAlignment = Element.ALIGN_MIDDLE;
-                    afterDiscount.Colspan = 4;
-                    table.AddCell(afterDiscount);
-
-                    table.AddCell(tozihatEmpty);
-
-
-
-
-                }
-
-                table.HorizontalAlignment = Element.ALIGN_CENTER;
-
-                //Create a cell and add text to it
-
-
-
-
-
-
-
-                //Add the table to the document
-                document.Add(table);
-
-
-
-                //Close the document
-                document.Close();
-
-
-
-
-
-
-            }
-
-
-
-        }
-
+        
+       
 
         protected void GenerateInvoicePDF(object sender, EventArgs e)
         {

@@ -2,7 +2,7 @@
 
 @{
     <title>تایید </title>
-    Layout = "/Views/Shared/_loginLayout.cshtml";
+    Layout = "/Views/Shared/_Layout.cshtml";
 }
 
 @section scripts{
@@ -34,7 +34,7 @@
             $(this).parent().find(".registererror").css("display", "none");
         })
         $("#fogetconfirm").click(function () {
-
+           
             var val = $("#forgettext").val();
             $(".mainlabla").find("input").each(function () {
 
@@ -89,7 +89,21 @@
                             window.location.href = url;
 
 
+                        }
+                        else {
+                            alert('@Resources.res.noemail');
+                            //toastr.options = {
+                            //    "debug": false,
+                            //    "positionClass": "toast-top-center",
+                            //    "onclick": null,
+                            //    "fadeIn": 300,
+                            //    "fadeOut": 1000,
+                            //    "timeOut": 8000,
+                            //    "extendedTimeOut": 1000,
 
+
+                            //};
+                            //toastr.error('  ');
                         }
 
 

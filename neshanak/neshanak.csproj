@@ -241,6 +241,7 @@
     <Compile Include="viewModel\getItemDetail.cs" />
     <Compile Include="viewModel\getLandVM.cs" />
     <Compile Include="viewModel\getMainVM.cs" />
+    <Compile Include="viewModel\getPageVM.cs" />
     <Compile Include="viewModel\getSubCatVM.cs" />
     <Compile Include="viewModel\imageForEMCVM.cs" />
     <Compile Include="viewModel\imagelistViwModel.cs" />
@@ -863,6 +864,7 @@
     <Content Include="Scripts\tinymce\langs\readme.md" />
     <Content Include="Scripts\tinymce\skins\ui\oxide-dark\fonts\tinymce-mobile.woff" />
     <Content Include="Scripts\tinymce\skins\ui\oxide\fonts\tinymce-mobile.woff" />
+    <Content Include="Views\Home\privacy.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="AdminPanel\images\scarfimages\" />

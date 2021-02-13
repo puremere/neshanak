@@ -1,4 +1,4 @@
-﻿@model AdminBlogVM
+﻿@model neshanak.viewModel.AdminBlogVM
 @{
     ViewBag.Title = "blog";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
@@ -67,20 +67,19 @@
 </style>
 <div class="row" style="background-color:white; padding:10px; margin:0px; margin-top:65px">
     <ul class="nav nav-tabs">
-        <li class="active"><a data-toggle="tab" href="#home" style=" color: #8d8d8d; ">لیست مطالب</a></li>
-        <li><a data-toggle="tab" href="#menu1" style=" color: #8d8d8d; ">تولید مطلب جدید</a></li>
-        <li><a data-toggle="tab" href="#menu3" style=" color: #8d8d8d; ">لیست سرفصل ها</a></li>
-        <li><a data-toggle="tab" href="#menu2" style=" color: #8d8d8d; ">افزودن سرفصل جدید </a></li>
+        <li class="active"><a data-toggle="tab" href="#home" style=" color: #8d8d8d; ">@Resources.res.blogList</a></li>
+        <li><a data-toggle="tab" href="#menu1" style=" color: #8d8d8d; ">@Resources.res.newBlog</a></li>
+        <li><a data-toggle="tab" href="#menu3" style=" color: #8d8d8d; ">@Resources.res.blogCatList</a></li>
+        <li><a data-toggle="tab" href="#menu2" style=" color: #8d8d8d; ">@Resources.res.addBlogCat </a></li>
 
     </ul>
 
     <div class="tab-content">
         <div id="home" class="tab-pane fade in active" style="padding-top:20px">
 
-
-            <div class="row">
+            <div class="row" style="padding:20px">
                 <div class="row fieldholder" style="width:25%;padding: 0 10px;display: inline-block;">
-                    <label> دسته بندی</label>
+                    <label> @Resources.res.BlogCat</label>
 
                     @{
                         List<SelectListItem> listItems2 = new List<SelectListItem>();
@@ -89,7 +88,7 @@
 
                             listItems2.Add(new SelectListItem
                             {
-                                Text = "همه",
+                                Text = Resources.res.all,
                                 Value = "",
                                 Selected = true
                             });
@@ -108,7 +107,7 @@
                         <div class=" ">
                             <span style="color:red; display:none">*</span>
 
-                            @Html.DropDownList("catListblog", listItems2, "-- انتخاب سرگروه --", new { id = "catListblog", name = "catList2", style = "", @class = "form-control" })
+                            @Html.DropDownList("catListblog", listItems2, Resources.res.chooscat, new { id = "catListblog", name = "catList2", style = "", @class = "form-control" })
                         </div>
                     }
 
@@ -118,12 +117,12 @@
                 <div class="row fieldholder" style="width:25%;padding: 0 10px;display: inline-block;">
                     <div class=" ">
                         <span style="color:red; display:none">*</span>
-                        <input class="form-control" style="min-width:250px" type="text" id="searchinput" name="searchinput" placeholder="عبارت مورد نظر را جستجو کنید" />
+                        <input class="form-control" style="min-width:250px" type="text" id="searchinput" name="searchinput" placeholder="@Resources.res.search" />
                     </div>
                 </div>
 
                 <div class="row fieldholder" style="width:25%;padding: 0 10px;display: inline-block;">
-                    <a id="changeBlogList" class="lgnsubmitt btn btn-primary">تایید</a>
+                    <a id="changeBlogList" class="lgnsubmitt btn btn-primary">@Resources.res.OK</a>
 
                 </div>
                 <script>
@@ -156,7 +155,7 @@
     background-image: -o-linear-gradient(top,#2a85ae 0,#246388 100%) !important;
     background-image: -webkit-gradient(linear,left top,left bottom,from(#2a85ae),to(#246388)) !important;
     background-image: linear-gradient(to bottom,#2a85ae 0,#246388 100%) !important;color: #fff">
-                                    <h3 class="panel-title"><i class="fa fa-shopping-basket fa-fw"></i>لیست اخبار  </h3>
+                                    <h3 class="panel-title"><i class="fa fa-shopping-basket fa-fw"></i>@Resources.res.blogList </h3>
                                 </div>
                                 <div class="panel-body">
                                     <div id="morris-area-chart">
@@ -168,16 +167,16 @@
                                                             ID
                                                         </th>
                                                         <th>
-                                                            عنوان
+                                                            @Resources.res.title
                                                         </th>
                                                         <th>
-                                                            نویسنده
+                                                            @Resources.res.writer
                                                         </th>
                                                         <th>
-                                                            دسته بندی
+                                                            @Resources.res.catnam
                                                         </th>
                                                         <th>
-                                                            تاریخ
+                                                            @Resources.res.date
                                                         </th>
 
                                                         <th>
@@ -219,7 +218,7 @@
 
                                                                         @{
                                                                             var ID = @item.ID;
-                                                                            <a id=@ID class="btn btn-primary PEbutton" style="  margin:5px ; cursor: pointer;  padding: 5px; color: #fff; border-radius: 5px;">ویرایش</a>
+                                                                            <a id=@ID class="btn btn-primary PEbutton" style="  margin:5px ; cursor: pointer;  padding: 5px; color: #fff; border-radius: 5px;">@Resources.res.edit</a>
 
                                                                         }
 
@@ -228,7 +227,7 @@
 
                                                                         @{
 
-                                                                            <a id=@ID class="btn btn-primary Dbutton" style="  margin:5px ; cursor: pointer;  padding: 5px; color: #fff; border-radius: 5px;">حذف</a>
+                                                                            <a id=@ID class="btn btn-primary Dbutton" style="  margin:5px ; cursor: pointer;  padding: 5px; color: #fff; border-radius: 5px;">@Resources.res.delete</a>
 
                                                                         }
 
@@ -252,7 +251,7 @@
                 </div>
 
 
-                <div class="row" id="detailholder" style="padding:0 35px ; display:none;">
+                <div class="row" id="detailholder" style="padding:0 35px ; display:none; width:100%" >
 
 
 
@@ -266,7 +265,7 @@
 
 
                                 <div class="row fieldholder col-lg-3">
-                                    <label> دسته بندی</label>
+                                    <label> @Resources.res.catnam</label>
 
                                     @{
                                         List<SelectListItem> listItems = new List<SelectListItem>();
@@ -288,14 +287,14 @@
                                     <div class=" ">
                                         <span style="color:red; display:none">*</span>
 
-                                        @Html.DropDownList("catListupdate", listItems, "-- انتخاب سرگروه --", new { id = "catListupdate", name = "catList", style = "", @class = "form-control REM2" })
+                                        @Html.DropDownList("catListupdate", listItems, Resources.res.chooscat, new { id = "catListupdate", name = "catList", style = "", @class = "form-control REM2" })
                                     </div>
 
 
                                 </div>
                                 <div class="row fieldholder col-lg-3">
                                     <label style="text-align: right">
-                                        عنوان :
+                                        @Resources.res.title :
                                     </label>
                                     <div>
                                         <span style="color:red; display:none">*</span>
@@ -307,7 +306,7 @@
                                 <div class="row fieldholder col-lg-3">
 
                                     <label style="text-align: right">
-                                        تگ ها :
+                                        @Resources.res.tags :
                                     </label>
 
                                     <div>
@@ -320,7 +319,7 @@
                                 <div class="row fieldholder col-lg-3">
 
                                     <label style="text-align: right">
-                                        عکس:
+                                        @Resources.res.image:
                                     </label>
 
                                     <div>
@@ -340,7 +339,7 @@
                             <div class="row">
                                 <div class="row fieldholder col-lg-12">
                                     <label style="text-align: right">
-                                        متن :
+                                        @Resources.res.content :
                                     </label>
                                     <div>
                                         <span style="color:red; display:none">*</span>
@@ -352,7 +351,7 @@
 
                                 </div>
                                 <div class="row fieldholder" style="width:25%;padding: 0 10px;display: inline-block;">
-                                    <a id="UpdateButt" class="lgnsubmitt btn btn-primary">تایید</a>
+                                    <a id="UpdateButt" class="lgnsubmitt btn btn-primary">@Resources.res.OK</a>
 
                                 </div>
                             </div>
@@ -383,7 +382,7 @@
                                             "timeOut": 5000,
                                             "extendedTimeOut": 1000
                                         }
-                                        toastr.error('لطفاً تمامی موارد را کامل کنید')
+                                        toastr.error('@Resources.res.completeAll')
 
                                     }
 
@@ -437,12 +436,12 @@
                         <div class="modal-content">
 
                             <div class="modal-body">
-                                <p>آیا از حذف نظر اطمینان دارید؟</p>
+                                <p>@Resources.res.delbusi</p>
 
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-primary" id="modalDelArticle">تایید</button>
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">انصراف</button>
+                                <button type="button" class="btn btn-primary" id="modalDelArticle">@Resources.res.OK</button>
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">@Resources.res.cancel</button>
                             </div>
                         </div>
                     </div>
@@ -558,11 +557,11 @@ new { enctype = "multipart/form-data", id = "addArticle" }))
             {
 
 
-                <div class="row" style="padding:10px">
+                <div class="row" style="padding:20px">
 
 
                     <div class="row fieldholder col-lg-3">
-                        <label> دسته بندی</label>
+                        <label> @Resources.res.cat</label>
 
                         @{
                             List<SelectListItem> listItems = new List<SelectListItem>();
@@ -583,14 +582,14 @@ new { enctype = "multipart/form-data", id = "addArticle" }))
                         }
                         <div class=" ">
                             <span style="color:red; display:none">*</span>
-                            @Html.DropDownList("catList", listItems, "-- انتخاب سرگروه --", new { id = "catList", name = "catList", style = "", @class = "form-control REM" })
+                            @Html.DropDownList("catList", listItems, Resources.res.chooscat, new { id = "catList", name = "catList", style = "", @class = "form-control REM" })
                         </div>
 
 
                     </div>
                     <div class="row fieldholder col-lg-3">
                         <label style="text-align: right">
-                            عنوان :
+                            @Resources.res.title :
                         </label>
                         <div>
                             <span style="color:red; display:none">*</span>
@@ -603,7 +602,7 @@ new { enctype = "multipart/form-data", id = "addArticle" }))
                     <div class="row fieldholder col-lg-3" style="min-height:70px">
 
                         <label style="text-align: right">
-                            تگ ها :
+                            @Resources.res.tags :
                         </label>
 
                         <div>
@@ -616,7 +615,7 @@ new { enctype = "multipart/form-data", id = "addArticle" }))
                     <div class="row fieldholder col-lg-3">
                         <div style="width:70%;display:inline-block">
                             <label style="text-align: right">
-                                عکس:
+                                @Resources.res.image:
                             </label>
 
                             <div>
@@ -638,7 +637,7 @@ new { enctype = "multipart/form-data", id = "addArticle" }))
                 <div class="row" style="padding:10px">
                     <div class="row fieldholder col-lg-12">
                         <label style="text-align: right">
-                            متن :
+                            @Resources.res.content :
                         </label>
                         <div>
                             <span style="color:red; display:none">*</span>
@@ -652,7 +651,7 @@ new { enctype = "multipart/form-data", id = "addArticle" }))
 
 
                     <div class="row fieldholder" style="width:25%;padding: 0 10px;display: inline-block;">
-                        <a id="CRprocuct" class="lgnsubmitt btn btn-primary">تایید</a>
+                        <a id="CRprocuct" class="lgnsubmitt btn btn-primary">@Resources.res.OK</a>
 
                     </div>
 
@@ -693,7 +692,7 @@ new { enctype = "multipart/form-data", id = "addArticle" }))
                                 "timeOut": 5000,
                                 "extendedTimeOut": 1000
                             }
-                            toastr.error('لطفاً تمامی موارد را کامل کنید')
+                            toastr.error('@Resources.res.completeAll')
 
                         }
 
@@ -745,13 +744,13 @@ new { enctype = "multipart/form-data", id = "addcatArticle" }))
             {
 
 
-                <div class="row">
+                <div class="row" style="padding:20px">
 
 
 
                     <div class=" fieldholder" style="width:25%;padding: 0 10px;display: inline-block;">
                         <label style="text-align: right">
-                            عنوان :
+                            @Resources.res.title :
                         </label>
                         <div>
                             <span class="star" style="color:red; display:none">*</span>
@@ -769,7 +768,7 @@ new { enctype = "multipart/form-data", id = "addcatArticle" }))
                     <div class=" fieldholder" style="width:25%;padding: 0 10px;display: inline-block;">
 
                         <label style="text-align: right">
-                            عکس:
+                            @Resources.res.image:
                         </label>
 
                         <div>
@@ -781,7 +780,7 @@ new { enctype = "multipart/form-data", id = "addcatArticle" }))
                     </div>
 
                     <div class="row fieldholder" style="margin-top:35px; width:25%;padding: 0 10px;display: inline-block;">
-                        <a id="setCatTitle" class="lgnsubmitt btn btn-primary">تایید</a>
+                        <a id="setCatTitle" class="lgnsubmitt btn btn-primary">@Resources.res.OK</a>
                     </div>
 
 
@@ -820,7 +819,7 @@ new { enctype = "multipart/form-data", id = "addcatArticle" }))
                                 "timeOut": 5000,
                                 "extendedTimeOut": 1000
                             }
-                            toastr.error('لطفاً تمامی موارد را کامل کنید')
+                            toastr.error('@Resources.res.completeAll')
 
                         }
 
@@ -836,7 +835,7 @@ new { enctype = "multipart/form-data", id = "addcatArticle" }))
 
         </div>
         <div id="menu3" class="tab-pane fade" style="padding-top:20px">
-            <div>
+            <div style="padding:20px">
                 <div id="Listholder">
                     <div class="row" style="padding:20px">
                         <div style="overflow-x:auto;padding:10px">
@@ -857,7 +856,7 @@ new { enctype = "multipart/form-data", id = "addcatArticle" }))
                                                             ID
                                                         </th>
                                                         <th>
-                                                            عنوان
+                                                            @Resources.res.title
                                                         </th>
 
 
@@ -890,7 +889,7 @@ new { enctype = "multipart/form-data", id = "addcatArticle" }))
 
                                                                         @{
                                                                             var ID = @item.ID;
-                                                                            <a id=@ID class="btn btn-primary CPbutton" style="  margin:5px ; cursor: pointer;  padding: 5px; color: #fff; border-radius: 5px;">ویرایش</a>
+                                                                            <a id=@ID class="btn btn-primary CPbutton" style="  margin:5px ; cursor: pointer;  padding: 5px; color: #fff; border-radius: 5px;">@Resources.res.edit</a>
 
                                                                         }
 
@@ -899,7 +898,7 @@ new { enctype = "multipart/form-data", id = "addcatArticle" }))
 
                                                                         @{
 
-                                                                            <a id=@ID class="btn btn-primary CDbutton" style="  margin:5px ; cursor: pointer;  padding: 5px; color: #fff; border-radius: 5px;">حذف</a>
+                                                                        <a id=@ID class="btn btn-primary CDbutton" style="  margin:5px ; cursor: pointer;  padding: 5px; color: #fff; border-radius: 5px;">@Resources.res.delete</a>
 
                                                                         }
 
@@ -931,12 +930,12 @@ new { enctype = "multipart/form-data", id = "addcatArticle" }))
                 @using (Html.BeginForm("updateCArticle", "Admin", FormMethod.Post, new { enctype = "multipart/form-data", id = "updateCArticle" }))
                 {
 
-                    <div style="padding: 15px 5px; border: 1px solid #d8d8d8; border-radius: 5px;">
+                    <div style="padding: 25px; border: 1px solid #d8d8d8; border-radius: 5px;">
                         <div class="row">
 
                             <div class="row fieldholder col-lg-3">
                                 <label style="text-align: right">
-                                    عنوان :
+                                    @Resources.res.title :
                                 </label>
                                 <div>
                                     <span style="color:red; display:none">*</span>
@@ -949,7 +948,7 @@ new { enctype = "multipart/form-data", id = "addcatArticle" }))
                             <div class="row fieldholder col-lg-3">
 
                                 <label style="text-align: right">
-                                    عکس:
+                                    @Resources.res.image:
                                 </label>
 
                                 <div>
@@ -969,7 +968,7 @@ new { enctype = "multipart/form-data", id = "addcatArticle" }))
                         <div class="row">
 
                             <div class="row fieldholder" style="width:25%;padding: 0 10px;display: inline-block;">
-                                <a id="UpdateCButt" class="lgnsubmitt btn btn-primary">تایید</a>
+                                <a id="UpdateCButt" class="lgnsubmitt btn btn-primary">@Resources.res.OK</a>
 
                             </div>
                         </div>
@@ -987,13 +986,13 @@ new { enctype = "multipart/form-data", id = "addcatArticle" }))
                     <div class="modal-content">
 
                         <div class="modal-body">
-                            <p>آیا از حذف نظر اطمینان دارید؟</p>
+                            <p>@Resources.res.delbusi</p>
 
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-primary" id="modalDelCArticle">تایید</button>
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">انصراف</button>
-                        </div>
+                            <button type="button" class="btn btn-primary" id="modalDelCArticle">@Resources.res.OK</button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">@Resources.res.cancel</button>
+                               </div>
                     </div>
                 </div>
             </div>
@@ -1075,7 +1074,7 @@ new { enctype = "multipart/form-data", id = "addcatArticle" }))
                             "timeOut": 5000,
                             "extendedTimeOut": 1000
                         }
-                        toastr.error('لطفاً تمامی موارد را کامل کنید')
+                        toastr.error('@Resources.res.completeAll')
 
                     }
 

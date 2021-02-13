@@ -51,7 +51,7 @@
     <script>
         var markers = {};
         var ITEMES = @Html.Raw(Json.Encode(Model.bzlist));
-          var first = ITEMES[0];
+        
         var mymap = L.map('mapid', { attributionControl: false}).setView([51.505, -0.09], 13);
         L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
             attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
@@ -62,7 +62,11 @@
             accessToken: 'pk.eyJ1IjoibWVyaW9saSIsImEiOiJja2p6dXhmdngwYmVvMnZwY2lyc2htNGxhIn0.Y9t__Bll6Fw9b9amb_rcHg',
 
         }).addTo(mymap);
-        mymap.panTo(new L.LatLng(first.lat, first.lng));
+        if (ITEMES != null) {
+            var first = ITEMES[0];
+            mymap.panTo(new L.LatLng(first.lat, first.lng));
+        }
+       
 
         var LeafIcon = L.Icon.extend({
             options: {
@@ -220,20 +224,27 @@
 <div style="display:flex; align-items:center; height:100% ">
     <div id="mapid" style=""></div>
     <div id="contentHolder">
-        @foreach (var item in Model.bzlist)
+        @if (Model.bzlist != null)
         {
-            var id = "E" + item.id;
-        <div class="itemHolder" id="@id" style="background-color:#fdfdfd">
-            <div class="cover" id="@item.id"></div>
-            <div class="DATA">
-                <h4 style="">@item.title</h4>
-                <h5>@item.desc</h5>
-                <h5>@item.address</h5>
-            </div>
-            <img src="@item.img" />
+            foreach (var item in Model.bzlist)
+            {
+                var id = "E" + item.id;
+                <div class="itemHolder" id="@id" style="background-color:#fdfdfd">
+                    <div class="cover" id="@item.id"></div>
+                    <div class="DATA">
+                        <h4 style="">@item.title</h4>
+                        <h5>@item.desc</h5>
+                        <h5>@item.address</h5>
+                    </div>
+                    <img src="@item.img" />
 
 
-        </div>
+                </div>
+            }
+        }
+        else
+        {
+            <div style="width:100%; text-align:center;padding: 50px;font-size: 20px;">@Resources.res.noItemFound</div>
         }
     </div>
 </div>

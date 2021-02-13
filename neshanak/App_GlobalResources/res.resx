@@ -486,4 +486,61 @@
   <data name="wellcome" xml:space="preserve">
     <value>wellcome</value>
   </data>
+  <data name="adminEntryTitle" xml:space="preserve">
+    <value>managment portal</value>
+  </data>
+  <data name="supectPanel" xml:space="preserve">
+    <value>supect tech portal</value>
+  </data>
+  <data name="about" xml:space="preserve">
+    <value>about</value>
+  </data>
+  <data name="completeAll" xml:space="preserve">
+    <value>please complete all field</value>
+  </data>
+  <data name="contact" xml:space="preserve">
+    <value>contact</value>
+  </data>
+  <data name="privacy" xml:space="preserve">
+    <value>privacy</value>
+  </data>
+  <data name="recoverDate" xml:space="preserve">
+    <value>recover date</value>
+  </data>
+  <data name="addBlogCat" xml:space="preserve">
+    <value>add new category</value>
+  </data>
+  <data name="BlogCat" xml:space="preserve">
+    <value>blog categories</value>
+  </data>
+  <data name="blogCatList" xml:space="preserve">
+    <value>blog category list</value>
+  </data>
+  <data name="blogList" xml:space="preserve">
+    <value>blog list</value>
+  </data>
+  <data name="codeWrong" xml:space="preserve">
+    <value>code is wrong</value>
+  </data>
+  <data name="content" xml:space="preserve">
+    <value>content</value>
+  </data>
+  <data name="date" xml:space="preserve">
+    <value>date</value>
+  </data>
+  <data name="image" xml:space="preserve">
+    <value>image</value>
+  </data>
+  <data name="newBlog" xml:space="preserve">
+    <value>new blog</value>
+  </data>
+  <data name="noemail" xml:space="preserve">
+    <value>email not registered</value>
+  </data>
+  <data name="tags" xml:space="preserve">
+    <value>tags</value>
+  </data>
+  <data name="writer" xml:space="preserve">
+    <value>writer</value>
+  </data>
 </root>
