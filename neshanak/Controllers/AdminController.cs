@@ -421,13 +421,17 @@ namespace neshanak.Controllers
         }
         public ActionResult Menu()
         {
-
+            CookieVM cookiemodel = JsonConvert.DeserializeObject<CookieVM>(getCookie("token"));
+            cookiemodel.currentpage = "Menu";
+            cookiemodel.controller = "admin";
+            SetCookie(JsonConvert.SerializeObject(cookiemodel), "token");
             // CatPageViewModel model = new CatPageViewModel();
             string token = Session["LogedInUser2"] as string;
             string device = RandomString(10);
             string code = MD5Hash(device + "ncase8934f49909");
             string result = "";
             string json = "";
+            string lan = Session["lang"] as string;
             using (WebClient client = new WebClient())
             {
 
@@ -436,55 +440,18 @@ namespace neshanak.Controllers
                 collection.Add("device", device);
                 collection.Add("code", code);
                 collection.Add("token", token);
+                collection.Add("lan", lan);
 
 
-                byte[] response = client.UploadValues(server + "/Admin/getcatslist.php", collection);
+                byte[] response = client.UploadValues(server + "/Admin/getcatlistAll.php", collection);
 
                 result = System.Text.Encoding.UTF8.GetString(response);
             }
 
-            using (WebClient client = new WebClient())
-            {
+          
 
-                var collection = new NameValueCollection();
-                collection.Add("device", device);
-                collection.Add("code", code);
-                collection.Add("servername", "neshanak");
-
-                byte[] response = client.UploadValues(server + "/Admin/getbaseCat.php", collection);
-
-                json = System.Text.Encoding.UTF8.GetString(response);
-            }
-
-
-
-            var log = JsonConvert.DeserializeObject<catslist>(result);
-            partnerVM serverlog = JsonConvert.DeserializeObject<partnerVM>(json);
-            List<catsdetail> mylist = new List<catsdetail>();
-            //getmemyearlydataViewModel model = new getmemyearlydataViewModel();
-            catsdetail newearlydatum = new catsdetail();
-            if (log.data != null)
-            {
-                foreach (var myvar in log.data)
-                {
-                    mylist.Add(myvar);
-                }
-            }
-
-            CatPageViewModel newlog = new CatPageViewModel()
-            {
-                Cats = new SelectList(mylist, "ID", "title")
-                // SelectedModel = ? if you want to preselect an item
-            };
-            viewModel.adminMenuVM model = new viewModel.adminMenuVM()
-            {
-
-                basecat = serverlog,
-                menuFilter = newlog
-            };
-
-
-            return View(model);
+            var log = JsonConvert.DeserializeObject<catAll>(result);
+            return View(log);
         }
         public ActionResult getfilters(string catID)
         {
@@ -1627,24 +1594,71 @@ namespace neshanak.Controllers
 
         //section  menu-------------
 
-
-        public ActionResult setnewcat(string cattitle, string neshanak)
+        public ActionResult editcat (string catID, string title, string image)
         {
-
+            string fname = image.Trim(',').Split(',').ToList().First();
+            string finalimage = Path.GetFileName(fname);
             string token = Session["LogedInUser2"] as string;
             string device = RandomString(10);
             string code = MD5Hash(device + "ncase8934f49909");
             string result = "";
+            string lan = Session["lang"] as string;
+
             using (WebClient client = new WebClient())
             {
 
                 var collection = new NameValueCollection();
                 collection.Add("device", device);
                 collection.Add("code", code);
-                collection.Add("title", cattitle);
+                collection.Add("title", title);
                 collection.Add("token", token);
-                collection.Add("servername", servername);
-                collection.Add("neshanak", neshanak);
+                collection.Add("catID", catID);
+                collection.Add("lan", lan);
+                collection.Add("image", finalimage);
+
+                byte[] response = client.UploadValues(server + "/Admin/editcat.php", collection);
+
+                result = System.Text.Encoding.UTF8.GetString(response);
+            }
+
+
+            if (result.Contains("1"))
+            {
+                return Content("1");
+            }
+
+            else if (result.Contains("0"))
+            {
+                return Content("0");
+            }
+            else
+            {
+                return Content("3");
+            }
+        }
+        public ActionResult setnewcat(string catID , string title, string image)
+        {
+
+
+            string fname = image.Trim(',').Split(',').ToList().First();
+            string finalimage = Path.GetFileName(image);
+            string token = Session["LogedInUser2"] as string;
+            string device = RandomString(10);
+            string code = MD5Hash(device + "ncase8934f49909");
+            string result = "";
+            string lan = Session["lang"] as string;
+
+            using (WebClient client = new WebClient())
+            {
+
+                var collection = new NameValueCollection();
+                collection.Add("device", device);
+                collection.Add("code", code);
+                collection.Add("title", title);
+                collection.Add("token", token);
+                collection.Add("catID", catID);
+                collection.Add("lan", lan);
+                collection.Add("image", finalimage);
 
                 byte[] response = client.UploadValues(server + "/Admin/setnewcat.php", collection);
 
@@ -1672,14 +1686,15 @@ namespace neshanak.Controllers
             string device = RandomString(10);
             string code = MD5Hash(device + "ncase8934f49909");
             string result = "";
+            string lan = Session["lang"] as string;
             using (WebClient client = new WebClient())
             {
 
                 var collection = new NameValueCollection();
                 collection.Add("device", device);
                 collection.Add("code", code);
-                collection.Add("id", catid);
-                collection.Add("servername", servername);
+                collection.Add("catID", catid);
+                collection.Add("lan", lan);
 
                 byte[] response = client.UploadValues(server + "/Admin/deletefromcat.php", collection);
 
@@ -1689,6 +1704,10 @@ namespace neshanak.Controllers
             ResponseFromServer Serverresponse = JsonConvert.DeserializeObject<ResponseFromServer>(result);
             if (Serverresponse.status == 200)
             {
+
+                string pathString = "~/images";
+                string savedFileName = Path.Combine(Server.MapPath(pathString), Serverresponse.message);
+                System.IO.File.Delete(savedFileName);
                 return Content("1");
             }
             else
@@ -1696,6 +1715,57 @@ namespace neshanak.Controllers
                 return Content(Serverresponse.message);
             }
 
+        }
+
+        public ActionResult getSlide(string catid) {
+
+            string device = RandomString(10);
+            string code = MD5Hash(device + "ncase8934f49909");
+            string result = "";
+            string lan = Session["lang"] as string;
+            using (WebClient client = new WebClient())
+            {
+
+                var collection = new NameValueCollection();
+                collection.Add("device", device);
+                collection.Add("code", code);
+                collection.Add("catID", catid);
+                collection.Add("lan", lan);
+                byte[] response = client.UploadValues(server + "/Admin/getSlide.php", collection);
+                result = System.Text.Encoding.UTF8.GetString(response);
+            }
+
+
+            return Content(result);
+        }
+        public void deletImage(string name)
+        {
+
+            string pathString = "~/images";
+            string savedFileName = Path.Combine(Server.MapPath(pathString), name);
+            System.IO.File.Delete(savedFileName);
+
+        }
+        public ActionResult getCatDetail(string catid)
+        {
+            string device = RandomString(10);
+            string code = MD5Hash(device + "ncase8934f49909");
+            string result = "";
+            string lan = Session["lang"] as string;
+            using (WebClient client = new WebClient())
+            {
+
+                var collection = new NameValueCollection();
+                collection.Add("device", device);
+                collection.Add("code", code);
+                collection.Add("catID", catid);
+                collection.Add("lan", lan);
+                byte[] response = client.UploadValues(server + "/Admin/getcatsItem.php", collection);
+                result = System.Text.Encoding.UTF8.GetString(response);
+            }
+
+          
+            return Content(result);
         }
         public ActionResult changecatname(string ID, string newname, string level)
         {
@@ -4215,99 +4285,8 @@ namespace neshanak.Controllers
 
             return View(mylist);
         }
-        [HttpPost]
-        public ActionResult Slider(sliderforedit detail)
-        {
-
-
-
-            string tobeaddedtosliderimage = RandomString(5);
-
-
-            string pathString = "~/images/panelimages";
-            if (!Directory.Exists(Server.MapPath(pathString)))
-            {
-                DirectoryInfo di = Directory.CreateDirectory(Server.MapPath(pathString));
-            }
-
-
-
-
-            try
-            {
-                List<string> imagelist = new List<string>();
-
-                for (int i = 0; i < Request.Files.Count; i++)
-                {
-                    HttpPostedFileBase hpf = Request.Files[i];
-                    imagelist.Add(tobeaddedtosliderimage + hpf.FileName);
-                    if (hpf.ContentLength == 0)
-                        continue;
-                    string savedFileName = Path.Combine(Server.MapPath(pathString), tobeaddedtosliderimage + Path.GetFileName(hpf.FileName));
-                    hpf.SaveAs(savedFileName); // Save the file
-
-                    //using (WebClient client = new WebClient())
-                    //{
-                    //    string ftpUsername = @"meri@neshanakco.com";
-                    //    string ftpPassword = @"!)lAx3_-h43s";
-                    //    client.Credentials = new NetworkCredential(ftpUsername, ftpPassword);
-                    //    client.UploadFile("ftp://www.neshanakco.com/public_html/webs/neshanak/api/portal/uploads/" + hpf.FileName, "STOR", savedFileName);
-                    //}
-                }
-                string imglst = "";
-                foreach (var item in imagelist)
-                {
-                    imglst += "&imaglist[]=" + item;
-                }
-
-                string json;
-
-
-
-
-                string device = RandomString(10);
-                string code = MD5Hash(device + "ncase8934f49909");
-                string result = "";
-                using (WebClient client = new WebClient())
-                {
-
-                    var collection = new NameValueCollection();
-                    collection.Add("device", device);
-                    collection.Add("code", code);
-                    collection.Add("imaglist", imglst);
-                    collection.Add("servername", servername);
-
-                    byte[] response = client.UploadValues(server + "/Admin/addslider.php", collection);
-
-                    result = System.Text.Encoding.UTF8.GetString(response);
-                }
-
-
-
-                ViewBag.message = "محصول مورد نظر اضافه شد";
-
-                return RedirectToAction("Slider", "Admin", new { message = "1" });
-            }
-            catch (WebException exception)
-            {
-
-                string responseText;
-                var responseStream = exception.Response.GetResponseStream();
-
-                // var responseStream = exception.Response?"":.GetResponseStream();
-
-                if (responseStream != null)
-                {
-                    using (var reader = new StreamReader(responseStream))
-                    {
-                        responseText = reader.ReadToEnd();
-                    }
-                }
-                throw exception.InnerException;
-            }
-
-
-        }
+       
+      
         public ActionResult myProfile(int? num)
         {
 
@@ -4547,51 +4526,62 @@ namespace neshanak.Controllers
         }
         public ActionResult slide()
         {
+            CookieVM cookiemodel = JsonConvert.DeserializeObject<CookieVM>(getCookie("token"));
+            cookiemodel.currentpage = "slide";
+            cookiemodel.controller = "admin";
+            SetCookie(JsonConvert.SerializeObject(cookiemodel), "token");
 
+            string token = Session["LogedInUser2"] as string;
             string device = RandomString(10);
             string code = MD5Hash(device + "ncase8934f49909");
             string result = "";
+            string json = "";
+            string lan = Session["lang"] as string;
+            using (WebClient client = new WebClient())
+            {
+
+                var collection = new NameValueCollection();
+                collection.Add("servername", servername);
+                collection.Add("device", device);
+                collection.Add("code", code);
+                collection.Add("token", token);
+                collection.Add("lan", lan);
+
+
+                byte[] response = client.UploadValues(server + "/Admin/getcatlistAll.php", collection);
+
+                result = System.Text.Encoding.UTF8.GetString(response);
+            }
+
+
+
+            var log = JsonConvert.DeserializeObject<catAll>(result);
+            return View(log);
+        }
+
+        public ActionResult addSlide(string catid, string image)
+        {
+            string device = RandomString(10);
+            string code = MD5Hash(device + "ncase8934f49909");
+            string result = "";
+            string lan = Session["lang"] as string;
             using (WebClient client = new WebClient())
             {
 
                 var collection = new NameValueCollection();
                 collection.Add("device", device);
                 collection.Add("code", code);
-                collection.Add("servername", servername);
-
-                byte[] response = client.UploadValues(server + "/Admin/getDataSlide.php", collection);
-
+                collection.Add("catID", catid);
+                collection.Add("image", image.Trim(','));
+                collection.Add("lan", lan);
+                byte[] response = client.UploadValues(server + "/Admin/addSlide.php", collection);
                 result = System.Text.Encoding.UTF8.GetString(response);
             }
-            BannerListAdmin BannerListModel = JsonConvert.DeserializeObject<BannerListAdmin>(result);
-            if (BannerListModel.filters != "")
-            {
-                BannerListModel.filters = BannerListModel.filters.Substring(1, BannerListModel.filters.Length - 1);
 
-            }
-            if (BannerListModel.products != "")
-            {
-                BannerListModel.products = BannerListModel.products.Substring(1, BannerListModel.products.Length - 1);
 
-            }
-            if (BannerListModel.cats != "")
-            {
-                BannerListModel.cats = BannerListModel.cats.Substring(1, BannerListModel.cats.Length - 1);
-
-            }
-            if (BannerListModel.subcats != "")
-            {
-                BannerListModel.subcats = BannerListModel.subcats.Substring(1, BannerListModel.subcats.Length - 1);
-
-            }
-            if (BannerListModel.subcats2 != "")
-            {
-                BannerListModel.subcats2 = BannerListModel.subcats2.Substring(1, BannerListModel.subcats2.Length - 1);
-
-            }
-
-            return View(BannerListModel);
+            return Content(result);
         }
+
         [HttpPost]
         public ActionResult editslide(string content, string type, string image, string title)
         {
@@ -4637,6 +4627,8 @@ namespace neshanak.Controllers
             }
             return RedirectToAction("slide");
         }
+       
+
         public void changeCommnetActive(string id, string value)
         {
 

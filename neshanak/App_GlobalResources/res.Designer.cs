@@ -79,6 +79,15 @@ namespace neshanak.App_GlobalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to add.
+        /// </summary>
+        public static string add {
+            get {
+                return ResourceManager.GetString("add", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to add new category.
         /// </summary>
         public static string addBlogCat {
@@ -858,6 +867,15 @@ namespace neshanak.App_GlobalResources {
         public static string newBlog {
             get {
                 return ResourceManager.GetString("newBlog", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to new name.
+        /// </summary>
+        public static string newName {
+            get {
+                return ResourceManager.GetString("newName", resourceCulture);
             }
         }
         

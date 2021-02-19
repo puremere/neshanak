@@ -543,4 +543,10 @@
   <data name="writer" xml:space="preserve">
     <value>نویسنده</value>
   </data>
+  <data name="add" xml:space="preserve">
+    <value>افزودن</value>
+  </data>
+  <data name="newName" xml:space="preserve">
+    <value>نام جدید</value>
+  </data>
 </root>

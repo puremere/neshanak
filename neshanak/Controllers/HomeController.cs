@@ -472,8 +472,33 @@ namespace neshanak.Controllers
             string searchResultPayload = JsonConvert.SerializeObject(model);
             string resu = await wb.doPostData(server + "/additem.php", searchResultPayload);
             countryCityCatVM viewModel = JsonConvert.DeserializeObject<countryCityCatVM>(resu);
+            cookie.images = "";
+            SetCookie(JsonConvert.SerializeObject(cookie), "token");
             return RedirectToAction("createItem");
 
+        }
+        public ContentResult sendToServerByJS()
+        {
+            string pathString = "~/images";
+            if (!Directory.Exists(Server.MapPath(pathString)))
+            {
+                DirectoryInfo di = Directory.CreateDirectory(Server.MapPath(pathString));
+            }
+            string filename = "";
+            for (int i = 0; i < Request.Files.Count; i++)
+            {
+
+                HttpPostedFileBase hpf = Request.Files[i];
+
+                if (hpf.ContentLength == 0)
+                    continue;
+                filename = RandomString() + "_" + hpf.FileName; ;
+                string savedFileName = Path.Combine(Server.MapPath(pathString), filename);
+                string savedFileNameThumb = Path.Combine(Server.MapPath(pathString), "0" + filename);
+                hpf.SaveAs(savedFileName);
+
+            }
+            return Content(filename);
         }
         public ContentResult sendToServer()
         {
@@ -511,11 +536,21 @@ namespace neshanak.Controllers
             string savedFileName = Path.Combine(Server.MapPath(pathString), id);
             System.IO.File.Delete(savedFileName);
             CookieVM model = JsonConvert.DeserializeObject<CookieVM>(getCookie("token"));
-            model.images = model.images.Replace(id + ",", "");
+            if (model.images != null)
+            {
+                model.images = model.images.Replace(id + ",", "");
+            }
+           
             
             SetCookie(JsonConvert.SerializeObject(model), "token");
         }
-
+        public void deleteImage(string id)
+        {
+            string pathString = "~/images";
+            string savedFileName = Path.Combine(Server.MapPath(pathString), id);
+            //System.IO.File.Delete(savedFileName);
+            
+        }
 
 
         public ActionResult Register(string message)

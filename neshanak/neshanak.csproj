@@ -234,6 +234,8 @@
     <Compile Include="viewModel\BannerListAdmin.cs" />
     <Compile Include="viewModel\BaseViewModel.cs" />
     <Compile Include="viewModel\BzListVM.cs" />
+    <Compile Include="viewModel\catAll.cs" />
+    <Compile Include="viewModel\catDetailVM.cs" />
     <Compile Include="viewModel\confrimVM.cs" />
     <Compile Include="viewModel\CookieVM.cs" />
     <Compile Include="viewModel\createItem.cs" />
@@ -460,6 +462,8 @@
     <Content Include="Images\slide.jpg" />
     <Content Include="Images\nodes\supectmarket.jpg" />
     <Content Include="Images\trash.png" />
+    <Content Include="Images\دکترها.png" />
+    <Content Include="Images\وکلا.png" />
     <Content Include="Scripts\bootstrap-tagsinput-angular.min.js" />
     <Content Include="Scripts\bootstrap-tagsinput.min.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -616,6 +620,7 @@
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Content\easy-autocomplete.min.css" />
     <Content Include="Scripts\captcha.validate.js" />
+    <Content Include="Scripts\download.js" />
     <Content Include="Scripts\editItem.js" />
     <Content Include="Scripts\createItem.js" />
     <Content Include="Scripts\croppie.js" />

@@ -4391,11 +4391,17 @@ body {
     margin: 0;
    
 }
-h1, h2, h3, h4, h5, h6,input, textarea,div,span,li {
-	font-family: var(--font);
-    font-size:15px
+.classhide{
+    display:none;
 }
-
+h1, h2, h3, h4, h5, h6, input, textarea, div, span, li {
+    font-family: var(--font);
+    font-size: 15px
+}
+.modalDelQuestion{
+    direction : var(--direction);
+    text-align : var(--align)
+}
 @media (max-width: 600px) {
     .fieldholder{
         width:100% !important;

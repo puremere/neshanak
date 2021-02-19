@@ -14,8 +14,8 @@ namespace neshanak.viewModel
         public string country { get; set; }
         public string subcat { get; set; }
         public string catLevel { get; set; }
-        public string mallID { get; set; }
-        public string floorID { get; set; }
+        public string mallID = "0";
+        public string floorID = "0";
         public string lan { get; set; }
 
     }

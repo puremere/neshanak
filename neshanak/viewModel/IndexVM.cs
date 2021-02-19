@@ -12,7 +12,7 @@ namespace neshanak.viewModel
         public List<Cat> cat { get; set; }
         public List<Subcat> subcat { get; set; }
         public List<Subcat2> subcat2 { get; set; }
-        
+        public List<Sld> sld { get; set; }
         public int id { get; set; }
         public string img { get; set; }
         public string title { get; set; }
@@ -31,6 +31,8 @@ namespace neshanak.viewModel
         public string lng { get; set; }
         public int country { get; set; }
         public int city { get; set; }
+        public string countryTitle { get; set; }
+        public string cityTitle { get; set; }
         public int catid { get; set; }
         public int subcatid { get; set; }
         public int subcatid2 { get; set; }

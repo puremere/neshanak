@@ -543,4 +543,10 @@
   <data name="writer" xml:space="preserve">
     <value>writer</value>
   </data>
+  <data name="add" xml:space="preserve">
+    <value>add</value>
+  </data>
+  <data name="newName" xml:space="preserve">
+    <value>new name</value>
+  </data>
 </root>

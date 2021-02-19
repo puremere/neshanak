@@ -10,7 +10,7 @@
 
     <link href="~/Content/indexStyle.css" rel="stylesheet" />
     <link href="~/Extra/leaflet/leaflet.css" rel="stylesheet" />
-    
+
 
     <link href="~/Content/slick.css" rel="stylesheet" />
     <link href="~/Content/slick-theme.css" rel="stylesheet" />
@@ -32,6 +32,7 @@
     </script>
     <script>
         var height = $(window).height();
+        alert(height)
         $("#mapid").height(height + "px");
         $("#contentHolder").height(height + "px");
 
@@ -39,7 +40,7 @@
         $(".itemHolder").click(function () {
             var id = $(this).attr('id');
             id = id.replace("E", "");
-            window.location.href = "/Home//itemDetail?id="+id
+            window.location.href = "/Home//itemDetail?id=" + id
         })
     </script>
 
@@ -51,7 +52,7 @@
     <script>
         var markers = {};
         var ITEMES = @Html.Raw(Json.Encode(Model.bzlist));
-        
+
         var mymap = L.map('mapid', { attributionControl: false}).setView([51.505, -0.09], 13);
         L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
             attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
@@ -66,7 +67,7 @@
             var first = ITEMES[0];
             mymap.panTo(new L.LatLng(first.lat, first.lng));
         }
-       
+
 
         var LeafIcon = L.Icon.extend({
             options: {
@@ -193,12 +194,14 @@
                 infinite: true,
                 autoplay: true,
                 speed: 500,
-                cssEase: 'linear'
+                cssEase: 'linear',
+                prevArrow: false,
+                nextArrow: false
             });
         });
     </script>
     <script>
-    
+
         $("#addnew").click(function () {
             window.location.href = "/Home/createItem"
         })
@@ -206,18 +209,24 @@
 
 }
 
-<div class="row" style="background-color:black">
-    <div id="slideHolder" style=" width:100%; height:auto; margin:auto;display:block">
-        <div class="your-class">
-            @foreach (var item in Model.sld)
-            {
-                <div class="imageholder">
-                    <img src="@item.image" />
+@{
+    if (Model.sld != null)
+    {
+        <div class="row" style="background-color:black; width:100%; margin:0">
+            <div id="slideHolder" style=" width:100%; height:auto; margin:auto;display:block">
+                <div class="your-class">
+                    @foreach (var item in Model.sld)
+                    {
+                        <div class="imageholder">
+                            <img src="@item.image" />
+                        </div>
+                    }
                 </div>
-            }
+            </div>
         </div>
-    </div>
-</div>
+    }
+}
+
 
 
 

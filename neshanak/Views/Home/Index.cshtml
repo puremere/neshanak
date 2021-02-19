@@ -178,16 +178,16 @@
                 <div class="menuSection">
                     @foreach (var item in Model.cat)
                     {
-
+                       
                         string ID = item.id.ToString();
                         int index = Model.cat.IndexOf(item);
-                        string imageName = "lawyers_icon.png"; // Path.GetFileNameWithoutExtension(item.img) + "_icon.png";
+                        string imageName = "https://www.neschanak.com/images/" + item.title+ ".png"; // Path.GetFileNameWithoutExtension(item.img) + "_icon.png";
                         if (index < 6)
                         {
                             string imagurl = item.img != "" ? item.img.Replace("jpg", "png") : "";
                             <div>
                                 <div class="item  ITEMCAT" id=@ID style=" ">
-                                    <span><img style="" src=@imagurl /></span>
+                                    <span><img style="" src=@imageName></span>
                                     <span style="font-weight:600">@item.title</span>
                                 </div>
                                 <p hidden>@item.IsFinal</p>

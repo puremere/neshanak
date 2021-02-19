@@ -537,4 +537,10 @@
   <data name="writer" xml:space="preserve">
     <value>Schriftsteller</value>
   </data>
+  <data name="add" xml:space="preserve">
+    <value>hinzufügen</value>
+  </data>
+  <data name="newName" xml:space="preserve">
+    <value>neuer Name</value>
+  </data>
 </root>
