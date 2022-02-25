@@ -5,6 +5,7 @@
     min-height: 25rem;
     width: 100%;
     overflow: hidden;
+    /*background: url('https://source.unsplash.com/XT5OInaElMw/1600x900') black no-repeat center center scroll;*/
 }
 
     header video {
@@ -38,9 +39,14 @@
         z-index: 1;
     }
 
+
+
+ @media screen and (max-width: 750px){
+
+ }
 @media (pointer: coarse) and (hover: none) {
     header {
-        background: url('https://source.unsplash.com/XT5OInaElMw/1600x900') black no-repeat center center scroll;
+        /*background: url('https://source.unsplash.com/XT5OInaElMw/1600x900') black no-repeat center center scroll;*/
     }
 
         header video {

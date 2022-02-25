@@ -316,7 +316,7 @@
     <value>Sie müssen den Allgemeinen Geschäftsbedingungen zustimmen</value>
   </data>
   <data name="logosection0" xml:space="preserve">
-    <value>profile</value>
+    <value>logout</value>
   </data>
   <data name="logosection5" xml:space="preserve">
     <value>Zuhause</value>
@@ -542,5 +542,137 @@
   </data>
   <data name="newName" xml:space="preserve">
     <value>neuer Name</value>
+  </data>
+  <data name="countryman" xml:space="preserve">
+    <value>location management</value>
+  </data>
+  <data name="video" xml:space="preserve">
+    <value>video</value>
+  </data>
+  <data name="confrimAction" xml:space="preserve">
+    <value>Are you sure?</value>
+  </data>
+  <data name="recommended" xml:space="preserve">
+    <value>recommended</value>
+  </data>
+  <data name="recommendText" xml:space="preserve">
+    <value>recommended Items</value>
+  </data>
+  <data name="state" xml:space="preserve">
+    <value>state</value>
+  </data>
+  <data name="registerError2" xml:space="preserve">
+    <value>this email is registered before</value>
+  </data>
+  <data name="registerError1" xml:space="preserve">
+    <value>wrong catpcha</value>
+  </data>
+  <data name="registerError3" xml:space="preserve">
+    <value>error! please try again later</value>
+  </data>
+  <data name="loginError1" xml:space="preserve">
+    <value>wrong captcha</value>
+  </data>
+  <data name="loginError2" xml:space="preserve">
+    <value>username or password is incorrect</value>
+  </data>
+  <data name="forum" xml:space="preserve">
+    <value>forum</value>
+  </data>
+  <data name="learning" xml:space="preserve">
+    <value>learning language</value>
+  </data>
+  <data name="mastercart" xml:space="preserve">
+    <value>master card</value>
+  </data>
+  <data name="FAQ" xml:space="preserve">
+    <value>FAQ</value>
+  </data>
+  <data name="mohasebeBank" xml:space="preserve">
+    <value>Calculate bank interest</value>
+  </data>
+  <data name="mohasebeMaster" xml:space="preserve">
+    <value>Calculate Master Card interest</value>
+  </data>
+  <data name="page" xml:space="preserve">
+    <value>page</value>
+  </data>
+  <data name="regandsign" xml:space="preserve">
+    <value>enrollment and registration</value>
+  </data>
+  <data name="sampleEmail" xml:space="preserve">
+    <value>sample emails</value>
+  </data>
+  <data name="addNewAccordion" xml:space="preserve">
+    <value>Add new item</value>
+  </data>
+  <data name="bankINTf1" xml:space="preserve">
+    <value>deposit amount</value>
+  </data>
+  <data name="chooseItem" xml:space="preserve">
+    <value>choose item</value>
+  </data>
+  <data name="editAccordion" xml:space="preserve">
+    <value>Edit item</value>
+  </data>
+  <data name="faqandemail" xml:space="preserve">
+    <value>FAQ and Email</value>
+  </data>
+  <data name="masterINTf1" xml:space="preserve">
+    <value>total account balance</value>
+  </data>
+  <data name="masterINTf2" xml:space="preserve">
+    <value>diposit amount</value>
+  </data>
+  <data name="masterINTf3" xml:space="preserve">
+    <value>pay amount</value>
+  </data>
+  <data name="reload" xml:space="preserve">
+    <value>reload</value>
+  </data>
+  <data name="totalB" xml:space="preserve">
+    <value>total benefit</value>
+  </data>
+  <data name="totalM" xml:space="preserve">
+    <value>month count</value>
+  </data>
+  <data name="type" xml:space="preserve">
+    <value>type</value>
+  </data>
+  <data name="enterSupermarket" xml:space="preserve">
+    <value>enter supermarket</value>
+  </data>
+  <data name="supermarket" xml:space="preserve">
+    <value>supermarket</value>
+  </data>
+  <data name="book" xml:space="preserve">
+    <value>book</value>
+  </data>
+  <data name="course" xml:space="preserve">
+    <value>course</value>
+  </data>
+  <data name="lan" xml:space="preserve">
+    <value>language</value>
+  </data>
+  <data name="section" xml:space="preserve">
+    <value>section</value>
+  </data>
+  <data name="tutorial" xml:space="preserve">
+    <value>tutorial management</value>
+  </data>
+  <data name="live" xml:space="preserve">
+    <value>live</value>
+  </data>
+  <data name="enrollment" xml:space="preserve">
+    <value>enrollment</value>
+  </data>
+  <data name="installmentMinimum" xml:space="preserve">
+    <value>minimum installment amount is : </value>
+  </data>
+  <data name="overwithdraw" xml:space="preserve">
+    <value>your credit amount must be bigger than withdraw amount</value>
+  </data>
+  <data name="rgst" xml:space="preserve">
+    <value>register</value>
   </data>
 </root>

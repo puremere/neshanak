@@ -10,18 +10,18 @@
 @using neshanak.Classes;
 @{
     Layout = "/Views/Shared/_Layout.cshtml";
+    <title>ثبت نام</title>
 }
 @section HeadIncludes {
     <link href="@BotDetect.Web.CaptchaUrls.Absolute.LayoutStyleSheetUrl"
           rel="stylesheet" type="text/css" />
 }
-@section styles{
-    <title>ثبت نام</title>
 
-}
 @section scripts{
-   
+
     <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="~/Scripts/toastr.js"></script>
+    <link href="~/build/css/toastr.css" rel="stylesheet" />
     @Scripts.Render("~/Scripts/captcha.validate.js")
     <script>
         $(document).ready(function () {
@@ -33,9 +33,9 @@
                 var pattern = /^[A-Za-z0-9]{1,20}$/;
                 return pattern.test(str);
             };
-           
-            
-            
+
+
+
 
         })
     </script>
@@ -70,7 +70,7 @@
             $(this).parent().find(".registererror").css("display", "none");
         })
         $("#verifyRegister").click(function () {
-           
+
             ///  alert("ssss");
             var n = $("#accountAutoLogin:checked").length;
             var pass = $("#registerpassword").val();
@@ -106,31 +106,32 @@
             }
 
 
-           
+
             //
         })
 
     </script>
-    @{
-        if (ViewBag.message != null)
-        {
-            <script>
-
-            toastr.options = {
-                "debug": false,
-                "positionClass": "toast-top-center",
-                "onclick": null,
-                "fadeIn": 300,
-                "fadeOut": 1000,
-                "timeOut": 8000,
-                "extendedTimeOut": 1000,
-
-
+    @if (ViewBag.message != null)
+    {
+        <script>
+            var message = "";
+            if ('@ViewBag.message' == "1")
+            {
+                message = '@Resources.res.registerError1';
+               
             }
-            toastr.error('@ViewBag.message');
-            </script>
-        }
-
+            else if ('@ViewBag.message' == "2")
+            {
+                message = '@Resources.res.registerError2';
+            }
+            else if ('@ViewBag.message' == "3")
+            {
+                message = '@Resources.res.registerError3';
+            }
+            alert(message);
+           
+           
+        </script>
     }
 }
 
@@ -147,13 +148,13 @@
                 <input type="hidden" name="rc" value="ZURUU1UzMVowaHFXNFFGZEdCb01pdz09"><input type="hidden" name="rd" value="a3RYVkxNOER0Q0IvaFpnQlVZMVNpdXV2bGxSSWJvRDEvbU8wN0VvdjFFakowc1NVQU9wdW9JOFF5QXhldEx0cg~~">
                 <div class="rowholder">
                     <label class="mainlabla">
-                        <input id="registername" class="c-ui-input__field c-ui-input__field--right-placeholder" type="text" name="registeremail" placeholder=" @Resources.res.registerName" value="">
+                        <input id="registername" class="c-ui-input__field c-ui-input__field--right-placeholder" type="text" name="registername" placeholder=" @Resources.res.registerName" value="">
                         <div class="registererror"><p>@Resources.res.registerNameError</p>  </div>
                     </label>
                 </div>
                 <div class="rowholder">
                     <label class="mainlabla">
-                        <input id="registerephone" class="c-ui-input__field c-ui-input__field--right-placeholder" type="text" name="registeremail" placeholder=" @Resources.res.registerPhone" value="">
+                        <input id="registerephone" class="c-ui-input__field c-ui-input__field--right-placeholder" type="text" name="registerphone" placeholder=" @Resources.res.registerPhone" value="">
 
                         <div class="registererror"><p>@Resources.res.registerPhoneError</p>  </div>
                     </label>
@@ -216,7 +217,7 @@
                 </div>
                 <div id="verifyRegister" class="rowholder">
                     <div class="mainlabla">
-                        <p style="float:left" class="">@Resources.res.OK</p>
+                        <p  style="cursor:pointer; float:left" class="">@Resources.res.OK</p>
                     </div>
                 </div>
                 <div class="rowholder">

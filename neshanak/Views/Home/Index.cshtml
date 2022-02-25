@@ -4,7 +4,7 @@
     Layout = "/Views/Shared/_Layout.cshtml";
     ViewBag.action = "index";
 }
-
+ @*1075211780-الف*@ 
 
 @section styles{
 
@@ -25,28 +25,38 @@
 
 
     <script>
+        let width = screen.width;
+        let number = 7;
+        let number2 = 4;
+        let buttonShow = true;
+        if (width < 750) {
+            number = 2
+            number2 = 2
+            buttonShow = false
+        }
         $(document).ready(function () {
 
             $('.randomList').slick({
-                slidesToShow: 4,
+                slidesToShow: number2,
                 slidesToScroll: 1,
                 autoplay: true,
                 autoplaySpeed: 2000,
-                dots: true
+                dots: buttonShow,
+                
             });
             $('.your-class').slick({
-                slidesToShow: 4,
+                slidesToShow: number2,
                 slidesToScroll: 1,
                 autoplay: true,
                 autoplaySpeed: 2000,
-                dots: true
+                dots: buttonShow,
             });
             $('.countrylist').slick({
-                slidesToShow: 7,
-                slidesToScroll: 1,
+                slidesToShow: number,
+                slidesToScroll: number,
                 autoplay: false,
                 autoplaySpeed: 2000,
-                dots: false
+                dots: false,
             })
         });
         $(".slidItemHolder").click(function () {
@@ -89,17 +99,8 @@
         })
         $(".countryItem").click(function () {
             var id = $(this).attr('id');
-            $.ajax({
-                url: "/home/getcityPartial",
-                dataType: "html",
-                data: {
-                    result: id
-                },
-                success: function (data) {
-                    $("#mymodal").modal('toggle');
-                    $("#citydropdownholder2").html(data);
-                }
-            })
+            window.location.href = "/Home/citySection?result=" + id;
+
         })
         $("#countryDropDown").change(function () {
             var id = $(this).val();
@@ -123,8 +124,46 @@
             window.location.href = "/Home/GetSubCat?result=0-0"
         })
     </script>
+    <script>
+        $(".searchButton").click(function () {
+            stateID = $("#countryDropDown").val();
+            cityID = $("#cityDropDown").val();
+            query = $("#searchQuery").val();
 
+            $.ajax({
+                url: "/home/setQuery",
+                dataType: "html",
+                data: {
+                    query: query,
+                    cityID: cityID,
+                    countryID: stateID
+                },
+                success: function () {
+                    window.location.href = "/Home/searchResult"
+                }
 
+            })
+
+        })
+    </script>
+    <script>
+        $("#supermarket").click(function () {
+            $.ajax({
+                url: "/Home/setValues",
+                dataType: "html",
+                data: {
+                    result: "388-2",
+                    mallID: "0",
+                    contract:"1",
+                },
+                success: function () {
+                    var url = "/Home/searchResult";
+                    window.location.href = url;
+                }
+            })
+        })
+
+    </script>
 }
 
 <style>
@@ -152,60 +191,59 @@
 <header>
     <div class="overlay"></div>
     <video playsinline="playsinline" autoplay="autoplay" muted="muted" loop="loop">
-        <source src="https://storage.googleapis.com/coverr-main/mp4/Mt_Baker.mp4" type="video/mp4">
+        <source src="~/video/neschanakCovid.mp4" type="video/mp4">
     </video>
-    <div class="container h-100" style="height:100%;    padding-top: 90px;">
-        <div class="d-flex h-100 text-center align-items-center" style="height:100%;display: flex;align-items: center;justify-content:center">
-            <div class="w-100 text-white">
-                <h1 style=" color:white">@Resources.res.headertext1</h1>
-                <h2 style=" color:white">@Resources.res.headertext2</h2>
-                <div class="formsection">
-                    <div class="dropdownholder">
-                        <input style="width:100%" class="form-control" placeholder="@Resources.res.headerFormInput1" />
+    <div class="container h-100" style="height:100%;  ">
+        <div class="d-flex h-100 text-center align-items-center class100h" style="height:100%;display: flex;align-items: center;justify-content:center">
+            <div class="w-100 text-white" style="width:100%">
+                <h1 class="titleTop">@Resources.res.headertext1</h1>
+                <h2  class="titleTop" style=" color:white">@Resources.res.headertext2</h2>
+                <div class="formsection" >
 
-                    </div>
                     <div class="dropdownholder">
                         @Html.DropDownList("countryDropDown", new SelectList(Model.lands, "ID", "title"), @Resources.res.headerFormInput3, new { @class = "form-control", id = "countryDropDown", style = "width:100%" })
                     </div>
-
                     <div class="dropdownholder" id="citydropdownholder">
-                        @Html.DropDownList("SelectedItem", new SelectList(Model.lands, "ID", "title"), @Resources.res.headerFormInput4, new { @class = "form-control", id = "cityDropDown", style = "width:100%" })
-
+                        @Html.DropDownList("SelectedItem", new SelectList(Model.bnr, "ID", "title"), @Resources.res.headerFormInput4, new { @class = "form-control", id = "cityDropDown", style = "width:100%" })
                     </div>
+                    <div class="dropdownholder inputITT">
+                        <input id="searchQuery" style="width:100%" class="form-control" placeholder="@Resources.res.headerFormInput1" />
+                    </div>
+                    <div style="cursor:pointer" class="searchButton">@Resources.res.headerFormInput2</div>
 
-                    <div class="searchButton">@Resources.res.headerFormInput2</div>
                 </div>
-                <div class="menuSection">
-                    @foreach (var item in Model.cat)
-                    {
-                       
-                        string ID = item.id.ToString();
-                        int index = Model.cat.IndexOf(item);
-                        string imageName = "https://www.neschanak.com/images/" + item.title+ ".png"; // Path.GetFileNameWithoutExtension(item.img) + "_icon.png";
-                        if (index < 6)
+
+                @*<div class="menuSection">
+                        @foreach (var item in Model.cat)
                         {
-                            string imagurl = item.img != "" ? item.img.Replace("jpg", "png") : "";
-                            <div>
-                                <div class="item  ITEMCAT" id=@ID style=" ">
-                                    <span><img style="" src=@imageName></span>
-                                    <span style="font-weight:600">@item.title</span>
+
+                            string ID = item.id.ToString();
+                            int index = Model.cat.IndexOf(item);
+                            string imageName = "https://www.neschanak.com/images/" + item.title+ ".png"; // Path.GetFileNameWithoutExtension(item.img) + "_icon.png";
+                            if (index < 6)
+                            {
+                                string imagurl = item.img != "" ? item.img.Replace("jpg", "png") : "";
+                                <div>
+                                    <div class="item  ITEMCAT" id=@ID style=" ">
+                                        <span><img style="" src=@imageName></span>
+                                        <span style="font-weight:600">@item.title</span>
+                                    </div>
+                                    <p hidden>@item.IsFinal</p>
                                 </div>
-                                <p hidden>@item.IsFinal</p>
-                            </div>
+
+                            }
+
+
 
                         }
 
+                        <div id="morecat" class="item  ITEMCAT" style=" ">
+                            <span><img style="" src="http://supectco.com/neshanak/portal/uploads/lawyers_icon.png" /></span>
+                            <span style="font-weight:600">@Resources.res.more</span>
+                        </div>
 
 
-                    }
-
-                    <div id="morecat" class="item  ITEMCAT" style=" ">
-                        <span><img style="" src="http://supectco.com/neshanak/portal/uploads/lawyers_icon.png" /></span>
-                        <span style="font-weight:600">@Resources.res.more</span>
-                    </div>
-
-
-                </div>
+                    </div>*@
             </div>
         </div>
     </div>
@@ -214,7 +252,8 @@
 
 
 
-<div class="countrylist">
+
+<div class="countrylist" style="">
     @foreach (var item in Model.lands)
     {
         <div id="@item.ID" class="countryItem">
@@ -224,7 +263,223 @@
 
 
         </div>
+
     }
+</div>
+<style>
+    .formsection{
+        width:80%
+    }
+    .video {
+    }
+
+    .titleTop {
+        color: white
+    }
+
+    .countrylist {
+        margin: 0 30px
+    }
+
+    .btnmiddle {
+        /*min-width: 150px;*/
+        cursor: pointer;
+        border-radius: 8px;
+        padding: 15px;
+        background-color: #5a0d69;
+        color: white;
+        margin-right: 10px;
+        max-width:150px
+    }
+
+    .btnmiddleHolder {
+        background-color: white;
+        display: flex;
+        justify-content: center;
+        padding: 50px;
+       
+        margin: 0px
+    }
+
+    .btntitle {
+        white-space: nowrap;
+        color: white;
+        width: 95%;
+        overflow: hidden;
+    }
+
+    .btnimage img {
+        width: 100%
+    }
+
+    .h-100 {
+    }
+
+    @@media screen and (max-width: 750px) {
+        .btnimage img {
+            width: 50%;
+        }
+        .btnmiddle{
+            max-width:unset!important
+        }
+        .btnimage {
+            padding: 5px
+        }
+
+        .btnmiddleHolder {
+            padding: 10px;
+        }
+
+        .viewProduct h3 {
+            font-size: 16px
+        }
+
+        .bannerHolder1 {
+            display: block
+        }
+
+            .bannerHolder1 div {
+                width: 49%;
+                display: inline-block
+            }
+
+        .bannerHolder2 {
+            display: block
+        }
+
+            .bannerHolder2 div {
+                width: 100%
+            }
+
+        .mapsection img {
+            width: 80%
+        }
+
+        .viewProduct {
+            padding: 80px 5%;
+        }
+
+        .mapsection h6 {
+            font-size: 14px;
+            margin-top: 20px
+        }
+
+        .mapsection {
+            padding: 10px;
+        }
+
+        .textSection {
+            display: block;
+            width: 100%
+        }
+
+            .textSection div {
+                width: 100%
+            }
+
+        .titleTop {
+            display: none
+        }
+
+
+        .btnmiddleHolder {
+            display: block !important;
+        }
+
+        .btnmiddle {
+            width: unset;
+            display: inline-block;
+            margin: 2px;
+            margin-bottom: 5px;
+            padding: 0
+        }
+
+        .countrylist {
+            margin: 0 40px;
+            padding: 5px
+        }
+
+        .btntitle {
+            padding: 10px
+        }
+
+        header {
+            height: 3vh
+        }
+
+        .class100h {
+            margin-top: 50px;
+            display:none !important;
+        }
+
+        .logosectionalone {
+            position: absolute
+        }
+
+        header video {
+            width: 120%;
+        }
+
+        .formsection {
+            width: 100%;
+            background-color: rgba(0,0,0,0.3);
+            border: none
+        }
+    }
+</style>
+<div class="row btnmiddleHolder" style="">
+    <div style="display:flex">
+        <div id="chatroom" class="btnmiddle" style="">
+            <a style="text-decoration:none;" href="/home/forum?gr=neschanak_chat">
+                <p class="btnimage" style="object-fit:scale-down"><img src="~/Images/forum.png" /></p>
+
+                <p class="btntitle">@Resources.res.forum</p>
+            </a>
+
+        </div>
+
+
+        <div id="turorial" class="btnmiddle" style="">
+            <a style="text-decoration:none;" href="/master/index">
+                <p class="btnimage" style="object-fit:scale-down"><img src="~/Images/master.png" /></p>
+                <p class="btntitle">@Resources.res.mastercart</p>
+            </a>
+
+        </div>
+
+        <div  class="btnmiddle" style="">
+            <a href="/Home/live">
+                <p class="btnimage" style="object-fit:scale-down">
+                    <img src="~/Images/live.png" />
+                </p>
+                <p class="btntitle">@Resources.res.live</p>
+            </a>
+
+
+        </div>
+    </div>
+    <div style="display:flex">
+
+        <div id="turorial" class="btnmiddle" style="">
+            <a style="text-decoration:none;" href="/language/index">
+                <p class="btnimage" style="object-fit:scale-down"><img src="~/Images/language.png" /></p>
+
+                <p class="btntitle">@Resources.res.learning</p>
+            </a>
+
+        </div>
+        <div id="supermarket" class="btnmiddle" style="">
+            <p class="btnimage" style="object-fit:scale-down">
+                <img src="~/Images/supermarketICON.png" />
+            </p>
+            <p class="btntitle">@Resources.res.supermarket</p>
+
+        </div>
+    </div>
+   
+   
+
+
 </div>
 <div class="viewProduct">
     <div class="line"></div>
@@ -238,7 +493,7 @@
                 <div class="your-class">
 
 
-                    @foreach (var item in Model.rec)
+                    @foreach (var item in Model.spc)
                     {
                         <div id="@item.id" class="slidItemHolder" style="padding:10px">
                             <div class="imageholder;" style="width:100%; height:150px;object-fit:cover">
@@ -285,9 +540,19 @@
         </div>
     </div>
 </div>
+<div class="bannerHolder2">
+    <div>
+        <a href="@Model.banners[4].catIDOrLink"><img src="@Model.banners[4].image" /></a>
+    </div>
+    <div>
+        <a href="@Model.banners[5].catIDOrLink"><img src="@Model.banners[5].image" /></a>
+    </div>
+
+
+</div>
 <div class="viewProduct">
     <div class="line"></div>
-    <h3 class="viewProductText"> @Resources.res.recenttext1</h3>
+    <h3 class="viewProductText"> @Resources.res.recommendText</h3>  @*random*@
     <h6 class="viewProductText">
         @Resources.res.recenttext2
     </h6>
@@ -326,23 +591,23 @@
 </div>
 <div class="bannerHolder1">
     <div>
-        <img src="~/Images/banner1.jpg" />
+        <a href="@Model.banners[0].catIDOrLink"><img src="@Model.banners[0].image" /></a>
     </div>
     <div>
-        <img src="~/Images/banner2.jpg" />
+        <a href="@Model.banners[1].catIDOrLink"><img src="@Model.banners[1].image" /></a>
     </div>
     <div>
-        <img src="~/Images/banner3.jpg" />
+        <a href="@Model.banners[2].catIDOrLink"><img src="@Model.banners[2].image" /></a>
     </div>
     <div>
-        <img src="~/Images/banner4.jpg" />
+        <a href="@Model.banners[3].catIDOrLink"><img src="@Model.banners[3].image" /></a>
     </div>
 </div>
 <div class="viewProduct">
     <div class="line"></div>
-    <h3 class="viewProductText"> @Resources.res.randomtext1</h3>
+    <h3 class="viewProductText"> @Resources.res.recenttext1</h3>
     <h6 class="viewProductText">
-        @Resources.res.randomtext2
+        @Resources.res.recenttext2
     </h6>
     <div class="slidHolder">
         @{
@@ -351,13 +616,12 @@
                 <div class="randomList">
 
                     @{
-                        foreach (var item in Model.rec)
+                        foreach (var item in Model.rand)
                         {
 
                             <div id="@item.id" class="slidItemHolder" style="padding:10px">
                                 <div class="imageholder;" style="width:100%; height:150px;object-fit:cover">
                                     <img style="width:100%;height:100% " src="@item.img.Split(',')[0]" />
-
                                 </div>
                                 <p class="title">@item.title</p>
                                 <p>@item.desc</p>
@@ -378,12 +642,14 @@
 
 
 </div>
+
 <div class="bannerHolder2">
+
     <div>
-        <img src="~/Images/banner5.jpg" />
+        <a href="@Model.banners[6].catIDOrLink"><img src="@Model.banners[6].image" /></a>
     </div>
     <div>
-        <img src="~/Images/banner6.jpg" />
+        <a href="@Model.banners[7].catIDOrLink"><img src="@Model.banners[7].image" /></a>
     </div>
 
 </div>
@@ -426,8 +692,8 @@
 
 
 </div>
-<div class="bannerHolder1">
 
+<div class="bannerHolder1">
     <div>
         <a href="@Model.banners[8].catIDOrLink"><img src="@Model.banners[8].image" /></a>
     </div>
@@ -441,10 +707,11 @@
         <a href="@Model.banners[11].catIDOrLink"><img src="@Model.banners[11].image" /></a>
     </div>
 </div>
+
 <div class="footerSection">
     <div class="aboutUs">
 
-        <div class="footerIcon" style=""> <img src="~/Images/logo.png" /><i class="fa fa-twitter"><span>twitter</span></i><i class="fa fa-facebook"><span>facebook</span></i><i class="fa fa-wifi"><span>RSS</span></i><i class="fa fa-envelope"><span>Main</span></i></div>
+        <div class="footerIcon" style=""> <img src="~/Images/logo_text.png" /><i class="fa fa-twitter"><span>twitter</span></i><i class="fa fa-facebook"><span>facebook</span></i><i class="fa fa-wifi"><span>RSS</span></i><i class="fa fa-envelope"><span>Main</span></i></div>
         <p style="color:white; line-height:2; font-size:14px">
             <br />
             @Resources.res.footeraboutus

@@ -7,6 +7,8 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using System.Web.Http;
+using neshanak.App_Start;
 
 namespace neshanak
 {
@@ -15,6 +17,7 @@ namespace neshanak
         protected void Application_Start()
         {
             AreaRegistration.RegisterAllAreas();
+            //GlobalConfiguration.Configure(WebApiConfig.Register);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
@@ -30,5 +33,6 @@ namespace neshanak
             Thread.CurrentThread.CurrentUICulture = new CultureInfo(languageSession);
             Thread.CurrentThread.CurrentCulture = new CultureInfo(languageSession);
         }
+       
     }
 }

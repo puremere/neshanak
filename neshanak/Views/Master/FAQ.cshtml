@@ -1,0 +1,180 @@
+﻿
+@model neshanak.viewModel.FAQVM
+@{
+    ViewBag.Title = "faq";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section styles{
+
+
+    <link href="~/Content/Site.css" rel="stylesheet" />
+    <link href="~/Content/fontawesome-all.css" rel="stylesheet" />
+
+    <link href="~/Content/slick.css" rel="stylesheet" />
+    <link href="~/Content/slick-theme.css" rel="stylesheet" />
+    <style>
+
+
+        ul.accordion-list {
+            position: relative;
+            display: block;
+            width: 100%;
+            height: auto;
+            padding: 20px;
+            margin: 0;
+            list-style: none;
+            background-color: #f9f9fA;
+        }
+
+            ul.accordion-list li {
+                position: relative;
+                display: block;
+                width: 100%;
+                height: auto;
+                background-color: #FFF;
+                padding: 20px;
+                margin: 0 auto 15px auto;
+                border: 1px solid #eee;
+                border-radius: 5px;
+                cursor: pointer;
+            }
+
+                ul.accordion-list li.active h3:after {
+                    transform: rotate(45deg);
+                }
+
+                ul.accordion-list li h3 {
+                    font-weight: 700;
+                    position: relative;
+                    display: block;
+                    width: 100%;
+                    height: auto;
+                    padding: 0 0 0 0;
+                    margin: 0;
+                    font-size: 15px;
+                    letter-spacing: 0.01em;
+                    cursor: pointer;
+                }
+
+                    ul.accordion-list li h3:after {
+                        content: "";
+                        font-family: "material-design-iconic-font";
+                        position: absolute;
+                        right: 0;
+                        top: 0;
+                        color: #Fcc110;
+                        transition: all 0.3s ease-in-out;
+                        font-size: 18px;
+                    }
+
+                ul.accordion-list li div.answer {
+                    position: relative;
+                    display: block;
+                    width: 100%;
+                    height: auto;
+                    margin: 0;
+                    padding: 0;
+                    cursor: pointer;
+                }
+
+                    ul.accordion-list li div.answer p {
+                        position: relative;
+                        display: block;
+                        font-weight: 300;
+                        padding: 10px 0 0 0;
+                        cursor: pointer;
+                        line-height: 150%;
+                        margin: 0 0 15px 0;
+                        font-size: 14px;
+                        width: 100% !important;
+                        max-width: none
+                    }
+    </style>
+}
+@section scripts{
+    <script src="~/Scripts/jquery.migrate.js"></script>
+    <script src="~/Scripts/slick.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('.your-class').slick({
+                dots: false,
+                infinite: true,
+                autoplay: true,
+                speed: 500,
+                cssEase: 'linear'
+            });
+        });
+    </script>
+
+    <link href="~/Content/slider.css" rel="stylesheet" />
+    <script src="~/Scripts/sliderscript.js"></script>
+    <script>
+        $('.bo-slider').boSlider({
+            slideShow: true,
+            interval: 8000
+        });
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            $('.accordion-list > li > .answer').hide();
+
+            $('.accordion-list > li').click(function () {
+                if ($(this).hasClass("active")) {
+                    $(this).removeClass("active").find(".answer").slideUp();
+                } else {
+                    $(".accordion-list > li.active .answer").slideUp();
+                    $(".accordion-list > li.active").removeClass("active");
+                    $(this).addClass("active").find(".answer").slideDown();
+                }
+                return false;
+            });
+
+        });
+    </script>
+    <link href="~/Content/material-design-iconic-font.css" rel="stylesheet" />
+}
+
+@if (Model.sld != null)
+{
+    <ul class="bo-slider">
+        @foreach (var slid in Model.sld)
+        {
+            if (slid.type == "1")
+            {
+                <li data-url="@slid.image" data-type="image"></li>
+            }
+            else
+            {
+                string videopath = "/video/" + @Path.GetFileNameWithoutExtension(slid.image) + ".mp4";
+                <li data-url="@videopath" data-type="video"></li>
+            }
+        }
+
+
+    </ul>
+
+}
+
+@{
+    if (Model.items != null)
+    {
+
+        <ul class="accordion-list">
+            @foreach (var item in Model.items)
+            {
+                <li>
+                    <h3>@item.title</h3>
+                    <div class="answer">
+                        @Html.Raw(item.content)
+                    </div>
+                </li>
+            }
+
+
+        </ul>
+    }
+}
+
+

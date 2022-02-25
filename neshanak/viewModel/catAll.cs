@@ -33,5 +33,57 @@ namespace neshanak.viewModel
     {
         public List<FiltercatsAll> filtercatsAll { get; set; }
     }
-    
+
+
+
+
+
+    public class lessonAll
+    {
+        public string ID { get; set; }
+        public string title { get; set; }
+        public string level { get; set; }
+    }
+
+    public class bookAll
+    {
+        public string ID { get; set; }
+        public string title { get; set; }
+        public List<lessonAll> lessonAll { get; set; }
+        public string level { get; set; }
+    }
+
+    public class courseAll
+    {
+        public string ID { get; set; }
+        public string title { get; set; }
+        public List<bookAll> bookAll { get; set; }
+        public string level { get; set; }
+    }
+
+    public class sectionAll
+    {
+        public string ID { get; set; }
+        public object sectiontitle { get; set; }
+        public List<courseAll> courseAll { get; set; }
+        public string level { get; set; }
+    }
+
+    public class LanAll
+    {
+        public string ID { get; set; }
+        public string title { get; set; }
+        public List<sectionAll> sectionAll { get; set; }
+        public string level { get; set; }
+    }
+
+    public class slideRequst
+    {
+        public List<LanAll> lanAll { get; set; }
+        public List<LocationAll> locationAll { get; set; }
+        public List<FiltercatsAll> filtercatsAll { get; set; }
+    }
+
+
+
 }

@@ -1,0 +1,20 @@
+﻿@model neshanak.viewModel.BzListVM
+
+
+@{
+    foreach (var item in Model.bzlist)
+    {
+        var id = "E" + item.id;
+        <div class="itemHolder" id="@id" style="background-color:#fdfdfd">
+            <div class="cover" id="@item.id"></div>
+            <div class="DATA">
+                <h4 style="">@item.title</h4>
+                <h5>@item.desc</h5>
+                <h5>@item.address</h5>
+            </div>
+            <img src="@item.img" />
+
+
+        </div>
+    }
+}

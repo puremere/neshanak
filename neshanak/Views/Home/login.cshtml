@@ -21,8 +21,8 @@
             }
         });
     </script>
-   
-    <script>
+
+    @*<script>
 
         $(document).ready(function () {
 
@@ -45,10 +45,10 @@
             }
 
         })
-    </script>
-   
-  
-    
+    </script>*@
+
+
+
     <script type="text/javascript">
         function preventBack() { window.history.forward(); }
         setTimeout("preventBack()", 0);
@@ -56,36 +56,16 @@
     </script>
     @Scripts.Render("~/Scripts/captcha.validate.js")
 
-    @{
-        if (ViewBag.message != null && ViewBag.message != "")
-        {
-            <script>
 
-            toastr.options = {
-                "debug": false,
-                "positionClass": "toast-top-center",
-                "onclick": null,
-                "fadeIn": 300,
-                "fadeOut": 1000,
-                "timeOut": 8000,
-                "extendedTimeOut": 1000,
-
-
-            }
-            toastr.error('@ViewBag.message');
-            </script>
-        }
-
-    }
 
     <script>
         function isValidPhonenumber(phonenumber) {
-                var pattern = /^09[0-9]{9}$/;
-                return pattern.test(phonenumber);
+            var pattern = /^09[0-9]{9}$/;
+            return pattern.test(phonenumber);
         };
-            function validateEmail(email) {
-                const re = /^(([^<>()[\]\\.,;:\s@@"]+(\.[^<>()[\]\\.,;:\s@@"]+)*)|(".+"))@@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-                return re.test(String(email).toLowerCase());
+        function validateEmail(email) {
+            const re = /^(([^<>()[\]\\.,;:\s@@"]+(\.[^<>()[\]\\.,;:\s@@"]+)*)|(".+"))@@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+            return re.test(String(email).toLowerCase());
         };
         $(".mainlabla").find("input").on("input", function () {
             $(this).parent().find(".registererror").css("display", "none");
@@ -112,7 +92,7 @@
                 $("#registeremail").parent().find(".registererror").css("display", "block");
             }
 
-          
+
 
             if (validateEmail(val) && (pass.length > 5)) {
                 $("#registerForm").submit();
@@ -124,7 +104,25 @@
 
 
 
+@if (@ViewBag.message != null)
+{
+    <script>
+          
+            var message = "";
+            if ('@ViewBag.message' == "1")
+            {
+                message = '@Resources.res.loginError1';
 
+            }
+            else if ('@ViewBag.message' == "2")
+            {
+                message = '@Resources.res.loginError2';
+            }
+            alert(message);
+
+
+    </script>
+}
 <div>
     <main id="loginMain" style="">
 
@@ -163,11 +161,11 @@ new { @class = "c-form-account", enctype = "multipart/form-data", id = "register
                                         <div class="captchaChild row col-md-12" style="">
                                             @Html.Captcha(registrationCaptcha)
                                         </div>
-                                        <div class="captchaChild row col-lg-12" style="margin-top:10px">
-                                            <label class="col-md-6 control-label" for="CaptchaCode" style=" margin-top:15px">@Resources.res.captchatext</label>
+                                        <div class=" row col-lg-12" style="margin-top:10px">
+                                            <label class="col-md-12 control-label" for="CaptchaCode" style=" margin-top:15px; text-align:center;">@Resources.res.captchatext</label>
 
-                                            <div class="col-md-6">
-                                                @Html.TextBox("CaptchaCode", null, new { @class = "form-control captchaVal" })
+                                            <div class="col-md-12">
+                                                @Html.TextBox("CaptchaCode", null, new { @class = "form-control captchaVal", style = "margin:auto" })
                                             </div>
                                         </div>
 
@@ -195,7 +193,7 @@ new { @class = "c-form-account", enctype = "multipart/form-data", id = "register
 
                 <div id="verifyyy" class="rowholder">
                     <div class="mainlabla">
-                        <p style="float:left" class="">@Resources.res.OK</p>
+                        <p style="cursor:pointer; float:left" class="">@Resources.res.OK</p>
                     </div>
                 </div>
                 <div class="rowholder">
@@ -207,12 +205,12 @@ new { @class = "c-form-account", enctype = "multipart/form-data", id = "register
                     </div>
                 </div>
 
-                
+
 
 
             }
         </div>
-    
+
 
     </main>
 </div>

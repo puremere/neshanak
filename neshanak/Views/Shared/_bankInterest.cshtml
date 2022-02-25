@@ -1,0 +1,30 @@
+﻿@model neshanak.viewModel.bankInterestVM
+
+    <div class="babaholder" style="max-height:400px; overflow-x:scroll">
+        <div class="tableItem" style="display:flex; justify-content:center">
+            <p>@Resources.res.totalB  <span> : @Model.totalBenefit</span></p>
+            @{
+                string month = (@Model.report.Count() - 1).ToString();
+                <p>@Resources.res.totalM  <span> : @month</span></p>
+            }
+
+        </div>
+        @foreach (var item in Model.report)
+        {
+            <div class="tableItem" style="display:flex">
+                <p>@item.ID</p>
+                <p>@item.bardashtShode</p>
+                <p></p>
+                <p>@item.ghabelPardakht</p>
+                <p>@item.ghabelBardasht</p>
+                <p></p>
+                <p>@item.sood</p>
+                <p>@item.mande</p>
+                <p>@item.x1</p>
+                <p>@item.x2</p>
+            </div>
+        }
+    </div>
+
+
+

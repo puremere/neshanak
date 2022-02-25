@@ -1,0 +1,122 @@
+﻿@model neshanak.viewModel.countryCityCatVM
+@{
+    ViewBag.Title = "GetSubCat";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section styles{
+
+
+    <link href="~/Content/Site.css" rel="stylesheet" />
+    <link href="~/Content/fontawesome-all.css" rel="stylesheet" />
+
+    <link href="~/Content/slick.css" rel="stylesheet" />
+    <link href="~/Content/slick-theme.css" rel="stylesheet" />
+}
+@section scripts{
+    <script src="~/Scripts/jquery.migrate.js"></script>
+    <script src="~/Scripts/slick.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('.your-class').slick({
+                dots: false,
+                infinite: true,
+                autoplay: true,
+                speed: 500,
+                cssEase: 'linear'
+            });
+        });
+    </script>
+
+    <script>
+       
+        $(".subcat").click(function () {
+            var subcat = $(this).attr('id');
+            $.ajax({
+                url : "/home/setCity",
+                dataType: "html",
+                data: {
+                    id: subcat
+                },
+                success: function () {
+                    var url = "/Home/GetSubCat?result=0-0&city=" + subcat;
+                    window.location.href = url
+                }
+            })
+
+          
+
+            
+        })
+
+    </script>
+
+
+
+
+    <link href="~/Content/slider.css" rel="stylesheet" />
+    <script src="~/Scripts/sliderscript.js"></script>
+    <script>
+        $('.bo-slider').boSlider({
+            slideShow: true,
+            interval: 8000,
+            dots: false
+        });
+    </script>
+
+}
+
+
+
+
+
+
+
+@if (Model.sld != null)
+{
+    <ul class="bo-slider">
+        @foreach (var slid in Model.sld)
+        {
+            if (slid.type == "1")
+            {
+                <li data-url="@slid.image" data-type="image"></li>
+            }
+            else
+            {
+                string videopath = "/video/" + @Path.GetFileNameWithoutExtension(slid.image) + ".mp4";
+                <li data-url="@videopath" data-type="video"></li>
+            }
+
+        }
+
+        @*<li data-url="/images/banner5.jpg" data-type="image"></li>
+        <li data-url="/images/banner6.jpg" data-type="image"></li>
+        <li data-url="/video/sm.mp4" data-type="video"></li>
+        <li data-url="/images/banner2.jpg" data-type="image"></li>*@
+    </ul>
+   
+}
+
+
+
+<!-- #endregion Jssor Slider End -->
+<div style="" class="subcatHolder" data-slide="1" data-speed="500">
+    <div>
+        @foreach (var item in Model.cities)
+        {
+            string imagefinal = item.img;
+         
+            <div class="subcat catitem" id="@item.ID">
+                <div>
+                    <div class="" style="">
+                        <img style="cursor:pointer; max-width:100%; max-height:100%; object-fit:scale-down" class="subcatimage" src=@imagefinal />
+                    </div>
+
+                    <p>@item.title</p>
+                </div>
+            </div>
+        }
+
+    </div>
+    @*<img class="bannerItem" src="http://supectco.com/app/portal/uploads/@Model.bnr.First().img" />*@
+</div>

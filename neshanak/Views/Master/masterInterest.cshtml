@@ -1,0 +1,142 @@
+﻿
+@model neshanak.viewModel.FAQVM
+@{
+    ViewBag.Title = "interest";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section styles{
+
+
+    <link href="~/Content/Site.css" rel="stylesheet" />
+    <link href="~/Content/fontawesome-all.css" rel="stylesheet" />
+
+    <link href="~/Content/slick.css" rel="stylesheet" />
+    <link href="~/Content/slick-theme.css" rel="stylesheet" />
+    <style>
+        .formholder {
+            margin-top: 70px;
+            display: flex;
+            align-items: center;
+            padding: 20px;
+            background-color: white;
+            justify-content: center;
+        }
+
+            .formholder input {
+                margin: 20px
+            }
+
+        .tableItem {
+            display: flex;
+            background-color: white;
+            border-bottom: 1px solid #eee;
+            border-radius: 5px;
+            padding: 5px;
+            margin: 5px;
+        }
+
+            .tableItem p {
+                min-width: 100px;
+            }
+
+        @@media screen and (max-width: 750px) {
+            
+            .formholder {
+                margin-top: 0;
+                display:block
+            }
+                .formholder input {
+                    margin: 5px;
+                    width: 45% !important;
+                    display: inline-block;
+                }
+            .tableItem p {
+                min-width: unset !important
+            }
+
+            #tableholder {
+                overflow-x: scroll
+            }
+
+            .tableItem {
+                width: 800px
+            }
+            #bankOK {
+                width: 250px;
+                margin: 5px;
+                width: 45% !important;
+                display: inline-block;
+            }
+            .logosectionalone {
+                display: block;
+                position:relative!important
+            }
+            
+
+        }
+
+
+
+    </style>
+}
+@section scripts{
+    <script src="~/Scripts/jquery.migrate.js"></script>
+    <script src="~/Scripts/slick.js"></script>
+
+    <script>
+        $("#bankOK").click(function () {
+            var koll = $("#koll").val();
+            var diposit = $("#diposit").val();
+            var pay = $("#pay").val();
+            var minpay = 30;
+            if (koll == "" || diposit == "" || pay == "") {
+                alert("@Resources.res.completeAll")
+            }
+            else {
+                if ((diposit / 100)* 3 > 30){
+                minpay = (diposit / 100) * 3;
+            }
+
+            if (koll < diposit) {
+                alert("@Resources.res.overwithdraw")
+            }
+            else if (pay < minpay) {
+                alert("@Resources.res.installmentMinimum" + " " + minpay)
+            }
+
+            else {
+                $.ajax({
+                    url: "/master/getMasterTable",
+                    data: {
+                        koll: koll,
+                        diposit: diposit,
+                        pay: pay,
+
+                    },
+                    success: function (data) {
+                        $("#tableholder").html(data);
+                    }
+                })
+            }
+            }
+
+
+        })
+    </script>
+
+
+}
+
+
+
+<div style="" class="formholder">
+    <input id="koll" class="form-control" style="width:250px" placeholder="@Resources.res.masterINTf1" />
+    <input id="diposit" class="form-control" style="width:250px" placeholder="@Resources.res.masterINTf2" />
+    <input id="pay" class="form-control" style="width:250px" placeholder="@Resources.res.masterINTf3" />
+    <div id="bankOK" class="btn btn-success">@Resources.res.OK</div>
+</div>
+
+
+<div class="" id="tableholder">
+
+</div>

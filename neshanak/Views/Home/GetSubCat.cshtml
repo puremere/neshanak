@@ -13,9 +13,9 @@
     <link href="~/Content/slick-theme.css" rel="stylesheet" />
 }
 @section scripts{
-
     <script src="~/Scripts/jquery.migrate.js"></script>
     <script src="~/Scripts/slick.js"></script>
+
     <script>
         $(document).ready(function () {
             $('.your-class').slick({
@@ -27,6 +27,7 @@
             });
         });
     </script>
+
     <script>
         $(".subcat").click(function () {
 
@@ -60,24 +61,78 @@
     </script>
 
 
+    @*<script src="~/Scripts/popper.js"></script>
+        <link href="~/Content/SLDstyle.css" rel="stylesheet" />
+        <script src="~/Scripts/SLDscript.js"></script>
+        <script>
+            window.player = new window.YT.Player(video, {
+                videoId: videoId,
+                playerVars: {
+                    autoplay: 1,
+                    modestbranding: 1,
+                    rel: 0
+                    // more parameters here
+                }
+            });
+        </script>*@
+
+
+    <link href="~/Content/slider.css" rel="stylesheet" />
+    <script src="~/Scripts/sliderscript.js"></script>
+    <script>
+            $('.bo-slider').boSlider({
+                slideShow: true,
+                interval: 8000
+            });
+    </script>
+
 }
 
-<div class="row" style="background-color:black">
-    <div id="slideHolder" style=" width:100%; height:auto; margin:auto;display:block">
-        <div class="your-class">
-            @foreach (var slid in Model.sld)
+
+
+
+
+@if (Model.sld != null)
+{
+    <ul class="bo-slider">
+        @foreach (var slid in Model.sld)
+        {
+            if (slid.type == "1")
             {
-                <div class="imageholder">
-                    <img src="@slid.image" />
-                </div>
+                <li data-url="@slid.image" data-type="image"></li>
             }
+            else
+            {
+                string videopath = "/video/" + @Path.GetFileNameWithoutExtension(slid.image) + ".mp4";
+                <li data-url="@videopath" data-type="video"></li>
+            }
+        }
 
-           
+
+    </ul>
+
+}
+@*@if (Model.sld != null)
+    {
+        <div class="row" style="background-color:black">
+            <div id="slideHolder" style=" width:100%; height:auto; margin:auto;display:block">
+                <div class="your-class">
+                    @foreach (var slid in Model.sld)
+                    {
+                        <div class="imageholder">
+                            <img src="@slid.image" />
+                        </div>
+                    }
 
 
+
+
+                </div>
+            </div>
         </div>
-    </div>
-</div>
+    }*@
+
+
 
 <!-- #endregion Jssor Slider End -->
 <div style="" class="subcatHolder" data-slide="1" data-speed="500">
@@ -88,7 +143,11 @@
             {
                 <div class="final catitem" id="@item.id-@item.catLevel">
                     <div>
-                        <img class="subcatimage" src="@item.img" /><p>@item.title</p>
+                        <div class="itemimageHolder">
+                            <img style="cursor:pointer; max-width:100%; max-height:100%;object-fit:scale-down" class="subcatimage" src="@item.img" />
+                        </div>
+
+                        <p>@item.title</p>
                     </div>
 
                 </div>
@@ -98,7 +157,11 @@
             {
                 <div class="subcat catitem" id="@item.id-@item.catLevel">
                     <div>
-                        <img class="subcatimage" src="@item.img" /><p>@item.title</p>
+                        <div class="itemimageHolder">
+                            <img style="max-width:100%; max-height:100%; object-fit:scale-down" class="subcatimage" src="@item.img" />
+                        </div>
+
+                        <p>@item.title</p>
                     </div>
                 </div>
 

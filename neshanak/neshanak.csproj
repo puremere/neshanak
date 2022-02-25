@@ -73,6 +73,17 @@
       <HintPath>..\packages\iTextSharp.5.5.13.2\lib\itextsharp.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Owin, Version=4.2.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.4.2.0\lib\net45\Microsoft.Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Owin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f0ebd12fd5e55cc5, processorArchitecture=MSIL">
+      <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="PagedList, Version=1.17.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
       <HintPath>..\packages\PagedList.1.17.0.0\lib\net40\PagedList.dll</HintPath>
     </Reference>
@@ -85,6 +96,9 @@
       <HintPath>..\packages\Stub.System.Data.SQLite.Core.NetFramework.1.0.113.3\lib\net45\System.Data.SQLite.dll</HintPath>
     </Reference>
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.7\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -135,9 +149,6 @@
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.4\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\packages\Newtonsoft.Json.11.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
-    </Reference>
     <Reference Include="WebGrease">
       <Private>True</Private>
       <HintPath>..\packages\WebGrease.1.6.0\lib\WebGrease.dll</HintPath>
@@ -185,6 +196,7 @@
     <Compile Include="AdminPanel\ViewModel\producDetailPageViewModel.cs" />
     <Compile Include="AdminPanel\ViewModel\productinfoviewdetail.cs" />
     <Compile Include="AdminPanel\ViewModel\ViewModelClass.cs" />
+    <Compile Include="apiViewModel\apiVM.cs" />
     <Compile Include="App_GlobalResources\res.de.designer.cs">
       <DependentUpon>res.de.resx</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -199,6 +211,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Classes\CaptchaHelper.cs" />
     <Compile Include="Classes\SessionAuthorizeAttribute .cs" />
     <Compile Include="Classes\SessionCheck.cs" />
@@ -207,6 +220,8 @@
     <Compile Include="Controllers\CaptchaValidationActionFilterAttribute.cs" />
     <Compile Include="Controllers\CustomerLoginController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\MasterController.cs" />
+    <Compile Include="Controllers\languageController.cs" />
     <Compile Include="Controllers\MainController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -222,6 +237,7 @@
     <Compile Include="ViewModelPost\addProductRespond.cs" />
     <Compile Include="ViewModelPost\buyRequest.cs" />
     <Compile Include="ViewModelPost\getMaindataViewModel.cs" />
+    <Compile Include="ViewModelPost\languateSlidVM.cs" />
     <Compile Include="ViewModelPost\ProductListFilterViewModel.cs" />
     <Compile Include="ViewModelPost\ProductListViewModel.cs" />
     <Compile Include="ViewModelPost\viewProductViewModel.cs" />
@@ -231,6 +247,7 @@
     <Compile Include="viewModel\adminMoneyVM.cs" />
     <Compile Include="viewModel\ArticleList.cs" />
     <Compile Include="viewModel\ArticleListOfMag.cs" />
+    <Compile Include="viewModel\bankInterestVM.cs" />
     <Compile Include="viewModel\BannerListAdmin.cs" />
     <Compile Include="viewModel\BaseViewModel.cs" />
     <Compile Include="viewModel\BzListVM.cs" />
@@ -238,8 +255,10 @@
     <Compile Include="viewModel\catDetailVM.cs" />
     <Compile Include="viewModel\confrimVM.cs" />
     <Compile Include="viewModel\CookieVM.cs" />
+    <Compile Include="viewModel\countryAll.cs" />
     <Compile Include="viewModel\createItem.cs" />
     <Compile Include="viewModel\editVM.cs" />
+    <Compile Include="viewModel\FAQVM.cs" />
     <Compile Include="viewModel\getItemDetail.cs" />
     <Compile Include="viewModel\getLandVM.cs" />
     <Compile Include="viewModel\getMainVM.cs" />
@@ -251,11 +270,16 @@
     <Compile Include="viewModel\languageVM.cs" />
     <Compile Include="viewModel\ListOfDeliveryTimeViewModel.cs" />
     <Compile Include="viewModel\main.cs" />
+    <Compile Include="viewModel\masterVM.cs" />
     <Compile Include="viewModel\newArcticelVM.cs" />
     <Compile Include="viewModel\orderProductListVM.cs" />
     <Compile Include="viewModel\pagesVM.cs" />
+    <Compile Include="viewModel\pageViewModel.cs" />
     <Compile Include="viewModel\PartnerOrders.cs" />
+    <Compile Include="viewModel\responsVM.cs" />
     <Compile Include="viewModel\searchResultVM.cs" />
+    <Compile Include="viewModel\teachingVM.cs" />
+    <Compile Include="viewModel\TutorialVM.cs" />
     <Compile Include="viewModel\userdata.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -395,11 +419,14 @@
     <Content Include="Content\indexStyle.css" />
     <Content Include="Content\magDetailStyle.css" />
     <Content Include="Content\main.css" />
+    <Content Include="Content\material-design-iconic-font.css" />
     <Content Include="Content\PagedList.css" />
     <Content Include="Content\resCarousel.css" />
     <Content Include="Content\root.css" />
+    <Content Include="Content\SLDstyle.css" />
     <Content Include="Content\slick-theme.css" />
     <Content Include="Content\slick.css" />
+    <Content Include="Content\slider.css" />
     <Content Include="Content\sliderStyle.css" />
     <Content Include="Content\subCatStyle.css" />
     <Content Include="Content\toastr.css" />
@@ -416,6 +443,7 @@
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="fonts\lg.svg" />
+    <Content Include="fonts\material-design-iconic-font\Material-Design-Iconic-Font.svg" />
     <Content Include="fonts\webfonts\fa-brands-400.svg" />
     <Content Include="fonts\webfonts\fa-duotone-900.svg" />
     <Content Include="fonts\webfonts\fa-light-300.svg" />
@@ -438,12 +466,17 @@
     <Content Include="Images\en.png" />
     <Content Include="Images\fa.png" />
     <Content Include="Images\final2.png" />
+    <Content Include="Images\forum.png" />
     <Content Include="Images\hero-area.jpg" />
     <Content Include="Images\doctors.png" />
+    <Content Include="Images\language.png" />
     <Content Include="Images\lawyers.png" />
+    <Content Include="Images\live.png" />
+    <Content Include="Images\master.png" />
     <Content Include="Images\pharmacy.png" />
     <Content Include="Images\restaurant.png" />
     <Content Include="Images\supermarket.png" />
+    <Content Include="Images\supermarketICON.png" />
     <Content Include="Images\translation.png" />
     <Content Include="Images\images.jpg" />
     <Content Include="Images\logo_text.png" />
@@ -616,6 +649,10 @@
     <Content Include="AdminPanel\Views\Shared\_UserProfile.cshtml" />
     <Content Include="AdminPanel\Views\Web.config" />
     <Content Include="AdminPanel\Views\_ViewStart.cshtml" />
+    <Content Include="fonts\material-design-iconic-font\Material-Design-Iconic-Font.eot" />
+    <Content Include="fonts\material-design-iconic-font\Material-Design-Iconic-Font.ttf" />
+    <Content Include="fonts\material-design-iconic-font\Material-Design-Iconic-Font.woff" />
+    <Content Include="fonts\material-design-iconic-font\Material-Design-Iconic-Font.woff2" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Content\easy-autocomplete.min.css" />
@@ -641,9 +678,12 @@
     <Content Include="Scripts\jssor.slider-28.0.0.min.js" />
     <Content Include="Scripts\main.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Scripts\popper.js" />
     <Content Include="Scripts\resCarousel.js" />
     <Content Include="Scripts\resCarousel.min.js" />
+    <Content Include="Scripts\SLDscript.js" />
     <Content Include="Scripts\slick.js" />
+    <Content Include="Scripts\sliderscript.js" />
     <Content Include="Scripts\tinymce\jquery.tinymce.min.js" />
     <Content Include="Scripts\tinymce\license.txt" />
     <Content Include="Scripts\tinymce\plugins\advlist\plugin.js" />
@@ -774,6 +814,7 @@
     <Content Include="video\sample.mp4" />
     <Content Include="video\Wildlife.wmv" />
     <Content Include="Views\map.jpg" />
+    <Content Include="Views\Shared\emailTemplate\inviteEmailTemplate.html" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -802,7 +843,6 @@
     <Content Include="Views\Home\forgetpass.cshtml" />
     <Content Include="Views\Home\login.cshtml" />
     <Content Include="Views\Home\Register.cshtml" />
-    <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Mag.cshtml" />
     <Content Include="Views\Home\magDetail.cshtml" />
     <Content Include="video\sample.flv" />
@@ -870,12 +910,37 @@
     <Content Include="Scripts\tinymce\skins\ui\oxide-dark\fonts\tinymce-mobile.woff" />
     <Content Include="Scripts\tinymce\skins\ui\oxide\fonts\tinymce-mobile.woff" />
     <Content Include="Views\Home\privacy.cshtml" />
+    <Content Include="Views\Admin\location.cshtml" />
+    <Content Include="Views\Home\citySection.cshtml" />
+    <Content Include="Views\Home\banner.cshtml" />
+    <Content Include="Views\Shared\_dataSectionOfSearch.cshtml" />
+    <Content Include="Views\Admin\productGroup.cshtml" />
+    <Content Include="Views\language\index.cshtml" />
+    <Content Include="Views\language\section.cshtml" />
+    <Content Include="Views\language\course.cshtml" />
+    <Content Include="Views\language\book.cshtml" />
+    <Content Include="Views\language\lession.cshtml" />
+    <Content Include="Views\language\vocab.cshtml" />
+    <Content Include="Views\Master\index.cshtml" />
+    <Content Include="Views\Admin\accordion.cshtml" />
+    <Content Include="Views\Master\FAQ.cshtml" />
+    <Content Include="Views\Master\Email.cshtml" />
+    <Content Include="Views\Master\bankInterest.cshtml" />
+    <Content Include="Views\Shared\_bankInterest.cshtml" />
+    <Content Include="Views\Master\masterInterest.cshtml" />
+    <Content Include="Views\Shared\_masterInterest.cshtml" />
+    <Content Include="Views\Home\forum.cshtml" />
+    <Content Include="Views\Admin\tutorial.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Home\live.cshtml" />
+    <Content Include="Views\Master\register.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="AdminPanel\images\scarfimages\" />
     <Folder Include="App_Data\" />
     <Folder Include="Images\icon\" />
     <Folder Include="Views\CustomerLogin\" />
+    <Folder Include="Views\DocFile\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

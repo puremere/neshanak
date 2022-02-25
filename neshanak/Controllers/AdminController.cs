@@ -37,9 +37,11 @@ using neshanak.viewModel;
 using neshanak.viewModel.comment;
 using System.Text.RegularExpressions;
 
+
 namespace neshanak.Controllers
 {
-    [SessionCheck]
+
+    [adminSessionCheck]
     public class AdminController : Controller
     {
 
@@ -49,7 +51,7 @@ namespace neshanak.Controllers
         static readonly string PasswordHash = "P@@Sw0rd";
         static readonly string SaltKey = "S@LT&KEY";
         static readonly string VIKey = "@1B2c3D4e5F6g7H8";
-        
+
         private void SetCookie(string mymodel, string name)
         {
 
@@ -419,6 +421,40 @@ namespace neshanak.Controllers
             };
             return View(model);
         }
+        public ActionResult location()
+        {
+            CookieVM cookiemodel = JsonConvert.DeserializeObject<CookieVM>(getCookie("token"));
+            cookiemodel.currentpage = "Menu";
+            cookiemodel.controller = "admin";
+            SetCookie(JsonConvert.SerializeObject(cookiemodel), "token");
+            // CatPageViewModel model = new CatPageViewModel();
+            string token = Session["LogedInUser2"] as string;
+            string device = RandomString(10);
+            string code = MD5Hash(device + "ncase8934f49909");
+            string result = "";
+            string json = "";
+            string lan = Session["lang"] as string;
+            using (WebClient client = new WebClient())
+            {
+
+                var collection = new NameValueCollection();
+                collection.Add("servername", servername);
+                collection.Add("device", device);
+                collection.Add("code", code);
+                collection.Add("token", token);
+                collection.Add("lan", lan);
+
+
+                byte[] response = client.UploadValues(server + "/Admin/getCountrylistAll.php", collection);
+
+                result = System.Text.Encoding.UTF8.GetString(response);
+            }
+
+
+
+            var log = JsonConvert.DeserializeObject<countryAll>(result);
+            return View(log);
+        }
         public ActionResult Menu()
         {
             CookieVM cookiemodel = JsonConvert.DeserializeObject<CookieVM>(getCookie("token"));
@@ -448,11 +484,47 @@ namespace neshanak.Controllers
                 result = System.Text.Encoding.UTF8.GetString(response);
             }
 
-          
+
 
             var log = JsonConvert.DeserializeObject<catAll>(result);
             return View(log);
         }
+
+        public ActionResult tutorial()
+        {
+            CookieVM cookiemodel = JsonConvert.DeserializeObject<CookieVM>(getCookie("token"));
+            cookiemodel.currentpage = "tutorial";
+            cookiemodel.controller = "admin";
+            SetCookie(JsonConvert.SerializeObject(cookiemodel), "token");
+            // CatPageViewModel model = new CatPageViewModel();
+            string token = Session["LogedInUser2"] as string;
+            string device = RandomString(10);
+            string code = MD5Hash(device + "ncase8934f49909");
+            string result = "";
+            string json = "";
+            string lan = Session["lang"] as string;
+            using (WebClient client = new WebClient())
+            {
+
+                var collection = new NameValueCollection();
+                collection.Add("servername", servername);
+                collection.Add("device", device);
+                collection.Add("code", code);
+                collection.Add("token", token);
+                collection.Add("lan", lan);
+
+
+                byte[] response = client.UploadValues(server + "/Admin/getTutorialAll.php", collection);
+
+                result = System.Text.Encoding.UTF8.GetString(response);
+            }
+
+
+
+            var log = JsonConvert.DeserializeObject<TutorialVM>(result);
+            return View(log);
+        }
+
         public ActionResult getfilters(string catID)
         {
 
@@ -1422,6 +1494,35 @@ namespace neshanak.Controllers
 
 
         }
+        public void ChangeProductRecommended(string id, string value)
+        {
+            if (true)
+            {
+                string device = RandomString(10);
+                string code = MD5Hash(device + "ncase8934f49909");
+                string result = "";
+
+
+                using (WebClient client = new WebClient())
+                {
+                    var collection = new NameValueCollection();
+                    collection.Add("device", device);
+                    collection.Add("code", code);
+                    collection.Add("id", id);
+                    collection.Add("value", value);
+                    collection.Add("servername", servername);
+
+                    byte[] response =
+                    client.UploadValues(server + "/Admin/ChangeProductRecommended.php?", collection);
+
+                    result = System.Text.Encoding.UTF8.GetString(response);
+                }
+            }
+
+
+
+        }
+        
         public ActionResult setnewfilter(string filterid, string detailtitle)
         {
 
@@ -1593,8 +1694,98 @@ namespace neshanak.Controllers
 
 
         //section  menu-------------
+        public ActionResult productGroup() {
+            return View();
+        }
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        [CaptchaValidationActionFilter("CaptchaCode", "RegistrationCaptcha", "Incorrect CAPTCHA Code!")]
+        public ActionResult setNewProductGroup(string catidOrLink, string locationID, string type)
+        {
+            if (!ModelState.IsValid)
+            {
+                // TODO: Captcha validation failed, show error message
+                return RedirectToAction("productGroup", "Admin");
+            }
+            else
+            {
 
-        public ActionResult editcat (string catID, string title, string image)
+                string device = RandomString(10);
+                string code = MD5Hash(device + "ncase8934f49909");
+                string result = "";
+                string token = Session["LogedInUser2"] as string;
+                using (WebClient client = new WebClient())
+                {
+
+                    var collection = new NameValueCollection();
+                    collection.Add("device", device);
+                    collection.Add("code", code);
+                    collection.Add("catidOrLink", catidOrLink);
+                    collection.Add("locationID", locationID);
+                    collection.Add("type", type);
+
+
+                    collection.Add("servername", servername);
+
+
+                    byte[] response = client.UploadValues(server + "/Admin/setNewDiscount.php", collection);
+
+                    result = System.Text.Encoding.UTF8.GetString(response);
+                }
+
+                // Reset the captcha if your app's workflow continues with the same view
+                MvcCaptcha.ResetCaptcha("ExampleCaptcha");
+                return RedirectToAction("productGroup", "Admin");
+
+            }
+        }
+
+
+
+
+        public ActionResult editCountry(string catID, string title, string image)
+        {
+            string fname = image.Trim(',').Split(',').ToList().First();
+            string finalimage = Path.GetFileName(fname);
+            string token = Session["LogedInUser2"] as string;
+            string device = RandomString(10);
+            string code = MD5Hash(device + "ncase8934f49909");
+            string result = "";
+            string lan = Session["lang"] as string;
+
+            using (WebClient client = new WebClient())
+            {
+
+                var collection = new NameValueCollection();
+                collection.Add("device", device);
+                collection.Add("code", code);
+                collection.Add("title", title);
+                collection.Add("token", token);
+                collection.Add("catID", catID);
+                collection.Add("lan", lan);
+                collection.Add("image", finalimage);
+
+                byte[] response = client.UploadValues(server + "/Admin/editCountry.php", collection);
+
+                result = System.Text.Encoding.UTF8.GetString(response);
+            }
+
+
+            if (result.Contains("1"))
+            {
+                return Content("1");
+            }
+
+            else if (result.Contains("0"))
+            {
+                return Content("0");
+            }
+            else
+            {
+                return Content("3");
+            }
+        }
+        public ActionResult editcat(string catID, string title, string image)
         {
             string fname = image.Trim(',').Split(',').ToList().First();
             string finalimage = Path.GetFileName(fname);
@@ -1636,7 +1827,51 @@ namespace neshanak.Controllers
                 return Content("3");
             }
         }
-        public ActionResult setnewcat(string catID , string title, string image)
+        public ActionResult editTutorial(string catID, string title, string image)
+        {
+            string fname = image.Trim(',').Split(',').ToList().First();
+            string finalimage = Path.GetFileName(fname);
+            string token = Session["LogedInUser2"] as string;
+            string device = RandomString(10);
+            string code = MD5Hash(device + "ncase8934f49909");
+            string result = "";
+            string lan = Session["lang"] as string;
+
+            using (WebClient client = new WebClient())
+            {
+
+                var collection = new NameValueCollection();
+                collection.Add("device", device);
+                collection.Add("code", code);
+                collection.Add("title", title);
+                collection.Add("token", token);
+                collection.Add("catID", catID);
+                collection.Add("lan", lan);
+                collection.Add("image", finalimage);
+
+                byte[] response = client.UploadValues(server + "/Admin/editTut.php", collection);
+
+                result = System.Text.Encoding.UTF8.GetString(response);
+            }
+
+
+            if (result.Contains("1"))
+            {
+                return Content("1");
+            }
+
+            else if (result.Contains("0"))
+            {
+                return Content("0");
+            }
+            else
+            {
+                return Content("3");
+            }
+        }
+        
+
+        public ActionResult setnewCountry(string catID, string title, string image)
         {
 
 
@@ -1658,7 +1893,87 @@ namespace neshanak.Controllers
                 collection.Add("token", token);
                 collection.Add("catID", catID);
                 collection.Add("lan", lan);
-                collection.Add("image", finalimage);
+                collection.Add("image", finalimage.Trim(','));
+
+                byte[] response = client.UploadValues(server + "/Admin/setnewCountry.php", collection);
+
+                result = System.Text.Encoding.UTF8.GetString(response);
+            }
+
+
+            if (result.Contains("1"))
+            {
+                return Content("1");
+            }
+
+            else if (result.Contains("0"))
+            {
+                return Content("0");
+            }
+            else
+            {
+                return Content("3");
+            }
+        }
+        public ActionResult delnewCountry(string catid)
+        {
+
+            string device = RandomString(10);
+            string code = MD5Hash(device + "ncase8934f49909");
+            string result = "";
+            string lan = Session["lang"] as string;
+            using (WebClient client = new WebClient())
+            {
+
+                var collection = new NameValueCollection();
+                collection.Add("device", device);
+                collection.Add("code", code);
+                collection.Add("catID", catid);
+                collection.Add("lan", lan);
+
+                byte[] response = client.UploadValues(server + "/Admin/deletefromCountry.php", collection);
+
+                result = System.Text.Encoding.UTF8.GetString(response);
+            }
+
+            ResponseFromServer Serverresponse = JsonConvert.DeserializeObject<ResponseFromServer>(result);
+            if (Serverresponse.status == 200)
+            {
+
+                string pathString = "~/images";
+                string savedFileName = Path.Combine(Server.MapPath(pathString), Serverresponse.message);
+                System.IO.File.Delete(savedFileName);
+                return Content("1");
+            }
+            else
+            {
+                return Content(Serverresponse.message);
+            }
+
+        }
+        public ActionResult setnewcat(string catID, string title, string image)
+        {
+
+
+            string fname = image.Trim(',').Split(',').ToList().First();
+            string finalimage = Path.GetFileName(image);
+            string token = Session["LogedInUser2"] as string;
+            string device = RandomString(10);
+            string code = MD5Hash(device + "ncase8934f49909");
+            string result = "";
+            string lan = Session["lang"] as string;
+
+            using (WebClient client = new WebClient())
+            {
+
+                var collection = new NameValueCollection();
+                collection.Add("device", device);
+                collection.Add("code", code);
+                collection.Add("title", title);
+                collection.Add("token", token);
+                collection.Add("catID", catID);
+                collection.Add("lan", lan);
+                collection.Add("image", finalimage.Trim(','));
 
                 byte[] response = client.UploadValues(server + "/Admin/setnewcat.php", collection);
 
@@ -1680,6 +1995,52 @@ namespace neshanak.Controllers
                 return Content("3");
             }
         }
+        public ActionResult setnewTut(string catID, string title, string image)
+        {
+
+
+            string fname = image.Trim(',').Split(',').ToList().First();
+            string finalimage = Path.GetFileName(image);
+            string token = Session["LogedInUser2"] as string;
+            string device = RandomString(10);
+            string code = MD5Hash(device + "ncase8934f49909");
+            string result = "";
+            string lan = Session["lang"] as string;
+
+            using (WebClient client = new WebClient())
+            {
+
+                var collection = new NameValueCollection();
+                collection.Add("device", device);
+                collection.Add("code", code);
+                collection.Add("title", title);
+                collection.Add("token", token);
+                collection.Add("catID", catID);
+                collection.Add("lan", lan);
+                collection.Add("image", finalimage.Trim(','));
+
+                byte[] response = client.UploadValues(server + "/Admin/setnewTut.php", collection);
+
+                result = System.Text.Encoding.UTF8.GetString(response);
+            }
+
+
+            if (result.Contains("1"))
+            {
+                return Content("1");
+            }
+
+            else if (result.Contains("0"))
+            {
+                return Content("0");
+            }
+            else
+            {
+                return Content("3");
+            }
+        }
+
+        
         public ActionResult delnewcat(string catid)
         {
 
@@ -1717,7 +2078,8 @@ namespace neshanak.Controllers
 
         }
 
-        public ActionResult getSlide(string catid) {
+        public ActionResult delnewTut(string catid)
+        {
 
             string device = RandomString(10);
             string code = MD5Hash(device + "ncase8934f49909");
@@ -1731,12 +2093,30 @@ namespace neshanak.Controllers
                 collection.Add("code", code);
                 collection.Add("catID", catid);
                 collection.Add("lan", lan);
-                byte[] response = client.UploadValues(server + "/Admin/getSlide.php", collection);
+
+                byte[] response = client.UploadValues(server + "/Admin/deletefromTut.php", collection);
+
                 result = System.Text.Encoding.UTF8.GetString(response);
             }
 
+            ResponseFromServer Serverresponse = JsonConvert.DeserializeObject<ResponseFromServer>(result);
+            if (Serverresponse.status == 200)
+            {
 
-            return Content(result);
+                string pathString = "~/images";
+                if (Serverresponse.message != null)
+                {
+                    string savedFileName = Path.Combine(Server.MapPath(pathString), Serverresponse.message);
+                    System.IO.File.Delete(savedFileName);
+                }
+                
+                return Content("1");
+            }
+            else
+            {
+                return Content(Serverresponse.message);
+            }
+
         }
         public void deletImage(string name)
         {
@@ -1745,6 +2125,28 @@ namespace neshanak.Controllers
             string savedFileName = Path.Combine(Server.MapPath(pathString), name);
             System.IO.File.Delete(savedFileName);
 
+        }
+
+        public ActionResult getCountryDetail(string catid)
+        {
+            string device = RandomString(10);
+            string code = MD5Hash(device + "ncase8934f49909");
+            string result = "";
+            string lan = Session["lang"] as string;
+            using (WebClient client = new WebClient())
+            {
+
+                var collection = new NameValueCollection();
+                collection.Add("device", device);
+                collection.Add("code", code);
+                collection.Add("catID", catid);
+                collection.Add("lan", lan);
+                byte[] response = client.UploadValues(server + "/Admin/getcountryItem.php", collection);
+                result = System.Text.Encoding.UTF8.GetString(response);
+            }
+
+
+            return Content(result);
         }
         public ActionResult getCatDetail(string catid)
         {
@@ -1764,9 +2166,31 @@ namespace neshanak.Controllers
                 result = System.Text.Encoding.UTF8.GetString(response);
             }
 
-          
+
             return Content(result);
         }
+        public ActionResult getTutDetail(string catid)
+        {
+            string device = RandomString(10);
+            string code = MD5Hash(device + "ncase8934f49909");
+            string result = "";
+            string lan = Session["lang"] as string;
+            using (WebClient client = new WebClient())
+            {
+
+                var collection = new NameValueCollection();
+                collection.Add("device", device);
+                collection.Add("code", code);
+                collection.Add("catID", catid);
+                collection.Add("lan", lan);
+                byte[] response = client.UploadValues(server + "/Admin/getTutItem.php", collection);
+                result = System.Text.Encoding.UTF8.GetString(response);
+            }
+
+
+            return Content(result);
+        }
+        
         public ActionResult changecatname(string ID, string newname, string level)
         {
 
@@ -2870,8 +3294,8 @@ namespace neshanak.Controllers
             SetCookie(JsonConvert.SerializeObject(cookiemodel), "token");
             Session["imageListAdd"] = "";
             Session["imageListEdit"] = "";
-            string device = RandomString(10);
-            string code = MD5Hash(device + "ncase8934f49909");
+            string device =  RandomString(10);
+            string code =  MD5Hash(device + "ncase8934f49909");
             string result = "";
             string lang = Session["lang"] as string;
             using (WebClient client = new WebClient())
@@ -2946,13 +3370,13 @@ namespace neshanak.Controllers
             {
                 ss = ss.Substring(0, ss.Length - 1);
                 List<string> imageList = ss.Split(',').ToList();
-                
+
                 if (imageList != null)
                 {
                     imagename = imageList[0];
                 }
             }
-            
+
             string device = RandomString(10);
             string code = MD5Hash(device + "ncase8934f49909");
             string result = "";
@@ -3058,7 +3482,7 @@ namespace neshanak.Controllers
         }
 
 
-       
+
         public ActionResult updateCArticle(string CIDupdate, string Cimageupdate, string Ctitleupdate)
         {
             string imagename = "";
@@ -3173,7 +3597,7 @@ namespace neshanak.Controllers
                     string savedFileName = Path.Combine(Server.MapPath(pathString), Path.GetFileName(result));
                     System.IO.File.Delete(savedFileName);
                 }
-               
+
 
                 //string imagename = result;
                 //string savedFileName = Path.Combine(Server.MapPath(pathString), imagename);
@@ -3358,7 +3782,7 @@ namespace neshanak.Controllers
         {
             Response.Cookies["lastpage"].Value = "1";
         }
-        public ActionResult GetTheListOfItems(string page, string value, string query, string partner)
+        public ActionResult GetTheListOfItems(string page, string value, string query, string partner,string Countryname)
         {
 
 
@@ -3388,6 +3812,8 @@ namespace neshanak.Controllers
                 collection.Add("query", query);
                 collection.Add("partner", partner);
                 collection.Add("servername", servername);
+                collection.Add("Countryname", Countryname);
+                
                 collection.Add("token", token);
                 collection.Add("lan", lang);
 
@@ -3402,15 +3828,66 @@ namespace neshanak.Controllers
             oderdetaillist log = JsonConvert.DeserializeObject<oderdetaillist>(result);
 
             List<orderdetail> data = new List<orderdetail>();
-
+            log.query = query;
+            log.location = Countryname;
             return PartialView("/Views/Shared/AdminShared/_ProductList.cshtml", log);
 
 
 
 
         }
-       
 
+        public ActionResult setvideo(string val, string image)
+        {
+            string device = RandomString(10);
+            string code = MD5Hash(device + "ncase8934f49909");
+            string token = Session["LogedInUser2"] as string;
+            string newjson = "";
+
+            string lang = Session["lang"] as string;
+            using (WebClient client = new WebClient())
+            {
+
+                var collection = new NameValueCollection();
+                collection.Add("device", device);
+                collection.Add("code", code);
+                collection.Add("token", token);
+                collection.Add("ID", val);
+                collection.Add("video", image.Trim(','));
+
+                byte[] response = client.UploadValues(server + "/Admin/setBusVideo.php", collection);
+
+                newjson = System.Text.Encoding.UTF8.GetString(response);
+            }
+            return Content("200");
+        }
+        public void RemoveVideo(string image,string val)
+        {
+            string path = "~/images/";
+            string name = Path.GetFileName(image);
+            string filename = Path.Combine(Server.MapPath(path), name);
+            System.IO.File.Delete(filename);
+            string device = RandomString(10);
+            string code = MD5Hash(device + "ncase8934f49909");
+            string token = Session["LogedInUser2"] as string;
+            string newjson = "";
+
+            string lang = Session["lang"] as string;
+            using (WebClient client = new WebClient())
+            {
+
+                var collection = new NameValueCollection();
+                collection.Add("device", device);
+                collection.Add("code", code);
+                collection.Add("token", token);
+                collection.Add("ID", val);
+                collection.Add("video", "");
+
+                byte[] response = client.UploadValues(server + "/Admin/setBusVideo.php", collection);
+
+                newjson = System.Text.Encoding.UTF8.GetString(response);
+            }
+        }
         public ActionResult product(int? page, int? MSG)
         {
 
@@ -3443,7 +3920,7 @@ namespace neshanak.Controllers
                         Session["imageList"] = "";
                     }
                 }
-                
+
 
 
 
@@ -3805,7 +4282,8 @@ namespace neshanak.Controllers
 
 
 
-
+        
+     
         [HttpPost]
         public ActionResult GetImage(string filename, HttpPostedFileBase blob)
         {
@@ -3900,8 +4378,8 @@ namespace neshanak.Controllers
             }
 
 
-                //ss = ss ;
-                ss = ss.Substring(0, ss.Length - 1);
+            //ss = ss ;
+            ss = ss.Substring(0, ss.Length - 1);
 
             model.data = ss;
 
@@ -3921,13 +4399,13 @@ namespace neshanak.Controllers
             else if (filename == "contactus")
             {
                 ss = Request.Cookies["imageContactUs"].Value;
-              
+
                 model.type = "contactus";
             }
             else if (filename == "privacy")
             {
                 ss = Request.Cookies["imageprivacy"].Value;
-                
+
             }
 
             ss = ss.Substring(0, ss.Length - 1);
@@ -3983,7 +4461,7 @@ namespace neshanak.Controllers
             }
             else
             {
-                
+
             }
 
             return PartialView("/Views/Shared/AdminShared/_imageForMCEPages.cshtml", model);
@@ -4172,14 +4650,14 @@ namespace neshanak.Controllers
                 result = System.Text.Encoding.UTF8.GetString(response);
             }
 
-            return Content("1");
+           // return Content("1");
             imagelistViwModel log = JsonConvert.DeserializeObject<imagelistViwModel>(result);
 
             if (log.List != null)
             {
                 foreach (var item in log.List)
                 {
-                    string pathString = "~/images/panelimages";
+                    string pathString = "~/images/";
                     string savedFileName = Path.Combine(Server.MapPath(pathString), Path.GetFileName(item.title));
                     System.IO.File.Delete(savedFileName);
                 }
@@ -4192,14 +4670,13 @@ namespace neshanak.Controllers
 
 
         }
-
         public ActionResult Edit(int id)
         {
 
             CookieVM cookimodel = JsonConvert.DeserializeObject<CookieVM>(getCookie("token"));
-            cookimodel.currentpage = "Edit/"+id;
+            cookimodel.currentpage = "Edit/" + id;
             cookimodel.controller = "admin";
-            string device = RandomString(10);
+            string device =  RandomString(10);
             string code = MD5Hash(device + "ncase8934f49909");
             string result = "";
             string lang = Session["lang"] as string;
@@ -4217,14 +4694,12 @@ namespace neshanak.Controllers
             }
             viewModel.itemDetailVM model = JsonConvert.DeserializeObject<viewModel.itemDetailVM>(result);
 
-          
-            cookimodel.images += model.img;
+
+            cookimodel.images = model.img;
             SetCookie(JsonConvert.SerializeObject(cookimodel), "token");
 
             return View(model);
         }
-
-
         [HttpPost]
         public async Task<ActionResult> Edit(itemDetailVM model)
         {
@@ -4232,16 +4707,20 @@ namespace neshanak.Controllers
             string code = MD5Hash(device + "ncase8934f49909");
             CookieVM cookie = JsonConvert.DeserializeObject<CookieVM>(getCookie("token"));
             string lang = Session["lang"] as string;
+            model.desc = model.desc.Replace("\r\n", " ");
             model.code = code;
             model.device = device;
             model.lan = lang;
-            model.img = model.img;
+            model.img = cookie.images;
             string searchResultPayload = JsonConvert.SerializeObject(model);
             webService wb = new webService();
             string resu = await wb.doPostData(server + "/additem.php", searchResultPayload);
             countryCityCatVM viewModel = JsonConvert.DeserializeObject<countryCityCatVM>(resu);
-            return RedirectToAction("edit", "admin",new { id = model.id});
-            
+
+            cookie.images = "";
+            SetCookie(JsonConvert.SerializeObject(cookie), "token");
+            return RedirectToAction("product", "admin");
+
 
         }
         public ActionResult Slider(string message)
@@ -4285,8 +4764,6 @@ namespace neshanak.Controllers
 
             return View(mylist);
         }
-       
-      
         public ActionResult myProfile(int? num)
         {
 
@@ -4470,7 +4947,7 @@ namespace neshanak.Controllers
         public ActionResult editbanner(string content, string type, string image, string title)
         {
 
-            string pathString = "~/images/panelimages";
+            string pathString = "~/images";
             if (!Directory.Exists(Server.MapPath(pathString)))
             {
                 DirectoryInfo di = Directory.CreateDirectory(Server.MapPath(pathString));
@@ -4548,18 +5025,42 @@ namespace neshanak.Controllers
                 collection.Add("lan", lan);
 
 
-                byte[] response = client.UploadValues(server + "/Admin/getcatlistAll.php", collection);
+                byte[] response = client.UploadValues(server + "/Admin/getSlideRequest.php", collection);
 
                 result = System.Text.Encoding.UTF8.GetString(response);
             }
 
 
 
-            var log = JsonConvert.DeserializeObject<catAll>(result);
+            var log = JsonConvert.DeserializeObject<slideRequst>(result);
             return View(log);
         }
+        public ActionResult getSlide(string catid, string locationID, string type,string page)
+        {
 
-        public ActionResult addSlide(string catid, string image)
+            string device = RandomString(10);
+            string code = MD5Hash(device + "ncase8934f49909");
+            string result = "";
+            string lan = Session["lang"] as string;
+            using (WebClient client = new WebClient())
+            {
+
+                var collection = new NameValueCollection();
+                collection.Add("device", device);
+                collection.Add("code", code);
+                collection.Add("catID", catid);
+                collection.Add("locationID", locationID);
+                collection.Add("type", type);
+                collection.Add("lan", lan);
+                collection.Add("page", page);
+                byte[] response = client.UploadValues(server + "/Admin/getSlide.php", collection);
+                result = System.Text.Encoding.UTF8.GetString(response);
+            }
+
+
+            return Content(result);
+        }
+        public ActionResult addSlide(string catid, string image,string locationID, string type,string page)
         {
             string device = RandomString(10);
             string code = MD5Hash(device + "ncase8934f49909");
@@ -4572,8 +5073,11 @@ namespace neshanak.Controllers
                 collection.Add("device", device);
                 collection.Add("code", code);
                 collection.Add("catID", catid);
+                collection.Add("type", type);
+                collection.Add("locationID", locationID);
                 collection.Add("image", image.Trim(','));
                 collection.Add("lan", lan);
+                collection.Add("page", page);
                 byte[] response = client.UploadValues(server + "/Admin/addSlide.php", collection);
                 result = System.Text.Encoding.UTF8.GetString(response);
             }
@@ -4581,54 +5085,6 @@ namespace neshanak.Controllers
 
             return Content(result);
         }
-
-        [HttpPost]
-        public ActionResult editslide(string content, string type, string image, string title)
-        {
-
-            string pathString = "~/images/panelimages";
-            if (!Directory.Exists(Server.MapPath(pathString)))
-            {
-                DirectoryInfo di = Directory.CreateDirectory(Server.MapPath(pathString));
-            }
-            string imagename = "";
-            for (int i = 0; i < Request.Files.Count; i++)
-            {
-
-                HttpPostedFileBase hpf = Request.Files[i];
-
-                if (hpf.ContentLength == 0)
-                    continue;
-                if (!image.Contains(hpf.FileName))
-                    continue;
-                imagename = RandomString(7) + Path.GetExtension(hpf.FileName);
-                string savedFileName = Path.Combine(Server.MapPath(pathString), imagename);
-                hpf.SaveAs(savedFileName);
-                imageUrl(savedFileName, "slider");
-            }
-            string device = RandomString(10);
-            string code = MD5Hash(device + "ncase8934f49909");
-            string result = "";
-            using (WebClient client = new WebClient())
-            {
-
-                var collection = new NameValueCollection();
-                collection.Add("servername", servername);
-                collection.Add("device", device);
-                collection.Add("code", code);
-                collection.Add("imagename", imagename);
-                collection.Add("content", content);
-                collection.Add("type", type);
-                collection.Add("title", title);
-
-                byte[] response = client.UploadValues(server + "/Admin/setSlideDetail.php", collection);
-
-                result = System.Text.Encoding.UTF8.GetString(response);
-            }
-            return RedirectToAction("slide");
-        }
-       
-
         public void changeCommnetActive(string id, string value)
         {
 
@@ -4706,8 +5162,6 @@ namespace neshanak.Controllers
             }
 
         }
-
-
         public ActionResult Discount()
         {
 
@@ -4882,16 +5336,15 @@ namespace neshanak.Controllers
             pagesVM model = JsonConvert.DeserializeObject<pagesVM>(result);
             return View(model);
         }
-       
         public ActionResult updatePages(viewModel.updatePagesVM model)
         {
-           
+
             string device = RandomString(10);
             string code = MD5Hash(device + "ncase8934f49909");
             string result = "";
 
 
-            string newContent = Regex.Replace(model.content, @">\s*<", "><", RegexOptions.Multiline).Replace("\"","\\\"");
+            string newContent = Regex.Replace(model.content, @">\s*<", "><", RegexOptions.Multiline).Replace("\"", "\\\"");
             string lang = Session["lang"] as string;
             using (WebClient client = new WebClient())
             {
@@ -5031,16 +5484,11 @@ namespace neshanak.Controllers
 
 
         }
-
-
         
-       
-
         protected void GenerateInvoicePDF(object sender, EventArgs e)
         {
 
         }
-
         public string bringPersionName(string srt)
         {
             string value = "";
@@ -5081,9 +5529,6 @@ namespace neshanak.Controllers
             }
             return value;
         }
-
-
-
         public ActionResult portfolio()
         {
 
@@ -5158,7 +5603,6 @@ namespace neshanak.Controllers
             }
             return result;
         }
-
         public ActionResult updatePortfolio(string CIDupdate, string Cimageupdate, string Ctitleupdate, string Cdescupdate, string CAddressupdate)
         {
 
@@ -5246,6 +5690,159 @@ namespace neshanak.Controllers
 
         }
 
+
+        public ActionResult accordion()
+        {
+            CookieVM cookiemodel = JsonConvert.DeserializeObject<CookieVM>(getCookie("token"));
+            cookiemodel.currentpage = "accordion";
+            cookiemodel.controller = "admin";
+            SetCookie(JsonConvert.SerializeObject(cookiemodel), "token");
+
+            string device = RandomString(10);
+            string code = MD5Hash(device + "ncase8934f49909");
+            string result = "";
+            string lang = Session["lang"] as string;
+            using (WebClient client = new WebClient())
+            {
+
+                var collection = new NameValueCollection();
+                collection.Add("device", device);
+                collection.Add("code", code);
+                collection.Add("servername", servername);
+                collection.Add("lan", lang);
+                byte[] response = client.UploadValues(server + "/Admin/getAccordion.php", collection);
+
+                result = System.Text.Encoding.UTF8.GetString(response);
+            }
+            
+            pagesVM model = JsonConvert.DeserializeObject<pagesVM>(result);
+            foreach(var item in model.items)
+            {
+                item.title = item.title.Replace("\"", "");
+            }
+            return View(model);
+        }
+        public ActionResult addNewAccordion(viewModel.updatePagesVM model)
+        {
+
+            string device = RandomString(10);
+            string code = MD5Hash(device + "ncase8934f49909");
+            string result = "";
+            string lang = Session["lang"] as string;
+
+            string newContent = Regex.Replace(model.content, @">\s*<", "><", RegexOptions.Multiline);
+            newContent = newContent.Replace("\\", "").Replace("&nbsp;", "");
+            newContent = model.content.Replace("\"", "*");
+            languageVM contentvm = new languageVM();
+            languageVM namevm = new languageVM();
+
+            if (!String.IsNullOrEmpty(model.newName))
+            {
+                model.name = model.newName;
+            }
+            if (lang == "en")
+            {
+                contentvm.en = newContent;
+                contentvm.fa = "";
+                contentvm.de = "";
+                namevm.en = model.name;
+                namevm.fa = "";
+                namevm.de = "";
+
+            }
+            else if (lang == "fa")
+            {
+                contentvm.fa = newContent;
+                contentvm.en = "";
+                contentvm.de = "";
+                namevm.fa = model.name;
+                namevm.en = "";
+                namevm.de = "";
+
+            }
+            else
+            {
+                contentvm.fa ="" ;
+                contentvm.en = "";
+                contentvm.de = newContent;
+                namevm.de = model.name;
+                namevm.en = "";
+                namevm.fa = "";
+            }
+            string finalcontent = JsonConvert.SerializeObject(contentvm);
+            string finalname = JsonConvert.SerializeObject(namevm);
+            using (WebClient client = new WebClient())
+            {
+
+                var collection = new NameValueCollection();
+                collection.Add("servername", servername);
+                collection.Add("device", device);
+                collection.Add("code", code);
+                collection.Add("type", model.type);
+                collection.Add("ItemID", model.dropdown);
+                if (model.update == "1")
+                {
+                    collection.Add("content", newContent);
+                    collection.Add("name", model.name);
+                }
+                else
+                {
+                    collection.Add("content", finalcontent);
+                    collection.Add("name", finalname);
+                }
+
+                
+                collection.Add("lan", lang);
+
+                byte[] response = client.UploadValues(server + "/Admin/addNewAccordion.php", collection);
+
+                result = System.Text.Encoding.UTF8.GetString(response);
+            }
+            Response.Cookies["IMG"].Value = "";
+            return RedirectToAction("accordion");
+        }
+        public ActionResult getAccordionDetail(string type, string ID)
+        {
+            string device = RandomString(10);
+            string code = MD5Hash(device + "ncase8934f49909");
+            string result = "";
+            string lang = Session["lang"] as string;
+            using (WebClient client = new WebClient())
+            {
+
+                var collection = new NameValueCollection();
+                collection.Add("device", device);
+                collection.Add("code", code);
+                collection.Add("servername", servername);
+                collection.Add("lan", lang);
+                collection.Add("ID", ID);
+                byte[] response = client.UploadValues(server+ "/Admin/getAccordionList.php", collection);
+
+                result = System.Text.Encoding.UTF8.GetString(response);
+            }
+            pagesVM model = JsonConvert.DeserializeObject<pagesVM>(result);
+            string content = model.items.First().content.Replace("\"", "").Replace("*", "\"").Replace("\\r", "").Replace("\\n", "");
+            return Content(content);
+        }
+        public void delAccordionDetail(string type, string ID)
+        {
+            string device = RandomString(10);
+            string code = MD5Hash(device + "ncase8934f49909");
+            string result = "";
+            string lang = Session["lang"] as string;
+            using (WebClient client = new WebClient())
+            {
+
+                var collection = new NameValueCollection();
+                collection.Add("device", device);
+                collection.Add("code", code);
+                collection.Add("servername", servername);
+                collection.Add("ID", ID);
+                byte[] response = client.UploadValues(server + "/Admin/delAccordionItem.php", collection);
+
+                result = System.Text.Encoding.UTF8.GetString(response);
+            }
+        }
 
         public void imageUrl(string filename, string type)
         {

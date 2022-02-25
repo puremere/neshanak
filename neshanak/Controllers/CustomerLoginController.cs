@@ -14,7 +14,7 @@ using System.Configuration;
 using BotDetect.Web.Mvc;
 using System.IO;
 using System.Web.Routing;
-
+using System.Net.Mail;
 
 namespace neshanak.Controllers
 {
@@ -122,7 +122,7 @@ namespace neshanak.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [CaptchaValidationActionFilter("CaptchaCode", "RegistrationCaptcha", "Incorrect CAPTCHA Code!")]
-        public ActionResult CustomerVerification(string registeremail, string email, string registerpassword, string CaptchaCode, string registerMoaref)
+        public ActionResult CustomerVerification(string registeremail, string registerPhone,string registerName, string registerpassword, string CaptchaCode, string registerMoaref)
         {
             CookieVM cookieModel = JsonConvert.DeserializeObject<CookieVM>(getCookie("token"));
 
@@ -152,8 +152,9 @@ namespace neshanak.Controllers
                 var collection = new NameValueCollection();
                 collection.Add("device", device);
                 collection.Add("code", code);
-                collection.Add("user", registeremail);
+                collection.Add("email", registeremail);
                 collection.Add("password", registerpassword);
+                collection.Add("name", registerName);
                 collection.Add("moaref", registerMoaref);
                 byte[] response = client.UploadValues(server + "/doSignUp.php", collection);
 
@@ -290,7 +291,7 @@ namespace neshanak.Controllers
             {
                 
 
-                Session["LogedInUser"] = log;
+                Session["LogedInUser"] = log.email;
                 Session["token"] = log.token;
 
 
@@ -380,7 +381,7 @@ namespace neshanak.Controllers
             else
             {
 
-                Session["LogedInUser"] = log;
+                Session["LogedInUser"] = log.email;
                 //  Session["UserLogedIn"] = log;
                 Session["token"] = log.token;
                 return RedirectToAction("Index", "Home");
@@ -528,8 +529,43 @@ namespace neshanak.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-       
 
+        public ActionResult sendEmail( string verifCode, string emailto)
+
+        {
+            var senderEmail = new MailAddress("info@neschanak.com", "neschanak");
+            var receiverEmail = new MailAddress(emailto, "Receiver");
+            var password = "A0@9yi1d";
+            var sub = "کد تایید";
+            string body = string.Empty;
+            using (StreamReader reader = new StreamReader(Server.MapPath("~/Views/Shared/emailTemplate/inviteEmailTemplate.html")))
+            {
+                body = reader.ReadToEnd();
+            }
+            body = body.Replace("{siteLogo}", "https://wwww.neschanak.com/images/logo.png");
+            body = body.Replace("{verifCode}", verifCode);
+
+
+            var smtp = new SmtpClient
+            {
+                Host = "mail.neschanak.com",
+                Port = 465,
+                EnableSsl = true,
+                DeliveryMethod = SmtpDeliveryMethod.Network,
+                UseDefaultCredentials = false,
+                Credentials = new NetworkCredential(senderEmail.Address, password)
+            };
+            using (var mess = new MailMessage(senderEmail, receiverEmail)
+            {
+                Subject = sub,
+                Body = body
+            })
+            {
+                smtp.Send(mess);
+            }
+
+            return Content("200");
+        }
 
     }
 }

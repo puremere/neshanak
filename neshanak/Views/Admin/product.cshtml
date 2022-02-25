@@ -158,12 +158,37 @@
 
                             }
                         }
+                        List<SelectListItem> listItems2 = new List<SelectListItem>();
+                        if (Model.log.locationAll != null)
+                        {
+                            foreach (var item in Model.log.locationAll)
+                            {
+                                listItems2.Add(new SelectListItem
+                                {
+                                    Text = item.title,
+                                    Value = "1" + item.ID
+                                });
+                                if (item.cityList != null)
+                                {
+                                    foreach (var subcat in item.cityList)
+                                    {
+                                        listItems2.Add(new SelectListItem
+                                        {
+                                            Text = "---" + subcat.title,
+                                            Value = "2" + subcat.ID
+                                        });
 
+
+                                    }
+                                }
+
+                            }
+                        }
 
                     }
 
                     <form method="post" action="ExportToExcel" style="display:inline-block; margin-left:8px">
-                        
+
 
                         <div class="autocomplete col-md-3 col-sm-3 col-xs-12" style="min-width:250px">
                             <label> @Resources.res.category </label>
@@ -172,16 +197,22 @@
 
                             </div>
                         </div>
-                        <div class="autocomplete col-md-3 col-sm-3 col-xs-12" style="min-width:250px"> 
+                        <div class="autocomplete col-md-3 col-sm-3 col-xs-12" style="min-width:250px">
+                            <label> @Resources.res.createLocation </label>
+                            <div style="width:100%">
+                                @Html.DropDownList("Countryname2", listItems2, "select item", new { id = "listofLocation2", @class = "form-control" })
+                            </div>
+                        </div>
+                        <div class="autocomplete col-md-3 col-sm-3 col-xs-12" style="min-width:250px">
                             <label> @Resources.res.search </label>
                             <div style="width:100%">
                                 <input id="SearchQuery" name="SearchQuery" type="text" placeholder=" @Resources.res.search" class="form-control" style="padding:8px" />
 
                             </div>
                         </div>
-                        <div style="display:flex; margin-top:25px;margin-left:15px; min-width:250px" >
+                        <div style="display:flex; margin-top:25px;margin-left:15px; min-width:250px">
                             <div style="padding:7px 40px" id="Verify" class="btn btn-primary lgnsubmitt"> @Resources.res.OK</div>
-                            
+
                         </div>
 
 
@@ -193,13 +224,15 @@
                                 var query = $("#SearchQuery").val();
                                 var value = $("#listofproduct").val();
                                 var partner = $("#partnerList").val();
+                                var Countryname = $("#listofLocation2").val()
                                 $.ajax({
                                     url: '/Admin/GetTheListOfItems',
                                     data:
                                     {
                                         value: value,
                                         query: query,
-                                        partner: partner
+                                        partner: partner,
+                                        Countryname: Countryname
                                     },
                                     dataType: 'html',
                                     success: function (data) {
@@ -234,7 +267,7 @@
 
 
 
-                          
+
                         </script>
                     </form>
                    

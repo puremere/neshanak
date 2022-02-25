@@ -42,6 +42,10 @@ namespace neshanak.Classes
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
             HttpSessionStateBase session = filterContext.HttpContext.Session;
+            if (session["lang"] == null)
+            {
+                session["lang"] = "en";
+            }
             if (session["LogedInUser"] == null)
             {
                 filterContext.Result = new RedirectToRouteResult(
@@ -49,6 +53,34 @@ namespace neshanak.Classes
                                 { "Controller", "Home" },
                                 { "Action", "login" }
                                 });
+            }
+
+        }
+    }
+    public class adminSessionCheck : ActionFilterAttribute
+    {
+        public override void OnActionExecuting(ActionExecutingContext filterContext)
+        {
+            HttpSessionStateBase session = filterContext.HttpContext.Session;
+            var descriptor = filterContext.ActionDescriptor;
+            var actionName = descriptor.ActionName;
+
+            if (session["lang"] == null)
+            {
+                session["lang"] = "en";
+            }
+
+            if (actionName != "Index" && actionName != "CustomerLogin")
+            {
+
+                if (session["LogedInUser2"] == null)
+                {
+                    filterContext.Result = new RedirectToRouteResult(
+                        new RouteValueDictionary {
+                                { "Controller", "Admin" },
+                                { "Action", "Index" }
+                                    });
+                }
             }
 
         }

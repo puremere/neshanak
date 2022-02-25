@@ -8,7 +8,7 @@
     ViewBag.Title = Resources.res.busilist;
 }
 
-
+<link href="~/Content/css-circular-prog-bar.css" rel="stylesheet" />
 
 
 @*@using (Html.BeginForm("Index", "Student", FormMethod.Get))
@@ -20,7 +20,10 @@
     }*@
 
 @{
-
+    <script src="~/Scripts/download.js"></script>
+    <input type="file" style="display:block" id="fileupload" />
+    <p id="parent" style="display:none"></p>
+    <p class="imageName" style="display:none"></p>
 
     <!-- Modal -->
     <p style="display:none" id="modalValue"></p>
@@ -129,6 +132,13 @@
                                                 @Resources.res.offer
                                             </th>
                                             <th>
+                                                @Resources.res.recommended
+
+                                            </th>
+                                            <th>
+
+                                            </th>
+                                            <th>
 
                                             </th>
                                             <th>
@@ -178,6 +188,24 @@
                                                     }
 
                                                 </td>
+                                                <td style="text-align: center;">
+                                                    @{
+
+                                                        if (item.recommended == "1")
+                                                        {
+                                                            <input id=@item.ID type="checkbox" class="recomended" checked />
+                                                        }
+                                                        else
+                                                        {
+                                                            <input id=@item.ID type="checkbox" class="recomended" />
+
+                                                        }
+
+                                                    }
+
+                                                </td>
+
+
                                                 <td>
 
                                                     <a id=@item.ID class="btn btn-primary editproduct" style="  margin:5px ; cursor: pointer;  padding: 5px; color: #fff; border-radius: 5px;">@Resources.res.edit</a> @*@Html.ActionLink("حذف", "Delete", new { id = item.ID })*@
@@ -188,6 +216,32 @@
 
                                                 </td>
 
+                                                @{
+                                                    int count = item.video.Count();
+                                                    string imageHolder = "holder" + item.ID;
+                                                    if (count == 33)
+                                                    {
+                                                        <td>
+                                                            <a id=@item.ID class="btn btn-primary addVideo" style="  margin:5px ; cursor: pointer;  padding: 5px; color: #fff; border-radius: 5px;">@Resources.res.video</a> @*@Html.ActionLink("حذف", "Delete", new { id = item.ID })*@
+                                                            <a id=@item.ID class="btn btn-primary confirmVideo" style=" display:none;  margin:5px ; cursor: pointer;  padding: 5px; color: #fff; border-radius: 5px;">@Resources.res.OK</a> @*@Html.ActionLink("حذف", "Delete", new { id = item.ID })*@
+
+                                                            <span id="@imageHolder"></span>
+                                                        </td>
+
+                                                    }
+                                                    else
+                                                    {
+
+                                                        <td>
+                                                            <div class="imageCover" style="position:relative !important; width:150px"><div style="position:relative"><img style="width:150px"  src="@item.video" /> <img class="removeVideo" id="@item.ID" src="/images/trash.png" style="position:absolute; bottom:0;top:0;left:0;right:0;margin:auto" /></div></div>
+                                                            <p>@Path.GetFileName(@item.video)</p>
+                                                        </td>
+                                                    }
+
+                                                }
+
+
+
 
                                             </tr>
                                         }
@@ -196,7 +250,54 @@
 
                                     </tbody>
                                 </table>
+                                <script>
+                                    $(".addVideo").click(function () {
 
+                                        $(this).parent().find(".confirmVideo").css("display","inline")
+                                        var parentName = $(this).parent().find('span').attr('id');
+                                        $("#parent").text(parentName);
+                                        $("#fileupload").click();
+
+
+                                    })
+                                    $("#fileupload").on('change', function () {
+                                        //alert("sss");
+                                        var pr = $("#parent").text();
+                                        uploadImage(pr, "imageName", this)
+                                    });
+                                    $(".confirmVideo").click(function () {
+                                        
+                                        var val = $(this).attr('id');
+                                        var image = $(".imageName").text();
+                                        $.ajax({
+                                            url: "/admin/setvideo",
+                                            dataType: "html",
+                                            data: {
+                                                val: val,
+                                                image : image
+                                            },
+                                            success: function (data) {
+                                                window.location.reload();
+                                            }
+                                        })
+                                    })
+                                    $(".removeVideo").click(function () {
+                                        var id = $(this).siblings().attr('src');
+                                        var val = $(this).attr('id');
+                                        $(this).remove();
+                                        $.ajax({
+                                            url: "/admin/RemoveVideo",
+                                            dataType: "html",
+                                            data: {
+                                                image: id,
+                                                val : val
+                                            },
+                                            success: function (data) {
+                                                window.location.reload();
+                                            }
+                                        })
+                                    })
+                                </script>
                             </div>
                         </div>
                     </div>
@@ -223,7 +324,7 @@
             });
         </script>
         <script>
-           
+
             $(".specialOffer").click(function () {
                 if ($(this).is(':checked')) {
                     var productValue = "1";
@@ -249,7 +350,7 @@
                     }
                 });
             })
-           
+
             $(".Active").click(function () {
                 if ($(this).is(':checked')) {
                     var productValue = "1";
@@ -275,7 +376,34 @@
                     }
                 });
             })
-          
+
+
+            $(".recomended").click(function () {
+                if ($(this).is(':checked')) {
+                    var productValue = "1";
+                }
+                else {
+                    var productValue = "0";
+                }
+                var Prodcutid = $(this).attr("id");
+
+                $.ajax({
+                    url: '/Admin/ChangeProductRecommended',
+                    dataType: 'html',
+                    data: {
+                        id: Prodcutid,
+                        value: productValue
+                    },
+                    success: function (data) {
+
+
+                    },
+                    error: function () {
+
+                    }
+                });
+            })
+
         </script>
 
 
@@ -383,7 +511,9 @@
                         data: {
                             page: num,
                             value: value,
-                            partner: partner
+                            partner: partner,
+                            Countryname: '@Model.location',
+                            query : '@Model.query'
 
                         },
                         dataType: 'html',

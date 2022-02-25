@@ -310,7 +310,7 @@
     <value>برای ثبت نام باید با موافقت خود را با این شرایط اعلام نمایید</value>
   </data>
   <data name="logosection0" xml:space="preserve">
-    <value>پروفایل</value>
+    <value>خروج</value>
   </data>
   <data name="logosection5" xml:space="preserve">
     <value>خانه</value>
@@ -548,5 +548,137 @@
   </data>
   <data name="newName" xml:space="preserve">
     <value>نام جدید</value>
+  </data>
+  <data name="countryman" xml:space="preserve">
+    <value>مدیریت لوکیشن</value>
+  </data>
+  <data name="video" xml:space="preserve">
+    <value>ویدیو</value>
+  </data>
+  <data name="confrimAction" xml:space="preserve">
+    <value>آیا از انجام عملیات اطمینان دارید</value>
+  </data>
+  <data name="recommended" xml:space="preserve">
+    <value>توصیه شده</value>
+  </data>
+  <data name="recommendText" xml:space="preserve">
+    <value>موارد توصیه شده</value>
+  </data>
+  <data name="state" xml:space="preserve">
+    <value>استان/ایالت</value>
+  </data>
+  <data name="registerError1" xml:space="preserve">
+    <value>این ایمیل قبلا ثبت شده است</value>
+  </data>
+  <data name="registerError2" xml:space="preserve">
+    <value>عبارت امنیتی نادرست است</value>
+  </data>
+  <data name="registerError3" xml:space="preserve">
+    <value>خطا ! لطفاً مجددا تلاش کنید</value>
+  </data>
+  <data name="loginError1" xml:space="preserve">
+    <value>عبارت امنیتی نادرست است</value>
+  </data>
+  <data name="loginError2" xml:space="preserve">
+    <value>نام کاربری یا رمز عبور اشتباه است</value>
+  </data>
+  <data name="forum" xml:space="preserve">
+    <value>اتاق گفتگو</value>
+  </data>
+  <data name="learning" xml:space="preserve">
+    <value>آموزش زبان</value>
+  </data>
+  <data name="mastercart" xml:space="preserve">
+    <value>مستر کارت</value>
+  </data>
+  <data name="FAQ" xml:space="preserve">
+    <value>سوالات متداول</value>
+  </data>
+  <data name="mohasebeBank" xml:space="preserve">
+    <value>محاسبه سود بانکی</value>
+  </data>
+  <data name="mohasebeMaster" xml:space="preserve">
+    <value>محاسبه سود مستر کارت</value>
+  </data>
+  <data name="page" xml:space="preserve">
+    <value>صفحه</value>
+  </data>
+  <data name="regandsign" xml:space="preserve">
+    <value>ثبت و نام و رجیستر</value>
+  </data>
+  <data name="sampleEmail" xml:space="preserve">
+    <value>ایمیل های نمونه</value>
+  </data>
+  <data name="addNewAccordion" xml:space="preserve">
+    <value>افزودن آیتم جدید</value>
+  </data>
+  <data name="bankINTf1" xml:space="preserve">
+    <value>مبلغ برداشت شده از بانک</value>
+  </data>
+  <data name="chooseItem" xml:space="preserve">
+    <value>آیتم مورد نظر را انتخاب کنید</value>
+  </data>
+  <data name="editAccordion" xml:space="preserve">
+    <value>ویرایش آیتم</value>
+  </data>
+  <data name="faqandemail" xml:space="preserve">
+    <value>سوالات و ایمیل های متداول</value>
+  </data>
+  <data name="masterINTf1" xml:space="preserve">
+    <value>مبلغ کردیت شما</value>
+  </data>
+  <data name="masterINTf2" xml:space="preserve">
+    <value>مبلغ قسط به دلخواه</value>
+  </data>
+  <data name="masterINTf3" xml:space="preserve">
+    <value>مبلغی که میخواهید پداخت کنید</value>
+  </data>
+  <data name="reload" xml:space="preserve">
+    <value>ریلود</value>
+  </data>
+  <data name="totalB" xml:space="preserve">
+    <value>سود پرداخت شده</value>
+  </data>
+  <data name="totalM" xml:space="preserve">
+    <value>تعداد ماه</value>
+  </data>
+  <data name="type" xml:space="preserve">
+    <value>نوع</value>
+  </data>
+  <data name="enterSupermarket" xml:space="preserve">
+    <value>ورود به سوپرمارکت</value>
+  </data>
+  <data name="supermarket" xml:space="preserve">
+    <value>سوپرمارکت</value>
+  </data>
+  <data name="book" xml:space="preserve">
+    <value>کتاب</value>
+  </data>
+  <data name="course" xml:space="preserve">
+    <value>دوره</value>
+  </data>
+  <data name="lan" xml:space="preserve">
+    <value>زبان</value>
+  </data>
+  <data name="section" xml:space="preserve">
+    <value>بخش</value>
+  </data>
+  <data name="tutorial" xml:space="preserve">
+    <value>مدیریت آموزش</value>
+  </data>
+  <data name="live" xml:space="preserve">
+    <value>پخش زنده</value>
+  </data>
+  <data name="enrollment" xml:space="preserve">
+    <value>ثبت نام</value>
+  </data>
+  <data name="installmentMinimum" xml:space="preserve">
+    <value>حداقل مبلغ قسط باید برابر باشد با: </value>
+  </data>
+  <data name="overwithdraw" xml:space="preserve">
+    <value>مقدار اعتبار شما باید بیشتر از مقدار برداشت باشد</value>
+  </data>
+  <data name="rgst" xml:space="preserve">
+    <value>رجیستر</value>
   </data>
 </root>

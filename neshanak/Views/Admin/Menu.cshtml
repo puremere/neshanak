@@ -245,7 +245,7 @@
     $("#cancelEdit").click(function () {
         $(".classhide").css("display", "none");
         $(".classshow").css("display", "inline-block");
-        $("#imageHolder0").css("display", "none");
+        $("#imageHolder").css("display", "none");
         $("#title").val("");
     })
     $(".ImageDelete").click(function () {
@@ -258,7 +258,7 @@
             },
             success: function () {
                 var srt = $(".imageName").text();
-                $(".imageName").text(srt.replace(name+ ","),"" );
+                $(".imageName2").text(srt.replace(name+ ","),"" );
                 $("#imageHolder0").css("display","none")
             }
         })

@@ -19,10 +19,14 @@ namespace neshanak.viewModel
     {
         [AllowHtml]
         public string content { get; set; }
-        [AllowHtml]
-        public string contentContactUs { get; set; }
+        
         
         public string name { get; set; }
+        public string update { get; set; }
+        public string type { get; set; }
+        public string newName { get; set; }
+        public string dropdown { get; set; }
+
     }
     public class updateArticleVM
     {

@@ -1,0 +1,22 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>forum</title>
+</head>
+<body>
+    <iframe allow="camera;microphone" id="inlineFrameExample"
+            title="Inline Frame Example"
+            style="position:absolute; top:0 ; left:0; width:100%; height:100%"
+            @*src="https://www.boomsolution.ir/screen/chatroom?username=eli&groupname=123">*@
+            src="https://boomsolution.ir/screen/chat?group_name=@ViewBag.gr&user_name=@ViewBag.url">
+
+    </iframe>
+</body>
+</html>

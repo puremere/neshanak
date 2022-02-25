@@ -216,13 +216,15 @@ namespace AdminPanel.ViewModel
     {
         public string ID { get; set; }
         public string title { get; set; }
+        public string video { get; set; }
         public string color { get; set; }
         public string description { get; set; }
         public string count { get; set; }
         public string isActive { get; set; }
-        public string isOffer { get; set; }
-        public string IsAvailable { get; set; }
+        public string recommended { get; set; }
         public string specialOffer { get; set; }
+        public string IsAvailable { get; set; }
+       
         public string serverRowID { get; set; }
         
     }
@@ -231,6 +233,8 @@ namespace AdminPanel.ViewModel
     {
         public string count { get; set; }
         public string current { get; set; }
+        public string query { get; set; }
+        public string location { get; set; }
         public List<orderdetail> data { get; set; }
     }
 
@@ -462,11 +466,24 @@ namespace AdminPanel.ViewModel
         public string title { get; set; }
         public string phone { get; set; }
     }
+    public class LocationAll
+    {
+        public string ID { get; set; }
+        public string title { get; set; }
+        public List<CityList> cityList { get; set; }
+    }
+    public class CityList
+    {
+        public string ID { get; set; }
+        public string title { get; set; }
+    }
+
     public class partnerVM
     {
         public List<string> productName { get; set; }
         public List<PartnerList> partnerList { get; set; }
         public List<FiltersModel> filtersModel { get; set; }
+        public List<LocationAll> locationAll { get; set; }
         public string isPartner { get; set; }
     }
 

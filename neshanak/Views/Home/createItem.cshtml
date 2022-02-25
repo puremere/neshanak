@@ -35,12 +35,36 @@
             $("body").get(0).style.setProperty("--direction", "ltr");
         }
         $(".creatButt").click(function () {
-            $("#createForm").submit();
+            $(".imageDefault").css("border", "none");
+            var value = 0;
+          
+            if ($(".imageItemParent").height() > 20) {
+
+            }
+            else {
+                alert($(".imageItemParent").height())
+                $(".imageDefault").css("border", "1px solid red");
+                value = 1;
+            }
+            $(".inputform").each(function () {
+                $(this).css("border", "none");
+                if ($(this).val() == "") {
+                    $(this).css("border", "1px solid red");
+                    value = 1;
+                }
+            })
+            if (value == 0) {
+                $("#createForm").submit();
+            }
+            else {
+                alert("@Resources.res.completeAll")
+            }
+
         });
         var getSubcatTree = function (val, type) {
             if (val != "") {
                 var id = val;
-               
+
                 $.ajax({
                     url: "/Home/getSubcatJson",
                     dataType: "html",
@@ -66,7 +90,7 @@
         $("#cat").change(function () {
             getSubcatTree($(this).val(),"1")
         })
-     
+
         $("#country").change(function () {
             var val = $(this).val();
             $.ajax({
@@ -76,6 +100,7 @@
                     result: val
                 },
                 success: function (data) {
+                    //alert(data);
                     $("#cityHolder").html(data);
 
                 }
@@ -83,17 +108,121 @@
         })
 
     </script>
-    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false&libraries=places&key=<API Key>"></script>
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false&libraries=places&key=AIzaSyDnIMRNDW6W-9c74yyiO_Sp3oeya0hoLwQ"></script>
     <script type="text/javascript">
+        var mymap;
+        var theMarker = {};
+        getLocation();
+        function showLocation(position) {
+            var lat = position.coords.latitude;
+            var lon = position.coords.longitude;
+            mymap = L.map('mapid', { attributionControl: false }).setView([51.505, -0.09], 13);
+            L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
+                attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+                maxZoom: 18,
+                id: 'mapbox/streets-v11',
+                tileSize: 512,
+                zoomOffset: -1,
+                accessToken: 'pk.eyJ1IjoibWVyaW9saSIsImEiOiJja2p6dXhmdngwYmVvMnZwY2lyc2htNGxhIn0.Y9t__Bll6Fw9b9amb_rcHg',
+
+            }).addTo(mymap);
+            mymap.panTo(new L.LatLng(lat, lon));
+
+
+
+            mymap.on('click', function (e) {
+
+                lat = e.latlng.lat;
+                lon = e.latlng.lng;
+
+                console.log("You clicked the map at LAT: " + lat + " and LONG: " + lon);
+                //Clear existing marker,
+
+                if (theMarker != undefined) {
+                    mymap.removeLayer(theMarker);
+                };
+
+                //Add a marker to show where you clicked.
+                theMarker = L.marker([lat, lon]).addTo(mymap);
+                $("#lat").val(lat);
+                $("#lon").val(lon);
+            });
+        }
+        function errorHandler(err) {
+
+            alert("locatin not found")
+
+            mymap = L.map('mapid', { attributionControl: false }).setView([51.505, -0.09], 13);
+            L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
+                attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+                maxZoom: 18,
+                id: 'mapbox/streets-v11',
+                tileSize: 512,
+                zoomOffset: -1,
+                accessToken: 'pk.eyJ1IjoibWVyaW9saSIsImEiOiJja2p6dXhmdngwYmVvMnZwY2lyc2htNGxhIn0.Y9t__Bll6Fw9b9amb_rcHg',
+
+            }).addTo(mymap);
+            mymap.panTo(new L.LatLng('35.7442005749', '51.473131743990'));
+
+
+            mymap.on('click', function (e) {
+
+                lat = e.latlng.lat;
+                lon = e.latlng.lng;
+
+                console.log("You clicked the map at LAT: " + lat + " and LONG: " + lon);
+                //Clear existing marker,
+
+                if (theMarker != undefined) {
+                    mymap.removeLayer(theMarker);
+                };
+
+                //Add a marker to show where you clicked.
+                theMarker = L.marker([lat, lon]).addTo(mymap);
+                $("#lat").val(lat);
+                $("#lng").val(lon);
+            });
+
+
+
+            if (err.code == 1) {
+                //alert("Error: Access is denied!");
+            } else if (err.code == 2) {
+                //alert("Error: Position is unavailable!");
+            }
+
+
+
+
+
+        }
+        function getLocation() {
+            if (navigator.geolocation) {
+                // timeout at 60000 milliseconds (60 seconds)
+                var options = { timeout: 3000 };
+                navigator.geolocation.getCurrentPosition
+                    (showLocation, errorHandler, options);
+
+
+            } else {
+                alert("Sorry, browser does not support geolocation!");
+            }
+        }
+        $("#mapid").height("250px");
+
         google.maps.event.addDomListener(window, 'load', function () {
             var places = new google.maps.places.Autocomplete(document.getElementById('address'));
             google.maps.event.addListener(places, 'place_changed', function () {
                 var place = places.getPlace();
-                alert( place.geometry.location.lat());
-                alert( place.geometry.location.lng());
-                //document.getElementById('<%=txtAddress.ClientID %>').value = place.formatted_address;
-                //document.getElementById('<%=txtLatitude.ClientID %>').value = place.geometry.location.lat();
-                //document.getElementById('<%=txtLongitude.ClientID %>').value = place.geometry.location.lng();
+
+
+                if (theMarker != undefined) {
+                    mymap.removeLayer(theMarker);
+                };
+                mymap.panTo(new L.LatLng(place.geometry.location.lat(), place.geometry.location.lng()));
+                theMarker = L.marker([place.geometry.location.lat(), place.geometry.location.lng()]).addTo(mymap);
+                $("#lat").val(place.geometry.location.lat());
+                $("#lng").val(place.geometry.location.lng());
             });
         });
     </script>
@@ -106,183 +235,175 @@
     <main id="loginMain" style="">
         <div class="row  parent">
             <div class="ItemsHome">
-                @{
-                    int w = Request.Browser.ScreenPixelsWidth;
-                    int h = Request.Browser.ScreenPixelsHeight;
-                    if (Request.Browser.IsMobileDevice || (w < 720 && h > 720))
-                    {
+                <div class="itemRow">
+                    <div class="default " style="cursor:pointer;margin-bottom:15px; text-align:center;border:1px dotted #4d4d4d; padding:5px 10px ;border-radius:5px;">@Resources.res.createImage <img class="imageDefault" style="width:30px; margin : 0 20px" src="~/images/addPic.png" /></div>
+                    <div id="imageHolder" style="display:flex">
 
-                    }
-                    else
-                    {
+                        <input multiple type="file" id="imageFileHolder" name="image" required="required" class="form-control  imageinput" style="display:none">
+
+                        <div class="imageItemParent">
+
+                            @{
+                                if (@ViewBag.images != null)
+                                {
+                                    string[] lst = (ViewBag.images).Split(',');
 
 
-                        <div class="itemRow">
-                            <div class="default " style="cursor:pointer;margin-bottom:15px; text-align:center;border:1px dotted #4d4d4d; padding:5px 10px ;border-radius:5px;">@Resources.res.createImage <img style="width:30px; margin : 0 20px"  src="~/images/addPic.png" /></div>
-                            <div id="imageHolder" style="display:flex">
+                                    foreach (var item in lst)
 
-                                <input multiple type="file" id="imageFileHolder" name="image" required="required" class="form-control " style="display:none">
-
-                            
-
-                                @{
-                                    if (@ViewBag.images != null)
                                     {
-                                        string[] lst = (ViewBag.images).Split(',');
 
+                                        <div class="imageCover">
+                                            <img src="/images/@item" />
+                                            <img id="@item" class="removeImage" src="/images/trash.png" style="position:absolute; bottom:0;top:0;left:0;right:0;margin:auto" /> <i class="fa fa-remove" style="font-size: 12px;position: absolute;bottom: 5px;left: 0px;color: white;"></i>
+                                        </div>
 
-                                        foreach (var item in lst)
-
-                                        {
-
-                                            <div class="imageCover">
-                                                <img src="/images/@item" />
-                                                <img id="@item" class="removeImage" src="/images/trash.png" style="position:absolute; bottom:0;top:0;left:0;right:0;margin:auto" /> <i class="fa fa-remove" style="font-size: 12px;position: absolute;bottom: 5px;left: 0px;color: white;"></i>
-                                            </div>
-
-                                        }
                                     }
                                 }
-                            </div>
+                            }
+                        </div>
 
+                    </div>
+
+
+                </div>
+                <form id="createForm" action="addItem" method="post">
+                    <div class="itemRow">
+                        @*<p>@Resources.res.link </p>*@
+
+                        <input placeholder="@Resources.res.link" value="@Model.link" id="link" name="link" class="form-control " />
+                    </div>
+                    <div class="itemRow">
+                        @*<p>@Resources.res.createTitle </p>*@
+                        <input placeholder="@Resources.res.createTitle" id="title" name="title" class="form-control inputform" />
+                    </div>
+
+
+                    <div class="itemRow">
+                        @*<p>@Resources.res.createDesc </p>*@
+                        <textarea placeholder="@Resources.res.createDesc" style="flex:1; height:100px" id="desc" name="desc" class="form-control inputform"></textarea>
+
+                    </div>
+                    <div class="itemRow">
+                        @*<p>@Resources.res.cat </p>*@
+                        @Html.DropDownList("catid", new SelectList(Model.cat, "ID", "title"), Resources.res.chooscat, new { @class = "form-control inputform", id = "cat", style = "" })
+
+                    </div>
+                    <div class="itemRow">
+                        @*<p>@Resources.res.subcat </p>*@
+                        <div id="subcatHolder" style="flex:1">
+                            @Html.DropDownList("subcatid", new SelectList(Model.cat, "ID", "title"), Resources.res.choossubcat, new { @class = "form-control", id = "subcat", @disabled = "disabled" })
 
                         </div>
 
+                    </div>
+                    <div class="itemRow">
+                        @*<p>@Resources.res.subcat2 </p>*@
+                        <div id="subcatHolder2" style="flex:1">
+                            @Html.DropDownList("subcatid2", new SelectList(Model.cat, "ID", "title"), Resources.res.coosesubcattwo, new { @class = "form-control", id = "subcat2", @disabled = "disabled" })
 
-                        <form id="createForm" action="addItem" method="post">
-                            <div class="itemRow">
-                                <p>@Resources.res.link </p>
+                        </div>
 
-                                <input value="@Model.link" id="link" name="link" class="form-control" />
-                            </div>
-                            <div class="itemRow">
-                                <p>@Resources.res.createTitle </p>
-                                <input id="title" name="title" class="form-control" />
-                            </div>
+                    </div>
 
+                    <div class="itemRow">
+                        @*<p>@Resources.res.createPhone </p>*@
 
-                            <div class="itemRow">
-                                <p>@Resources.res.createDesc </p>
-                                <textarea style="height:100px" id="desc" name="desc" class="form-control"></textarea>
+                        <input placeholder="@Resources.res.createPhone" id="phone1" name="phone1" class="form-control " />
 
-                            </div>
-                            <div class="itemRow">
-                                <p>@Resources.res.cat </p>
-                                @Html.DropDownList("catid", new SelectList(Model.cat, "ID", "title"), Resources.res.chooscat, new { @class = "form-control", id = "cat" })
+                    </div>
+                    <div class="itemRow">
+                        @*<p>@Resources.res.createPhone2 </p>*@
 
-                            </div>
-                            <div class="itemRow">
-                                <p>@Resources.res.subcat </p>
-                                <div id="subcatHolder">
-                                    @Html.DropDownList("subcatid", new SelectList(Model.cat, "ID", "title"), Resources.res.choossubcat, new { @class = "form-control", id = "subcat", @disabled = "disabled" })
+                        <input placeholder="@Resources.res.createPhone2" id="phone2" name="phone2" class="form-control " />
 
-                                </div>
+                    </div>
 
-                            </div>
-                            <div class="itemRow">
-                                <p>@Resources.res.subcat2 </p>
-                                <div id="subcatHolder2">
-                                    @Html.DropDownList("subcatid2", new SelectList(Model.cat, "ID", "title"), Resources.res.coosesubcattwo, new { @class = "form-control", id = "subcat2", @disabled = "disabled" })
+                    <div class="itemRow">
+                        @*<p>@Resources.res.fax </p>*@
+                        <input placeholder="@Resources.res.fax" id="fax" name="fax" class="form-control " />
+                    </div>
+                    <div class="itemRow">
+                        @*<p>@Resources.res.mobile1 </p>*@
 
-                                </div>
+                        <input placeholder="@Resources.res.mobile1" id="mobile1" name="mobile1" class="form-control " />
 
-                            </div>
+                    </div>
+                    <div class="itemRow">
+                        @*<p>@Resources.res.mobile2 </p>*@
 
-                            <div class="itemRow">
-                                <p>@Resources.res.createPhone </p>
+                        <input placeholder="@Resources.res.mobile2" id="mobile2" name="mobile2" class="form-control " />
 
-                                <input placeholder="" id="phone1" name="phone1" class="form-control" />
-
-                            </div>
-                            <div class="itemRow">
-                                <p>@Resources.res.createPhone2 </p>
-
-                                <input placeholder="" id="phone2" name="phone2" class="form-control" />
-
-                            </div>
-
-                            <div class="itemRow">
-                                <p>@Resources.res.fax </p>
-                                <input placeholder="" id="fax" name="fax" class="form-control" />
-                            </div>
-                            <div class="itemRow">
-                                <p>@Resources.res.mobile1 </p>
-
-                                <input placeholder="" id="mobile1" name="mobile1" class="form-control" />
-
-                            </div>
-                            <div class="itemRow">
-                                <p>@Resources.res.mobile2 </p>
-
-                                <input placeholder="" id="mobile2" name="mobile2" class="form-control" />
-
-                            </div>
-                            <div class="itemRow">
-                                <p>@Resources.res.email </p>
-                                <input placeholder="@Resources.res.email" id="email" name="email" class="form-control" />
-                            </div>
-                            <div class="itemRow">
-                                <p>@Resources.res.instagram </p>
-                                <input placeholder="@Resources.res.instagram" id="instagram" name="instagram" class="form-control" />
-                            </div>
-
-                            <div class="itemRow">
-                                <p>@Resources.res.website </p>
-                                <input placeholder="@Resources.res.website" id="website" name="website" class="form-control" />
-                            </div>
-                            @*
-        <div class="itemRow">
-            <p>@Resources.res.telegram </p>
-            <input placeholder="@Resources.res.telegram" id="telegram" name="telegram" class="form-control" />
-        </div>
-        <div class="itemRow">
-            <p>@Resources.res.whatsapp </p>
-            <input placeholder="@Resources.res.whatsapp" id="whatsapp" name="whatsapp" class="form-control" />
-        </div>*@
-
-                            <div class="itemRow">
-                                <p>@Resources.res.country </p>
-                                @Html.DropDownList("country", new SelectList(Model.lands, "ID", "title"), Resources.res.chooseCountry, new { @class = "form-control", id = "country" })
-
-                            </div>
-                            <div class="itemRow">
-                                <p>@Resources.res.city </p>
-                                <div id="cityHolder">
-                                    @Html.DropDownList("city", new SelectList(Model.lands, "ID", "title"), Resources.res.chooseCity, new { @class = "form-control", id = "city", @disabled = "disabled" })
-
-                                </div>
-
-                            </div>
-                            <div class="itemRow">
-                                <p>@Resources.res.createAddress </p>
-                                <textarea style="height:100px" id="address" name="address" class="form-control"></textarea>
-
-                            </div>
-                            <div class="itemRow">
-                                <p>@Resources.res.createLocation </p>
-                                <div id="mapid" style=""></div>
-                            </div>
-                            <input style="display:none" id="lat" name="lat" />
-                            <input style="display:none" id="lng" name="lng" />
+                    </div>
+                    <div class="itemRow">
+                        @*<p>@Resources.res.email </p>*@
+                        <input placeholder="@Resources.res.email" id="email" name="email" class="form-control " />
+                    </div>
 
 
-                            <div class="itemRow " style="border:none">
-                                <div class="creatButt btn btn-success">@Resources.res.createButt</div>
-                            </div>
-                        </form>
+                    <div class="itemRow">
+                        @*<p>@Resources.res.website </p>*@
+                        <input placeholder="@Resources.res.website" id="website" name="website" class="form-control " />
+                    </div>
+                    @*
+                        <div class="itemRow">
+                            <p>@Resources.res.telegram </p>
+                            <input placeholder="@Resources.res.telegram" id="telegram" name="telegram" class="form-control" />
+                        </div>
+                        <div class="itemRow">
+                            <p>@Resources.res.whatsapp </p>
+                            <input placeholder="@Resources.res.whatsapp" id="whatsapp" name="whatsapp" class="form-control" />
+                        </div>*@
+
+                    <div class="itemRow">
+                        @*<p>@Resources.res.country </p>*@
+                        @Html.DropDownList("country", new SelectList(Model.lands, "ID", "title"), Resources.res.chooseCountry, new { @class = "form-control inputform", id = "country", style = "" })
+
+                    </div>
+                    <div class="itemRow">
+                        @*<p>@Resources.res.city </p>*@
+                        <div id="cityHolder" style="flex:1">
+                            @Html.DropDownList("city", new SelectList(Model.lands, "ID", "title"), Resources.res.chooseCity, new { @class = "form-control", id = "city", @disabled = "disabled", style = "" })
+
+                        </div>
+
+                    </div>
+                    <div class="itemRow">
+                        @*<p>@Resources.res.instagram </p>*@
+                        <input placeholder="@Resources.res.city" id="instagram" name="instagram" class="form-control " />
+                    </div>
+                    <div class="itemRow">
+                        @*<p>@Resources.res.createAddress </p>*@
+                        <textarea placeholder="@Resources.res.createAddress" style="flex:1; height:100px" id="address" name="address" class="form-control inputform"></textarea>
+
+                    </div>
+                    <div class="" style="    padding: 10PX;">
 
 
+                        <div id="mapid" style=""></div>
+                    </div>
+                    <input style="display:none" id="lat" name="lat" />
+                    <input style="display:none" id="lng" name="lng" />
 
 
+                    <div class="itemRow " style="border:none">
+                        <div class="creatButt btn btn-success">@Resources.res.createButt</div>
+                    </div>
+                </form>
+            </div>
+            @{
+                int w = Request.Browser.ScreenPixelsWidth;
+                int h = Request.Browser.ScreenPixelsHeight;
+                if (Request.Browser.IsMobileDevice || (w < 720 && h > 720))
+                {
 
-
-                    }
-
+                }
+                else
+                {
 
 
                 }
-
-            </div>
+            }
 
 
 

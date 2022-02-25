@@ -52,7 +52,7 @@
             var result = '';
             var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
             var charactersLength = characters.length;
-            for (var i = 0; i <length; i++) {
+            for (var i = 0; i < length; i++) {
                 result += characters.charAt(Math.floor(Math.random() * charactersLength));
             }
             return result;
@@ -79,13 +79,14 @@
         @foreach (var item in Model.items)
         {
             int index = Model.items.IndexOf(item);
+            string srt = "home" + (index + 1).ToString();
             if (index == 0)
             {
                 <li class="active"><a class="teba" data-toggle="tab" href="#home" style=" color: #8d8d8d; ">@item.title</a></li>
             }
             else
             {
-                <li ><a class="teba" data-toggle="tab" href="#home3" style=" color: #8d8d8d; ">@item.title</a></li>
+                <li><a class="teba" data-toggle="tab" href="#@srt" style=" color: #8d8d8d; ">@item.title</a></li>
             }
         }
 
@@ -368,6 +369,7 @@
                         </script>
                         <script>
                             $("#clickContact").click(function () {
+                              
                                 var items = @Html.Raw(Json.Encode(Model.items));
                                 var srt = "";
                                 for (var i = 0, l = items.length; i < l; i++) {
@@ -529,16 +531,16 @@
                                 });
                         </script>
                         <script>
-                           
+
                             $("#clickPrivacy").click(function () {
-                               
+
                                 var items = @Html.Raw(Json.Encode(Model.items));
                                 var srt = "";
                                 for (var i = 0, l = items.length; i < l; i++) {
 
                                     if (items[i].title === '@Resources.res.privacy') {
                                         srt = items[i].content;
-                                      
+
                                         html = $.parseHTML(srt);
                                         var $response = $(html);
                                         var $links = $response.find('img');

@@ -1,0 +1,142 @@
+﻿
+@{
+    ViewBag.Title = "GetSubCat";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section styles{
+
+
+    <link href="~/Content/Site.css" rel="stylesheet" />
+    <link href="~/Content/fontawesome-all.css" rel="stylesheet" />
+
+    <link href="~/Content/slick.css" rel="stylesheet" />
+    <link href="~/Content/slick-theme.css" rel="stylesheet" />
+}
+@section scripts{
+    <script src="~/Scripts/jquery.migrate.js"></script>
+    <script src="~/Scripts/slick.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('.your-class').slick({
+                dots: false,
+                infinite: true,
+                autoplay: true,
+                speed: 500,
+                cssEase: 'linear'
+            });
+        });
+    </script>
+
+
+
+
+
+
+    <link href="~/Content/slider.css" rel="stylesheet" />
+    <script src="~/Scripts/sliderscript.js"></script>
+    <script>
+        $('.bo-slider').boSlider({
+            slideShow: true,
+            interval: 8000
+        });
+    </script>
+
+}
+
+
+
+
+
+@if (Model.sld != null)
+{
+    <ul class="bo-slider">
+        @foreach (var slid in Model.sld)
+        {
+            if (slid.type == "1")
+            {
+                <li data-url="@slid.image" data-type="image"></li>
+            }
+            else
+            {
+                string videopath = "/video/" + @Path.GetFileNameWithoutExtension(slid.image) + ".mp4";
+                <li data-url="@videopath" data-type="video"></li>
+            }
+        }
+
+
+    </ul>
+
+}
+@*@if (Model.sld != null)
+    {
+        <div class="row" style="background-color:black">
+            <div id="slideHolder" style=" width:100%; height:auto; margin:auto;display:block">
+                <div class="your-class">
+                    @foreach (var slid in Model.sld)
+                    {
+                        <div class="imageholder">
+                            <img src="@slid.image" />
+                        </div>
+                    }
+
+
+
+
+                </div>
+            </div>
+        </div>
+    }*@
+
+
+<style>
+    .learningP {
+        border: 0 !important;
+    }
+
+    .catitem {
+        width: 19%;
+    }
+
+    @@media screen and (max-width: 750px) {
+        .catitem {
+            width: 49%;
+        }
+
+            .catitem p {
+                width: 90%;
+                padding: 0
+            }
+    }
+</style>
+<!-- #endregion Jssor Slider End -->
+<div style="" class="subcatHolder" data-slide="1" data-speed="500">
+    <div>
+        <div class="final catitem">
+            <a style="text-decoration:none" href="/master/bankInterest">
+                <div>
+                    <div style="width:100%; height:150px ; background-color:#2e0437">
+                        <img style="cursor:pointer; max-width:100%; max-height:100%;object-fit:scale-down" class="subcatimage" src="~/Images/master.png" />
+                    </div>
+
+                    <p class="learningP " style="margin: 20px 5px; font-weight:500; font-size:16px;padding-top:0">@Resources.res.rgst</p>
+                </div>
+            </a>
+
+        </div>
+        <div class="final catitem">
+            <a style="text-decoration:none" href="/master/masterInterest">
+                <div>
+                    <div style="width:100%; height:150px ; background-color:#2e0437">
+                        <img style="cursor:pointer; max-width:100%; max-height:100%;object-fit:scale-down" class="subcatimage" src="~/Images/master.png" />
+                    </div>
+
+                    <p class="learningP " style="margin: 20px 5px; font-weight:500; font-size:16px;padding-top:0">@Resources.res.enrollment</p>
+                </div>
+            </a>
+
+        </div>
+        
+    </div>
+    @*<img class="bannerItem" src="http://supectco.com/app/portal/uploads/@Model.bnr.First().img" />*@
+</div>

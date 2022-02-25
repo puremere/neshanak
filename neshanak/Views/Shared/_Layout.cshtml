@@ -8,17 +8,42 @@
     @*@Scripts.Render("~/bundles/modernizr")*@
     <link href="~/Content/bootstrap.css" rel="stylesheet" />
     <link href="~/Content/fontawesome-all.css" rel="stylesheet" />
-   
-   
+
+
     @RenderSection("styles", required: false)
     @RenderSection("HeadIncludes", required: false)
     <link href="~/Content/indexStyle.css" rel="stylesheet" />
+   
 </head>
 <body>
-
+   <style>
+       #addnew {
+           width: 150px;
+           margin: 0 15px
+       }
+       .itemimageHolder {
+           width: 100%;
+           height: 150px
+       }
+       @@media screen and (max-width: 750px) {
+           .logosectionalone{
+               padding:5px 10px
+           }
+           #addnew {
+               margin: 0px
+           }
+           .catitem{
+               width:31%
+           }
+           .itemimageHolder {
+               height: unset
+           }
+       }
+       
+   </style>
     <div class="logosectionalone">
-        <img src="~/Images/logo.png" />
-        <p id="addnew" style="width:150px; margin:0 15px" class="btn btn-success">@Resources.res.logosection4</p>
+        <img src="~/Images/logo_text.png" />
+        <p id="addnew" style="" class="btn btn-success">@Resources.res.logosection4</p>
 
         <ul>
 
@@ -26,7 +51,8 @@
             @{
                 if (Session["token"] != null)
                 {
-                    <li id="">@Resources.res.logosection0</li>
+                    <li id="logout">@Resources.res.logosection0</li>
+
                 }
                 else
                 {
@@ -69,7 +95,11 @@
         $("#login").click(function () {
             window.location.href = "/Home/login"
         })
+        $("#logout").click(function () {
+            window.location.href = "/Home/logout"
+        })
         $("#addnew").click(function () {
+
             window.location.href = "/Home/createItem"
         })
         $("#home").click(function () {
@@ -120,6 +150,15 @@
 
         }
 
+    </script>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-K63XYBVDJY"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-K63XYBVDJY');
     </script>
 </body>
 </html>

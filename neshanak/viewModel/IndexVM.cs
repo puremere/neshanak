@@ -15,6 +15,7 @@ namespace neshanak.viewModel
         public List<Sld> sld { get; set; }
         public int id { get; set; }
         public string img { get; set; }
+        public string video { get; set; }
         public string title { get; set; }
         public string phone1 { get; set; }
         public string phone2 { get; set; }
@@ -36,20 +37,53 @@ namespace neshanak.viewModel
         public int catid { get; set; }
         public int subcatid { get; set; }
         public int subcatid2 { get; set; }
-        
-    }
-    public class countryCityCatVM
-    {
-        public List<Land> lands { get; set; }
-        public List<city> cities { get; set; }
-        public List<Cat> cat { get; set; }
+        public string mbrand { get; set; }
     }
 
-    public class city
+
+    public class Sld
+    {
+        public int ID { get; set; }
+        public object catIDOrLink { get; set; }
+        public string type { get; set; }
+        public string image { get; set; }
+        public object Ptitle { get; set; }
+        public object title { get; set; }
+        public object name { get; set; }
+    }
+
+    public class Land
     {
         public int ID { get; set; }
         public string title { get; set; }
+        public string flag { get; set; }
     }
+
+    public class City
+    {
+        public int ID { get; set; }
+        public string title { get; set; }
+        public string img { get; set; }
+    }
+
+    public class Cat
+    {
+        public int id { get; set; }
+        public string title { get; set; }
+        public int IsFinal { get; set; }
+        public int catLevel { get; set; }
+        public string img { get; set; }
+    }
+
+    public class countryCityCatVM
+    {
+        public string countryTitle { get; set; }
+        public List<Sld> sld { get; set; }
+        public List<Land> lands { get; set; }
+        public List<City> cities { get; set; }
+        public List<Cat> cat { get; set; }
+    }
+    
 
     //public class Banner
     //{
@@ -73,6 +107,8 @@ namespace neshanak.viewModel
         public List<Land> lands { get; set; }
         public List<Blog> blog { get; set; }
         public List<Banner> banners { get; set; }
+        public string educationLink { get; set; }
+        public string chatLink { get; set; }
     }
     public class Blog
     {
@@ -81,39 +117,7 @@ namespace neshanak.viewModel
         public object content { get; set; }
         public string  image { get; set; }
     }
-    public class Land
-    {
-        public int ID { get; set; }
-        public string title { get; set; }
-        public string flag { get; set; }
-    }
-    public class City
-    {
-        public int ID { get; set; }
-        public string title { get; set; }
-        public string img { get; set; }
-    }
-    public class Sld
-    {
-        public int ID { get; set; }
-        public string catIDOrLink { get; set; }
-        public string type { get; set; }
-        public string image { get; set; }
-        public string Ptitle { get; set; }
-        public string title { get; set; }
-        public string name { get; set; }
-    }
-
-    public class Cat
-    {
-        public int id { get; set; }
-        public string title { get; set; }
-        public int IsFinal { get; set; }
-        public int catLevel { get; set; }
-        public string img { get; set; }
-        public string flag { get; set; }
-
-    }
+   
     public class Subcat
     {
         public int id { get; set; }
@@ -134,12 +138,14 @@ namespace neshanak.viewModel
 
     public class Spc
     {
+        public int id { get; set; }
         public string img { get; set; }
-        public string txt1 { get; set; }
-        public string txt2 { get; set; }
-        public int act { get; set; }
-        public string dest { get; set; }
-        public string bg { get; set; }
+        public string title { get; set; }
+        public object cat { get; set; }
+        public int disc { get; set; }
+        public int eshop { get; set; }
+        public int verif { get; set; }
+        public string desc { get; set; }
 
     }
 

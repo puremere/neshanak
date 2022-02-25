@@ -63,6 +63,10 @@ body {
     align-items: center;
     margin: 0 10px;
 }
+.formsection{
+    margin:auto
+}
+
 
 .formsection input {
     height: 44px;
@@ -70,7 +74,6 @@ body {
     border: 1px solid #ddd;
     background-color: #EFEFEF;
     border-radius: 5px;
-  
     direction: var(--direction);
     text-align: var(--align);
     width: 33%;
@@ -121,7 +124,7 @@ body {
 
 #cityDropDown, #countryDropDown {
     width: 28%;
-    height: 44px;
+   
     background-color: white;
 }
 
@@ -384,7 +387,7 @@ body {
     align-items: center;
     background-color: rgba(0,0,0,0.5);
     position: absolute;
-    z-index: 9;
+    z-index: 99999;
     width: 100%;
     top:0
 }
@@ -425,24 +428,27 @@ body {
     }
 
 .itemRow {
-    padding: 15px 5px;
+    padding: 10px;
     direction: var(--dir);
-    border: 1px solid #eee;
-    margin: 5px;
+    display: flex border: 1px solid #eee;
+    /*margin: 5px;
     border-radius: 5px;
     box-shadow: 2px 2px 5px -1px rgba(148,149,153,1);
     background-color: #eee;
-    margin-bottom: 20px;
+    margin-bottom: 20px;*/
 }
 
     .itemRow p {
         text-align: var(--align);
-        font-weight:600
+        font-weight:600;
+        width:35%;
     }
 
     .itemRow input {
-        margin-top: 15px;
-        text-align: var(--align)
+       
+        text-align: var(--align);
+       
+        flex:1
     }
 
 .imageparent {
@@ -500,12 +506,13 @@ body {
 .ItemsHome {
     padding: 15px;
    
-    width: 40%;
+    width: 60%;
     margin: auto;
     margin-top: 0px;
 
     border-radius: 5px;
     margin-top:50px;
+    background-color:white
 }
 .creatButt {
     width: 100%;
@@ -729,7 +736,7 @@ h1, h2, h3, h4, h5, h6, input, textarea,p {
 }
 
 .subcatHolder img {
-    padding: 5px
+    /*padding: 5px*/
 }
 .itemHolder .DATA h4, h5 {
     text-align: var(--align);
@@ -747,7 +754,7 @@ h1, h2, h3, h4, h5, h6, input, textarea,p {
     color: black
 }
     .detailField p {
-        color: white;
+        color: black;
         margin: 0;
         padding: 0;
         width: 100%;
@@ -795,7 +802,32 @@ textarea {
 .catitem p {
     width: 100%;
     text-align: center;
+    white-space:nowrap;
+    overflow-x:hidden
 }
+
+
+.catitem0 {
+    width: 12%;
+    display: inline-block;
+    padding: 10px;
+}
+
+    .catitem0 div {
+        border-radius: 10px;
+        background-color: white;
+        border: 1px solid #eee
+    }
+
+    .catitem0 p {
+        width: 100%;
+        text-align: center;
+        white-space: nowrap;
+        overflow-x: hidden
+    }
+
+
+
 .detailField{
     direction: var(--direction)
 }
@@ -814,10 +846,89 @@ textarea {
     display: inline-block;
     padding: 50px
 }
+
 @media (max-width : 724px) {
+    #contentHolder {
+       
+        width: 100%;
+       
+    }
+    .searchButton {
+        padding: 0px 25px;
+        background-color: #F85C9B;
+        color: white;
+        border-radius: 5px;
+        align-items: center;
+        margin: 10px;
+        padding: 10px;
+    }
+    .formsection{
+        display:block;
+        padding:0
+    }
+    .formsection>div{
+        margin:5px
+    }
+    .dropdownholder{
+        margin-top:10px;
+        width:45%;
+        display:inline-block
+    }
+    .logosectionalone {
+        display: block;
+       /*position:relative*/
+    }
+    .inputITT {
+        margin-left: -10px;
+        margin-right: 10px;
+    }
+    .searchButton {
+        display: inline-block;
+        width: 44%;
+        margin: 0;
+    }
+
+
+    .logosectionalone ul {
+        margin: 10px 0;
+    }
+
+        .logosectionalone p {
+            margin: 10px 0;
+        }
+
+        .logosectionalone img {
+            margin: 10px 0;
+            width: 40%
+        }
+        .logosectionalone div {
+            margin: 5px 0;
+            
+        }
+    .dropdown {
+        position: absolute;
+        right: 10px;
+        top: 11px;
+    }
+    .footerSection, .footerIcon {
+        display: block
+    }
+    .footerSection .aboutUs {
+        width: 100%;
+      
+    }
+    .footerSection .Tag {
+        width: 100%;
+       
+    }
     .ItemsHome {
        
         width: 60%;
      
+    }
+    .slidHolder {
+        margin: 0 30px;
+        margin-top: 50px;
+        
     }
 }

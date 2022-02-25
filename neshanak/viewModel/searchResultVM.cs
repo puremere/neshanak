@@ -7,6 +7,7 @@ namespace neshanak.viewModel
 {
     public class searchResultVM
     {
+        public string contract { get; set; }
         public string code { get; set; }
         public string device { get; set; }
         public string mobile { get; set; }
@@ -17,6 +18,8 @@ namespace neshanak.viewModel
         public string mallID = "0";
         public string floorID = "0";
         public string lan { get; set; }
+        public string page = "0";
+        public string  searchq { get; set; }
 
     }
     

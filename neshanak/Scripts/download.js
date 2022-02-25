@@ -1,14 +1,14 @@
 ﻿//
 
 var uploadImage = function (imageParent, imageName,input) {
-
    
+    
    // var ext = input.files[0].filename.substring(url.lastIndexOf('.') + 1).toLowerCase();
    //&& (ext == "gif" || ext == "png" || ext == "jpeg" || ext == "jpg")
     if (input.files && input.files[0] ) {
         var processID = makeid();
         var htmldiv = `<div class="imageCover" style="postion:relative !important; width:150px"><div style="position:relative"><img style="width:150px" id="` + processID + `" src="#" /> </div></div> `;
-
+       
         $("#" + imageParent).append(htmldiv);
         var mydiv = document.getElementById(processID);
 
@@ -27,15 +27,7 @@ var uploadImage = function (imageParent, imageName,input) {
     }
 }
 
-var makeid = function () {
-    var result = '';
-    var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-    var charactersLength = characters.length;
-    for (var i = 0; i < 10; i++) {
-        result += characters.charAt(Math.floor(Math.random() * charactersLength));
-    }
-    return result;
-};
+
 var sendFile = function (key, value, imageName) {
 
     let progressID = key.split(';;;')[1];
@@ -96,7 +88,7 @@ var sendFile = function (key, value, imageName) {
         spg.children('.progress').each(function () {
             this.remove();
         })
-        let check = `<img onclick= removeImage("` + progressID + `***` + name + `")   id="R` + progressID + `" class="removeImage" src="/images/trash.png" style="position:absolute; bottom:0;top:0;left:0;right:0;margin:auto" /> `;
+        let check = `<img onclick= removeImage("` + progressID + `***` + name + `","` + imageName+`")   id="R` + progressID + `"  src="/images/trash.png" style="position:absolute; bottom:0;top:0;left:0;right:0;margin:auto" /> `;
         spg.append(check);
         //onclick=removeImage(` + rsp + `)
     })
@@ -104,30 +96,8 @@ var sendFile = function (key, value, imageName) {
     request.send(formData);
 
 };
-$(".removeImage").click(function () {
-    var element = $(this)
-    var name = element.attr('id');
-    $.ajax({
-        url: "/home/removeimage",
-        data: {
-            id: name
-        },
-        success: function () {
-            element.parent().remove();
-        }
-    })
-    //            $.ajax({
-    //                url: "/home/removeimage",
-    //                data: {
-    //                    id: name
-    //                },
-    //                success: function () {
-    //                    alert("#P" + name);
-    //                    //$("#P" + name).remove();
-    //.                }
-    //            })
-});
-var removeImage = function (DAT) {
+
+var removeImage = function (DAT, imageName) {
     let id = "R" + DAT.split('***')[0];
     let name = DAT.split('***')[1];
    
@@ -137,9 +107,9 @@ var removeImage = function (DAT) {
             id: name
         },
         success: function () {
-            var srt = $(".imageName" ).text();
+            var srt = $("." + imageName ).text();
             
-            $(".imageName").text(srt.replace(name + ",","") );
+            $("." + imageName).text(srt.replace(name + ",","") );
             $("#" + id).parent().parent().remove();
         }
     })

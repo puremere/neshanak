@@ -1,0 +1,27 @@
+﻿@model neshanak.viewModel.master.masterVM
+<style>
+   
+</style>
+<div style="">
+    <div class="tableItem" style="display: flex; justify-content: center; max-height: 400px; overflow-x: scroll" >
+        <p>@Resources.res.totalB  <span> : @Model.totalBenefit</span></p>
+        @{
+            string month = (@Model.report.Count() - 1).ToString();
+            <p>@Resources.res.totalM  <span> : @month</span></p>
+        }
+
+    </div>
+    @foreach (var item in Model.report)
+    {
+        <div class="tableItem" style="display:flex">
+            <p>@item.monthCount</p>
+            <p>@item.bardasht</p>
+            <p>@item.sood</p>
+            <p>@item.ghest</p>
+            <p>@item.etebar</p>
+            <p>@item.mojudi</p>
+        </div>
+    }
+</div>
+
+

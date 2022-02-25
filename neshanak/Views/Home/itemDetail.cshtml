@@ -10,7 +10,6 @@
 
     <link href="~/Content/slick.css" rel="stylesheet" />
     <link href="~/Content/slick-theme.css" rel="stylesheet" />
-
     <link href="~/Extra/leaflet/leaflet.css" rel="stylesheet" />
 }
 @section scripts
@@ -65,81 +64,137 @@
 
 
     </script>
+    <link href="~/Content/slider.css" rel="stylesheet" />
+    <script src="~/Scripts/sliderscript.js"></script>
+    <script>
+        $('.bo-slider').boSlider({
+            slideShow: true,
+            interval: 8000
+        });
+    </script>
 }
-<div style="width:100%; height:100%; background:linear-gradient(to left, rgba(202, 119, 180, 0.5) 0%, rgba(202, 119, 180, 0.5) 100%), url(/Images/images.jpg) no-repeat;background-attachment: fixed;">
-    <div style=" width:100%; height:100%">
-        <div class="row" style="display:flex; padding:50px 10%;justify-content:center">
-            <div class="flexdiv" style="">
-                <div style="display:flex">
-                    <div class="flexchild" style="">
-                        <div style="margin-bottom:10px" class="detailField"><p class="tile"> @Model.title</p></div>
-                        <div style="">
-
-                            @if (@Model.phone1 != "")
-                            {
-                                <div class="detailField"><p><span style="font-weight:600; font-size:17px">@Resources.res.phone</span> &nbsp;&nbsp;  :&nbsp; &nbsp;     @Model.phone1</p> </div>
-                            }
-                            @if (@Model.phone2 != "")
-                            {
-                                <div class="detailField"><p><span style="font-weight:600; font-size:17px">@Resources.res.phone 2</span> &nbsp;&nbsp;  :&nbsp; &nbsp;     @Model.phone2</p> </div>
-                            }
-                            @if (@Model.mobile1 != "")
-                            {
-                                <div class="detailField"><p><span style="font-weight:600; font-size:17px">@Resources.res.mobile</span> &nbsp;&nbsp;  :&nbsp; &nbsp;     @Model.mobile1</p> </div>
-
-                            }
-                            @if (@Model.mobile2 != "")
-                            {
-                                <div class="detailField"><p><span style="font-weight:600; font-size:17px">@Resources.res.mobile 2</span> &nbsp;&nbsp;  :&nbsp; &nbsp;     @Model.mobile2</p> </div>
-                            }
-                            @if (@Model.fax != "")
-                            {
-                                <div class="detailField"><p><span style="font-weight:600; font-size:17px">@Resources.res.fax 2</span> &nbsp;&nbsp;  :&nbsp; &nbsp;     @Model.fax</p> </div>
-
-                            }
-
-                            <div class="detailField"><p><span style="font-weight:600; font-size:17px">@Resources.res.email</span> &nbsp;&nbsp;  :&nbsp; &nbsp;     @Model.email</p> </div>
-                            <div class="detailField"><p><span style="font-weight:600; font-size:17px">@Resources.res.website</span> &nbsp;&nbsp;  :&nbsp; &nbsp; @Model.website</p> </div>
-                            <div class="detailField"><p><span style="font-weight:600; font-size:17px">@Resources.res.country</span> &nbsp;&nbsp;  :&nbsp; &nbsp; @Model.countryTitle</p></div>
-                            <div class="detailField"><p><span style="font-weight:600; font-size:17px">@Resources.res.city</span> &nbsp;&nbsp;  :&nbsp; &nbsp; @Model.cityTitle</p></div>
-                            <div class="detailField"><p><span style="font-weight:600; font-size:17px">@Resources.res.address</span> &nbsp;&nbsp;  :&nbsp; &nbsp; @Model.address</p></div>
-                        </div>
-
-                    </div>
-                    <div class="flexchild2" style="">
-                        <div class="slidHolder" style="margin-top:0">
-                            <div class="your-class" style="width:100%; height:100%;object-fit:cover;">
-
-                                @{
-
-                                    foreach (var item in Model.sld)
-                                    {
-                                        <div class="detailImage;" style="width:100%; height:auto;  ">
-                                            <img style="width:100%;height:100%; margin:auto;border-radius:15px " src="@item.image" />
-                                        </div>
-                                    }
-                                }
-
-                            </div>
 
 
-                        </div>
+    <style>
+        .sectionItem {
+            border-radius: 15px;
+            margin-top: 40px;
+            background-color: white;
+            color: #8d8d8d;
+            width: 80%;
+            padding: 50px;
+        
+            text-align: center;
+            margin: 20px auto;
+            border: 1px solid #ddd;
+            background: #fff;
+            box-shadow: 2px 2px 5px -1px rgb(148 149 153);
+        }
+        .detailDesc{
+            width:100%;
+        }
+       
+    </style>
+    <div style="width:100% ; background-color  : white">
+        @if (Model.sld != null)
+        {
+            <ul class="bo-slider">
+                @foreach (var slid in Model.sld)
+                {
+                    if (slid.type == "1")
+                    {
+                        <li data-url="@slid.image" data-type="image"></li>
+                    }
+                    else
+                    {
+                        string videopath = "/video/" + @Path.GetFileNameWithoutExtension(slid.image) + ".mp4";
+                        <li data-url="@videopath" data-type="video"></li>
+                    }
+                }
 
-                    </div>
-                </div>
+
+            </ul>
+
+        }
+        @if (Model.mbrand != "")
+        {
+            <a style="text-decoration : none; margin:5px; cursor:pointer;" href="https://shop.neschanak.com/">
+                <p style="  margin: auto;   padding: 25px;  background: #fff; box-shadow: 2px 2px 5px -1px rgb(148 149 153); border-radius: 15px; font-size:26px; font-weight:600">@Resources.res.enterSupermarket</p>
+            </a>
+        }
+        <p style="  margin: auto;   padding: 25px;  background: #fff; box-shadow: 2px 2px 5px -1px rgb(148 149 153); border-radius: 15px; font-size:26px; font-weight:600">@Model.title</p>
 
 
+        @{
+            if (@Model.desc != "")
+            {
+                <div class="sectionItem"><div class="detailDesc">@Model.desc</div></div>
+            }
+        }
 
-                <div style="padding:25px 20px;border-radius:15px;margin-top:40px; background-color:white;color :#8d8d8d" class="detailField"><div class="detailDesc">@Model.desc</div></div>
 
-                <div id="mapid" style="height:350px;border-radius:15px;margin-top:40px"></div>
+        <div class="sectionItem">
 
+            @if (@Model.phone1 != "")
+            {
+                <div class="detailField"><p><span style="font-weight:600; font-size:17px">@Resources.res.phone</span> &nbsp;&nbsp;  :&nbsp; &nbsp;     @Model.phone1</p> </div>
+            }
+            @if (@Model.phone2 != "")
+            {
+                <div class="detailField"><p><span style="font-weight:600; font-size:17px">@Resources.res.phone 2</span> &nbsp;&nbsp;  :&nbsp; &nbsp;     @Model.phone2</p> </div>
+            }
+            @if (@Model.mobile1 != "")
+            {
+                <div class="detailField"><p><span style="font-weight:600; font-size:17px">@Resources.res.mobile</span> &nbsp;&nbsp;  :&nbsp; &nbsp;     @Model.mobile1</p> </div>
 
-            </div>
+            }
+            @if (@Model.mobile2 != "")
+            {
+                <div class="detailField"><p><span style="font-weight:600; font-size:17px">@Resources.res.mobile 2</span> &nbsp;&nbsp;  :&nbsp; &nbsp;     @Model.mobile2</p> </div>
+            }
+            @if (@Model.fax != "")
+            {
+                <div class="detailField"><p><span style="font-weight:600; font-size:17px">@Resources.res.fax 2</span> &nbsp;&nbsp;  :&nbsp; &nbsp;     @Model.fax</p> </div>
 
+            }
+
+            @if (@Model.email != "")
+            {
+                <div class="detailField"><p><span style="font-weight:600; font-size:17px">@Resources.res.email</span> &nbsp;&nbsp;  :&nbsp; &nbsp;     @Model.email</p> </div>
+
+            }
+            @if (@Model.website != "")
+            {
+                <div class="detailField"><p><span style="font-weight:600; font-size:17px">@Resources.res.website</span> &nbsp;&nbsp;  :&nbsp; &nbsp; @Model.website</p> </div>
+
+            }
+            @if (@Model.countryTitle != "")
+            {
+                <div class="detailField"><p><span style="font-weight:600; font-size:17px">@Resources.res.country</span> &nbsp;&nbsp;  :&nbsp; &nbsp; @Model.countryTitle</p></div>
+
+            }
+            @if (@Model.cityTitle != "")
+            {
+                <div class="detailField"><p><span style="font-weight:600; font-size:17px">@Resources.res.state</span> &nbsp;&nbsp;  :&nbsp; &nbsp; @Model.cityTitle</p></div>
+            }
+            @if (@Model.cityTitle != "")
+            {
+                <div class="detailField"><p><span style="font-weight:600; font-size:17px">@Resources.res.city</span> &nbsp;&nbsp;  :&nbsp; &nbsp; @Model.instagram</p></div>
+
+            }
+            @if (@Model.address != "")
+            {
+                <div class="detailField"><p><span style="font-weight:600; font-size:17px">@Resources.res.address</span> &nbsp;&nbsp;  :&nbsp; &nbsp; @Model.address</p></div>
+
+            }
         </div>
+
+
+
+        <div id="mapid" style="height:350px;border-radius:15px;margin-top:40px"></div>
+
+
     </div>
-</div>
 
 
 

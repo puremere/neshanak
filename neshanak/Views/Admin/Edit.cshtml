@@ -24,14 +24,17 @@
             crossorigin="">
     </script>
 
-  
+
     <script src="~/Scripts/editItem.js"></script>
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false&libraries=places&key=AIzaSyDnIMRNDW6W-9c74yyiO_Sp3oeya0hoLwQ"></script>
     <script>
+        var mymap;
+        var theMarker = {};
         getLocation();
         function showLocation(position) {
             var lat = @Model.lat;
             var lon = @Model.lng;
-            var mymap = L.map('mapid', { attributionControl: false }).setView([51.505, -0.09], 13);
+            mymap = L.map('mapid', { attributionControl: false }).setView([51.505, -0.09], 13);
             L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
                 attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
                 maxZoom: 18,
@@ -44,7 +47,7 @@
             mymap.panTo(new L.LatLng(lat, lon));
 
 
-            var theMarker = {};
+
             theMarker = L.marker([lat, lon]).addTo(mymap);
             mymap.on('click', function (e) {
 
@@ -68,7 +71,7 @@
              var lat = @Model.lat;
             var lon = @Model.lng;
 
-            var mymap = L.map('mapid', { attributionControl: false }).setView([51.505, -0.09], 13);
+             mymap = L.map('mapid', { attributionControl: false }).setView([51.505, -0.09], 13);
             L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
                 attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
                 maxZoom: 18,
@@ -81,7 +84,7 @@
             mymap.panTo(new L.LatLng(lat, lon));
 
 
-            var theMarker = {};
+
             theMarker = L.marker([lat, lon]).addTo(mymap);
             mymap.on('click', function (e) {
 
@@ -127,6 +130,21 @@
             }
         }
         $("#mapid").height("250px");
+        google.maps.event.addDomListener(window, 'load', function () {
+            var places = new google.maps.places.Autocomplete(document.getElementById('address'));
+            google.maps.event.addListener(places, 'place_changed', function () {
+                var place = places.getPlace();
+
+
+                if (theMarker != undefined) {
+                    mymap.removeLayer(theMarker);
+                };
+                mymap.panTo(new L.LatLng(place.geometry.location.lat(), place.geometry.location.lng()));
+                theMarker = L.marker([place.geometry.location.lat(), place.geometry.location.lng()]).addTo(mymap);
+                $("#lat").val(place.geometry.location.lat());
+                $("#lng").val(place.geometry.location.lng());
+            });
+        });
     </script>
     <script>
         if ('@Session["lang"]' == 'fa') {
@@ -224,7 +242,7 @@
 
 
                         <div class="itemRow">
-                            <div class="default " style="cursor:pointer;margin-bottom:15px; text-align:center;border:1px dotted #4d4d4d; padding:5px 10px ;border-radius:5px;">@Resources.res.createImage <img style="width:30px; margin : 0 20px" src="~/images/addPic.png" /></div>
+                            <div class="default" style="cursor:pointer;margin-bottom:15px; text-align:center;border:1px dotted #4d4d4d; padding:5px 10px ;border-radius:5px;">@Resources.res.createImage <img style="width:30px; margin : 0 20px" src="~/images/addPic.png" /></div>
                             <div id="imageHolder" style="display:flex">
 
                                 <input multiple type="file" id="imageFileHolder" name="image" required="required" class="form-control " style="display:none">
@@ -232,7 +250,7 @@
 
 
                                 @{
-                                    if (Model.img != null)
+                                    if (Model.img != null && Model.img != "")
                                     {
                                         string[] lst = (Model.img.Trim(',')).Split(',');
 
@@ -240,11 +258,14 @@
                                         foreach (var item in lst)
 
                                         {
+                                            if (item != "")
+                                            {
+                                                <div class="imageCover">
+                                                    <img src="/images/@item" />
+                                                    <img id="@item" class="removeImage" src="/images/trash.png" style="position:absolute; bottom:0;top:0;left:0;right:0;margin:auto" /> <i class="fa fa-remove" style="font-size: 12px;position: absolute;bottom: 5px;left: 0px;color: white;"></i>
+                                                </div>
+                                            }
 
-                                            <div class="imageCover">
-                                                <img src="/images/@item" />
-                                                <img id="@item" class="removeImage" src="/images/trash.png" style="position:absolute; bottom:0;top:0;left:0;right:0;margin:auto" /> <i class="fa fa-remove" style="font-size: 12px;position: absolute;bottom: 5px;left: 0px;color: white;"></i>
-                                            </div>
 
                                         }
                                     }
@@ -257,35 +278,36 @@
 
                         <form id="createForm" action="Edit" method="post">
                             <div class="itemRow">
-                                <p>@Resources.res.link </p>
+                                @*<p>@Resources.res.link </p>*@
 
-                                <input value="@Model.link" id="link" name="link" class="form-control" />
+                                <input placeholder="@Resources.res.link" value="@Model.link" id="link" name="link" class="form-control" />
                             </div>
                             <div class="itemRow">
-                                <p>@Resources.res.createTitle </p>
+                                @*<p>@Resources.res.createTitle </p>*@
 
-                                <input value="@Model.title" id="title" name="title" class="form-control" />
+                                <input placeholder="@Resources.res.createTitle" value="@Model.title" id="title" name="title" class="form-control" />
                             </div>
 
 
                             <div class="itemRow">
-                                <p>@Resources.res.createDesc </p>
-                                <textarea style="height:100px" id="desc" name="desc" class="form-control">@Model.desc</textarea>
+                                @*<p>@Resources.res.createDesc </p>*@
+                                <textarea placeholder="@Resources.res.createDesc" style="height:100px" id="desc" name="desc" class="form-control">@Model.desc</textarea>
 
                             </div>
                             <div class="itemRow">
-                                <p>@Resources.res.cat </p>
+                                @*<p>@Resources.res.cat </p>*@
                                 @Html.DropDownListFor(x => x.catid, new SelectList(Model.cat, "ID", "title"), Resources.res.chooscat, new { @class = "form-control", id = "cat" })
 
                             </div>
                             <div class="itemRow">
-                                <p>@Resources.res.subcat </p>
+                                @*<p>@Resources.res.subcat </p>*@
                                 <div id="subcatHolder">
                                     @{
 
                                         if (Model.subcatid == 0)
                                         {
-                                            @Html.DropDownList("", new SelectList(Model.cat, "ID", "title"), Resources.res.choossubcat, new { @class = "form-control", id = "subcat", @disabled = "disable" })
+
+                                            @Html.DropDownList("subcatID", new SelectList(@Model.cat, "id", "title"), Resources.res.choossubcat, new { @class = "form-control", id = "subcat", @disabled = "disable" })
 
                                         }
                                         else
@@ -300,13 +322,13 @@
 
                             </div>
                             <div class="itemRow">
-                                <p>@Resources.res.subcat2 </p>
+                                @*<p>@Resources.res.subcat2 </p>*@
                                 <div id="subcatHolder2">
                                     @{
 
                                         if (Model.subcatid2 == 0)
                                         {
-                                            @Html.DropDownList("", new SelectList(Model.cat.Select(c => new { Id = c.id + "-" + c.catLevel, title = c.title }), "ID", "title"), Resources.res.coosesubcattwo, new { @class = "form-control", id = "subcat2", @disabled = "disable" })
+                                            @Html.DropDownList("subcat2ID", new SelectList(Model.cat.Select(c => new { Id = c.id + "-" + c.catLevel, title = c.title }), "ID", "title"), Resources.res.coosesubcattwo, new { @class = "form-control", id = "subcat2", @disabled = "disable" })
 
                                         }
                                         else
@@ -323,45 +345,42 @@
                             </div>
 
                             <div class="itemRow">
-                                <p>@Resources.res.createPhone </p>
+                                @*<p>@Resources.res.createPhone </p>*@
 
-                                <input value="@Model.phone1" placeholder="" id="phone1" name="phone1" class="form-control" />
-
-                            </div>
-                            <div class="itemRow">
-                                <p>@Resources.res.createPhone </p>
-
-                                <input value="@Model.phone2" placeholder="" id="phone2" name="phone2" class="form-control" />
-
-                            </div>
-
-                            <div class="itemRow">
-                                <p>@Resources.res.fax </p>
-                                <input value="@Model.fax" placeholder="" id="fax" name="fax" class="form-control" />
-                            </div>
-                            <div class="itemRow">
-                                <p>@Resources.res.createPhone2 </p>
-
-                                <input value="@Model.mobile1" placeholder="" id="mobile1" name="mobile1" class="form-control" />
+                                <input value="@Model.phone1" placeholder="@Resources.res.createPhone " id="phone1" name="phone1" class="form-control" />
 
                             </div>
                             <div class="itemRow">
-                                <p>@Resources.res.createPhone2 </p>
+                                @*<p>@Resources.res.createPhone </p>*@
 
-                                <input value="@Model.mobile2" placeholder="" id="mobile2" name="mobile2" class="form-control" />
+                                <input value="@Model.phone2" placeholder="@Resources.res.createPhone" id="phone2" name="phone2" class="form-control" />
+
+                            </div>
+
+                            <div class="itemRow">
+                                @*<p>@Resources.res.fax </p>*@
+                                <input value="@Model.fax" placeholder="@Resources.res.fax" id="fax" name="fax" class="form-control" />
+                            </div>
+                            <div class="itemRow">
+                                @*<p>@Resources.res.createPhone2 </p>*@
+
+                                <input value="@Model.mobile1" placeholder="@Resources.res.createPhone2 " id="mobile1" name="mobile1" class="form-control" />
 
                             </div>
                             <div class="itemRow">
-                                <p>@Resources.res.email </p>
+                                @*<p>@Resources.res.createPhone2 </p>*@
+
+                                <input value="@Model.mobile2" placeholder="@Resources.res.createPhone2" id="mobile2" name="mobile2" class="form-control" />
+
+                            </div>
+                            <div class="itemRow">
+                                @*<p>@Resources.res.email </p>*@
                                 <input value="@Model.email" placeholder="@Resources.res.email" id="email" name="email" class="form-control" />
                             </div>
-                            <div class="itemRow">
-                                <p>@Resources.res.instagram </p>
-                                <input value="@Model.instagram" placeholder="@Resources.res.instagram" id="instagram" name="instagram" class="form-control" />
-                            </div>
+
 
                             <div class="itemRow">
-                                <p>@Resources.res.website </p>
+                                @*<p>@Resources.res.website </p>*@
                                 <input value="@Model.website" placeholder="@Resources.res.website" id="website" name="website" class="form-control" />
                             </div>
                             @*
@@ -375,13 +394,13 @@
         </div>*@
 
                             <div class="itemRow">
-                                <p>@Resources.res.country </p>
+                                @*<p>@Resources.res.country </p>*@
                                 @Html.DropDownListFor(x => x.country, new SelectList(Model.lands, "ID", "title"), Resources.res.chooseCountry, new { @class = "form-control", id = "country" })
 
 
                             </div>
                             <div class="itemRow">
-                                <p>@Resources.res.city </p>
+                                @*<p>@Resources.res.city </p>*@
                                 <div id="cityHolder">
                                     @Html.DropDownListFor(x => x.city, new SelectList(Model.cities, "ID", "title"), Resources.res.chooseCity, new { @class = "form-control", id = "city" })
 
@@ -389,18 +408,22 @@
 
                             </div>
                             <div class="itemRow">
-                                <p>@Resources.res.createAddress </p>
-                                <textarea style="height:100px" id="address" name="address" class="form-control">@Model.address</textarea>
+                                @*<p>@Resources.res.instagram </p>*@
+                                <input value="@Model.instagram" placeholder="@Resources.res.instagram" id="instagram" name="instagram" class="form-control" />
+                            </div>
+                            <div class="itemRow">
+                                @*<p>@Resources.res.createAddress </p>*@
+                                <textarea placeholder="@Resources.res.createAddress" style="height:100px" id="address" name="address" class="form-control">@Model.address</textarea>
 
                             </div>
                             <div class="itemRow">
-                                <p>@Resources.res.createLocation </p>
+                                @*<p>@Resources.res.createLocation </p>*@
                                 <div id="mapid" style=""></div>
                             </div>
                             <input value="@Model.lat" style="display:none" id="lat" name="lat" />
                             <input value="@Model.lng" style="display:none" id="lng" name="lng" />
                             <input hidden value="@Model.id" name="id" />
-                            <input hidden value="@Model.img" name="img" />
+
 
                             <div class="itemRow " style="border:none">
                                 <div class="creatButt btn btn-success">@Resources.res.createButt</div>

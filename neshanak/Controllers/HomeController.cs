@@ -31,6 +31,13 @@ namespace neshanak.Controllers
             Response.Cookies[name].Value = Encrypt(mymodel);
 
         }
+        private static Random random = new Random();
+        public static string RandomString(int length)
+        {
+            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+            return new string(Enumerable.Repeat(chars, length)
+              .Select(s => s[random.Next(s.Length)]).ToArray());
+        }
         private string getCookie(string name)
         {
 
@@ -49,7 +56,7 @@ namespace neshanak.Controllers
                 SetCookie(srt, "token");
                 return srt;
             }
-            else if (name ==  "vari" && req2 == "")
+            else if (name == "vari" && req2 == "")
             {
                 variabli cookieModel = new variabli();
                 string srt = JsonConvert.SerializeObject(cookieModel);
@@ -119,18 +126,19 @@ namespace neshanak.Controllers
               .Select(s => s[random.Next(s.Length)]).ToArray());
         }
         static string server = "http://www.supectco.com/neshanak/api/v1";
-
         static string servername = "";
         webService wb = new webService();
         public static string device = RandomString();
         public static string code = MD5Hash(device + "ncase8934f49909");
         public async Task<ActionResult> Index()
+        
         {
             CookieVM cookiemodel = JsonConvert.DeserializeObject<CookieVM>(getCookie("token"));
             cookiemodel.currentpage = "index";
             cookiemodel.controller = "home";
-            cookiemodel.city = "1";
-            cookiemodel.country = "1";
+           
+            cookiemodel.city = cookiemodel.city==null?  "1" : cookiemodel.city;
+            cookiemodel.country = cookiemodel.country  == null ?  "1" : cookiemodel.country;
             SetCookie(JsonConvert.SerializeObject(cookiemodel), "token");
             if (Session["lang"] == null)
 
@@ -143,7 +151,7 @@ namespace neshanak.Controllers
                 code = device,
                 device = code,
                 city = cookiemodel.city == null ? "" : cookiemodel.city,
-                country = cookiemodel.country == null ? "": cookiemodel.country,
+                country = cookiemodel.country == null ? "" : cookiemodel.country,
                 lan = lang,
                 mobile = "",
                 nodeID = ""
@@ -151,25 +159,35 @@ namespace neshanak.Controllers
             };
             string contactpayload = JsonConvert.SerializeObject(mainModel);
             string resu = await wb.doPostData(server + "/GetMain.php", contactpayload);
+
             IndexVM model = JsonConvert.DeserializeObject<IndexVM>(resu);
             return View(model);
         }
 
-        public async Task<ActionResult> GetSubCat(string result)
+        public async Task<ActionResult> GetSubCat(string result,string city)
         {
             CookieVM cookiemodel = JsonConvert.DeserializeObject<CookieVM>(getCookie("token"));
             cookiemodel.currentpage = "GetSubCat";
             cookiemodel.controller = "home";
             SetCookie(JsonConvert.SerializeObject(cookiemodel), "token");
+            if (city == null)
+            {
+                city = cookiemodel.city;
+            }
+            else
+            {
+                cookiemodel.city = city;
+            }
             variabli varimodel = JsonConvert.DeserializeObject<variabli>(getCookie("vari"));
             if (result == null)
             {
-                result = varimodel.result; 
+                result = varimodel.result;
             }
             else
             {
                 varimodel.result = result;
             }
+           
             SetCookie(JsonConvert.SerializeObject(varimodel), "vari");
             string lang = Session["lang"] as string;
 
@@ -179,7 +197,7 @@ namespace neshanak.Controllers
                 ID = result.Split('-')[0],
                 code = HomeController.code,
                 device = HomeController.device,
-                city = "",
+                city = city,
                 mobile = "",
                 lan = lang,
 
@@ -188,7 +206,7 @@ namespace neshanak.Controllers
             string resu = await wb.doPostData(server + "/GetCatsPage.php", subCatload);
             IndexVM model = JsonConvert.DeserializeObject<IndexVM>(resu);
             return View(model);
-
+            
             //return View();
         }
 
@@ -211,7 +229,7 @@ namespace neshanak.Controllers
             string resu = await wb.doPostData(server + "/getPage.php", contactpayload);
             ViewBag.message = resu;
             return View();
-          
+
         }
         public async Task<ActionResult> contact()
         {
@@ -236,29 +254,29 @@ namespace neshanak.Controllers
         }
         public async Task<ActionResult> privacy()
         {
-           
-            CookieVM cookiemodel = JsonConvert.DeserializeObject<CookieVM>(getCookie("token"));
-            cookiemodel.currentpage = "contact";
-            cookiemodel.controller = "home";
-            SetCookie(JsonConvert.SerializeObject(cookiemodel), "token");
-            string lang = Session["lang"] as string;
-            getPageVM mainModel = new getPageVM()
-            {
-                code = device,
-                device = code,
-                lan = lang,
-                page = "privacy"
 
-            };
-            string contactpayload = JsonConvert.SerializeObject(mainModel);
-            string resu = await wb.doPostData(server + "/getPage.php", contactpayload);
-            ViewBag.message = resu;
+            //CookieVM cookiemodel = JsonConvert.DeserializeObject<CookieVM>(getCookie("token"));
+            //cookiemodel.currentpage = "contact";
+            //cookiemodel.controller = "home";
+            //SetCookie(JsonConvert.SerializeObject(cookiemodel), "token");
+            //string lang = Session["lang"] as string;
+            //getPageVM mainModel = new getPageVM()
+            //{
+            //    code = device,
+            //    device = code,
+            //    lan = lang,
+            //    page = "privacy"
+
+            //};
+            //string contactpayload = JsonConvert.SerializeObject(mainModel);
+            //string resu = await wb.doPostData(server + "/getPage.php", contactpayload);
+           // ViewBag.message = resu;
             return View();
 
         }
         public ActionResult setCat(string result)
         {
-            
+
             variabli varimodel = JsonConvert.DeserializeObject<variabli>(getCookie("token"));
             if (result == null)
             {
@@ -272,7 +290,7 @@ namespace neshanak.Controllers
             return RedirectToAction("searchResult");
         }
 
-        public async Task<ActionResult> GetSubCatjson(string result,string level)
+        public async Task<ActionResult> GetSubCatjson(string result, string level)
         {
             string lang = Session["lang"] as string;
 
@@ -288,7 +306,7 @@ namespace neshanak.Controllers
 
             };
             string subCatload = JsonConvert.SerializeObject(VMmodel);
-            string resu = await wb.doPostData(server + "/GetCatsPage.php", subCatload);
+            string resu = await wb.doPostData(server + "/GetCatsPageFull.php", subCatload);
             IndexVM model = JsonConvert.DeserializeObject<IndexVM>(resu);
             if (level == "1")
             {
@@ -302,9 +320,15 @@ namespace neshanak.Controllers
 
             //return View();
         }
-        public async Task<ActionResult> getcityPartial(string result)
+        public ActionResult test()
         {
 
+
+            return Content("{\"message\" : \"shashidam to retrofited\"}");
+        }
+
+        public async Task<ActionResult> getcityPartial(string result)
+        {
             CookieVM cookmodel = JsonConvert.DeserializeObject<CookieVM>(getCookie("token"));
             cookmodel.country = result;
             SetCookie(JsonConvert.SerializeObject(cookmodel), "token");
@@ -312,7 +336,7 @@ namespace neshanak.Controllers
 
             getLandCATVM VMmodel = new getLandCATVM()
             {
-               
+
                 code = HomeController.code,
                 device = HomeController.device,
                 country = result,
@@ -322,46 +346,94 @@ namespace neshanak.Controllers
             string subCatload = JsonConvert.SerializeObject(VMmodel);
             string resu = await wb.doPostData(server + "/getLandscat.php", subCatload);
             countryCityCatVM model = JsonConvert.DeserializeObject<countryCityCatVM>(resu);
-            return PartialView("/Views/Shared/_partialCity.cshtml", model);
+           
+             return PartialView("/Views/Shared/_partialCity.cshtml", model);
+        }
+        public async Task<ActionResult> citySection(string result)
+        {
+
+            CookieVM cookmodel = JsonConvert.DeserializeObject<CookieVM>(getCookie("token"));
+            cookmodel.country = result;
+            cookmodel.query = "";
+            SetCookie(JsonConvert.SerializeObject(cookmodel), "token");
+            string lang = Session["lang"] as string;
+
+            getLandCATVM VMmodel = new getLandCATVM()
+            {
+
+                code = HomeController.code,
+                device = HomeController.device,
+                country = result,
+                lan = lang,
+
+            };
+            string subCatload = JsonConvert.SerializeObject(VMmodel);
+            string resu = await wb.doPostData(server + "/getLandscat.php", subCatload);
+            countryCityCatVM model = JsonConvert.DeserializeObject<countryCityCatVM>(resu);
+            return View(model);
+           // return PartialView("/Views/Shared/_partialCity.cshtml", model);
 
             //return View();
         }
-        
-        public void setCity (string id)
+
+        public void setCity(string id)
         {
             CookieVM cookiemodel = JsonConvert.DeserializeObject<CookieVM>(getCookie("token"));
             cookiemodel.city = id;
             SetCookie(JsonConvert.SerializeObject(cookiemodel), "token");
         }
-        public void setValues(string result, string mallID)
+        public void setValues(string result, string mallID,string contract)
         {
             string srt = getCookie("token");
             CookieVM cookieVM = JsonConvert.DeserializeObject<CookieVM>(srt);
             cookieVM.result = result;
             cookieVM.mallID = mallID;
+            TempData["contract"] = contract;
             SetCookie(JsonConvert.SerializeObject(cookieVM), "token");
         }
-        public async Task<ActionResult> searchResult()
+        public void setQuery(string query, string cityID, string countryID)
         {
+            string srt = getCookie("token");
+            CookieVM cookieVM = JsonConvert.DeserializeObject<CookieVM>(srt);
+            cookieVM.city = cityID;
+            cookieVM.country = countryID;
+            cookieVM.query = query;
+            SetCookie(JsonConvert.SerializeObject(cookieVM), "token");
+        }
+        public async Task<ActionResult> searchResult(string fromForm)
+        {
+            
             // string result, string mallID, string floorID
             CookieVM model = JsonConvert.DeserializeObject<CookieVM>(getCookie("token"));
+            if (fromForm == null)
+            {
+                model.page ="1";
+            }
             model.currentpage = "searchResult";
             model.controller = "home";
             string lang = Session["lang"] as string;
             SetCookie(JsonConvert.SerializeObject(model), "token");
+            string subcat = model.result != null ? model.result.Split('-')[0] : "";
+            string catlevel = model.result != null ? model.result.Split('-')[1] : "";
+            string contract = TempData["contract"] as string;
             searchResultVM VMmodel = new searchResultVM()
             {
-                city = model.city == null ? "": model.city ,
+                searchq = model.query,
+                city = model.city == null ? "" : model.city,
                 country = model.country == null ? "" : model.country,
                 mobile = "",
-                subcat = model.result.Split('-')[0],
-                catLevel = model.result.Split('-')[1],
+                subcat = subcat,
+                catLevel = catlevel,
                 code = HomeController.code,
                 device = HomeController.device,
                 lan = lang,
                 floorID = model.floorID,
                 mallID = model.mallID,
-               
+                page = model.page,
+                contract = contract
+
+                //02122517428@tct2
+                //650038
             };
             string searchResultPayload = JsonConvert.SerializeObject(VMmodel);
             string resu = await wb.doPostData(server + "/GetSearchResult.php", searchResultPayload);
@@ -369,8 +441,25 @@ namespace neshanak.Controllers
             ViewBag.result = model.result;
             ViewBag.mallID = model.mallID;
             ViewBag.floorID = model.floorID;
+            if (fromForm != null)
+            {
+                return Content(JsonConvert.SerializeObject(viewModel));
+            }
             return View(viewModel);
             // return View();
+        }
+       
+        public ActionResult getNewList (string objectstring)
+        {
+            BzListVM viewModel = JsonConvert.DeserializeObject<BzListVM>(objectstring);
+            return PartialView("/Views/Shared/_dataSectinOfSearch.cshtml", viewModel);
+        }
+        public void setPage()
+        {
+            CookieVM model = JsonConvert.DeserializeObject<CookieVM>(getCookie("token"));
+            int current = model.page != null ? Int32.Parse(model.page) : 0;
+            model.page = (current + 1).ToString() ;
+            SetCookie(JsonConvert.SerializeObject(model), "token");
         }
         public ActionResult searchResultMap(string result, string mallID, string floorID)
         {
@@ -416,7 +505,7 @@ namespace neshanak.Controllers
         }
         public ActionResult ChangeLanguage(string lang)
         {
-           
+
             lang = lang.ToLower();
             string current = JsonConvert.DeserializeObject<CookieVM>(getCookie("token")).currentpage;
             string controller = JsonConvert.DeserializeObject<CookieVM>(getCookie("token")).controller;
@@ -424,10 +513,7 @@ namespace neshanak.Controllers
             return RedirectToAction(current, controller);
 
         }
-
-
-
-
+        [HomeSessionCheck]
         public async Task<ActionResult> createItem()
         {
             CookieVM cookiemodel = JsonConvert.DeserializeObject<CookieVM>(getCookie("token"));
@@ -458,10 +544,9 @@ namespace neshanak.Controllers
             itemDetailVM viewModel = JsonConvert.DeserializeObject<itemDetailVM>(resu);
 
             return View(viewModel);
-
         }
         [HttpPost]
-        public async Task<ActionResult> addITem(itemDetailVM model )
+        public async Task<ActionResult> addITem(itemDetailVM model)
         {
             CookieVM cookie = JsonConvert.DeserializeObject<CookieVM>(getCookie("token"));
             string lang = Session["lang"] as string;
@@ -492,7 +577,7 @@ namespace neshanak.Controllers
 
                 if (hpf.ContentLength == 0)
                     continue;
-                filename = RandomString() + "_" + hpf.FileName; ;
+                filename = RandomString(7)+ hpf.FileName; ;
                 string savedFileName = Path.Combine(Server.MapPath(pathString), filename);
                 string savedFileNameThumb = Path.Combine(Server.MapPath(pathString), "0" + filename);
                 hpf.SaveAs(savedFileName);
@@ -500,9 +585,9 @@ namespace neshanak.Controllers
             }
             return Content(filename);
         }
-        public ContentResult sendToServer()
+        public ContentResult sendToServer(string srt)
         {
-
+           
             string pathString = "~/images";
             if (!Directory.Exists(Server.MapPath(pathString)))
             {
@@ -516,7 +601,7 @@ namespace neshanak.Controllers
 
                 if (hpf.ContentLength == 0)
                     continue;
-                filename = RandomString() + "_" + hpf.FileName; ;
+                filename =RandomString(7) + hpf.FileName; ;
                 string savedFileName = Path.Combine(Server.MapPath(pathString), filename);
                 string savedFileNameThumb = Path.Combine(Server.MapPath(pathString), "0" + filename);
                 hpf.SaveAs(savedFileName);
@@ -540,8 +625,8 @@ namespace neshanak.Controllers
             {
                 model.images = model.images.Replace(id + ",", "");
             }
-           
-            
+
+
             SetCookie(JsonConvert.SerializeObject(model), "token");
         }
         public void deleteImage(string id)
@@ -549,7 +634,7 @@ namespace neshanak.Controllers
             string pathString = "~/images";
             string savedFileName = Path.Combine(Server.MapPath(pathString), id);
             //System.IO.File.Delete(savedFileName);
-            
+
         }
 
 
@@ -559,26 +644,13 @@ namespace neshanak.Controllers
             cookiemodel.currentpage = "message";
             cookiemodel.controller = "home";
             SetCookie(JsonConvert.SerializeObject(cookiemodel), "token");
-            if (message == "1")
-            {
-                ViewBag.message = "عبارت امنیتی نادرست است";
-            }
-            else if (message == "2")
-            {
-                ViewBag.message = "این شماره قبلاً ثبت شده است";
-            }
-            else if (message == "3")
-            {
-                ViewBag.message = "خطا ! لطفاً مجددا تلاش کنید";
-            }
+            ViewBag.message = message;
+            
             return View();
         }
         public ActionResult login(string message)
         {
-            CookieVM cookiemodel = JsonConvert.DeserializeObject<CookieVM>(getCookie("token"));
-            cookiemodel.currentpage = "login";
-            cookiemodel.controller = "home";
-            SetCookie(JsonConvert.SerializeObject(cookiemodel), "token");
+            
             CookieVM cookieModel = JsonConvert.DeserializeObject<CookieVM>(getCookie("token"));
             ViewBag.username = cookieModel.Username;
             ViewBag.password = cookieModel.Password;
@@ -592,23 +664,60 @@ namespace neshanak.Controllers
                 {
                     if (message == "1")
                     {
-                        ViewBag.message = "عبارت امنیتی نادرست است";
+                        ViewBag.message = "1" ;
 
                     }
                     else if (message == null)
                     {
                         ViewBag.message = "";
-
                     }
                     else
                     {
-
-                        ViewBag.message = "نام کاربری یا رمز عبور اشتباه است";
+                        ViewBag.message = "2";
                     }
                 }
             }
 
             return View();
+        }
+        public ActionResult forum(string gr)
+        {
+            if (Session["LogedInUser"] == null)
+            {
+                return RedirectToAction("login", "Home");
+            }
+            else
+            {
+                string emailsrt = Session["LogedInUser"] as string;
+                string email = emailsrt + "|" + emailsrt.Split('@')[0];
+
+
+                ViewBag.url = email;
+                ViewBag.gr = gr;
+            }
+            return View();
+        }
+        public ActionResult live()
+        {
+            if (Session["LogedInUser"] == null)
+            {
+                return RedirectToAction("login", "Home");
+            }
+            else
+            {
+                string emailsrt = Session["LogedInUser"] as string;
+                string email = emailsrt + "|" + emailsrt.Split('@')[0];
+
+
+                ViewBag.url = email;
+            }
+            return View();
+        }
+        public ActionResult logout() {
+            Session["token"] = null;
+            Session["LogedInUser"] = null;
+            return RedirectToAction("index");
+
         }
         public ActionResult confirm()
         {
@@ -627,7 +736,7 @@ namespace neshanak.Controllers
         }
         public ActionResult forgetpass(string type)
         {
-           
+
             return View();
         }
         public ActionResult ChangePass(string Token)
@@ -639,7 +748,7 @@ namespace neshanak.Controllers
             return View();
         }
 
-
+     
         public ActionResult Mag()
         {
             CookieVM cookiemodel = JsonConvert.DeserializeObject<CookieVM>(getCookie("token"));
@@ -705,7 +814,7 @@ namespace neshanak.Controllers
                 varimodel.magid = id;
             }
             SetCookie(JsonConvert.SerializeObject(varimodel), "vari");
-           
+
             string token = "";
             if (Session["token"] != null)
             {
@@ -743,7 +852,8 @@ namespace neshanak.Controllers
             return View(log);
 
         }
-        public async Task<ActionResult> itemDetail(string id) {
+        public async Task<ActionResult> itemDetail(string id)
+        {
 
             CookieVM cookiemodel = JsonConvert.DeserializeObject<CookieVM>(getCookie("token"));
             cookiemodel.currentpage = "itemDetail";
@@ -780,6 +890,8 @@ namespace neshanak.Controllers
             viewModel.itemDetailVM model = JsonConvert.DeserializeObject<viewModel.itemDetailVM>(resu);
             return View(model);
         }
+
+     
 
     }
 }
